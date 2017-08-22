@@ -1,0 +1,78 @@
+<?php
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of BuscaCategoriaDados
+ *
+ * @author danielkarling
+ */
+
+//set_include_path('./opt/lampp/lib/php');
+
+//include ($SERVER["DOCUMENTROOT"].'./DataBase.php');
+include_once 'config.php';
+
+include_once URL.'/classes/CategoriaDados.php';
+include_once URL.'/classes/BD/DataBase.php';
+
+class BuscaCategoriaAluno {
+
+    public $categorias;
+    public $nomeCategorias;
+    public $qtdDiscCursadas;
+
+    public function __construct($grr) {
+
+        try {
+            $conn = DataBase::getInstance()->getDb();
+            $sql = "
+
+SELECT a.perc, a.media, a.categoria, b.qtd FROM
+(SELECT SUM(dadosCategoria.perc) as perc,SUM(dadosCategoria.media) as media, dadosCategoria.categoria FROM(SELECT ROUND(SUM(dados.qtd) * SUM(dados.percUnit)) AS perc, 0 AS media, dados.categoria FROM (SELECT COUNT(*) AS qtd, 0 AS percUnit, d.CATEGORIA FROM aproveitamento a LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO = 'APROVADO' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA UNION SELECT 0 AS qtd, 100/COUNT(*) AS percUnit, d.CATEGORIA FROM aproveitamento a  LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dados GROUP BY dados.categoria UNION SELECT 0 AS perc, ROUND(AVG(a.MEDIA_FINAL)) AS media, d.categoria FROM aproveitamento a LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dadosCategoria GROUP  BY  dadosCategoria.categoria) AS a 
+LEFT JOIN 
+
+(
+SELECT categoria , COUNT(disciplina.categoria) as qtd FROM disciplina LEFT JOIN aproveitamento ON disciplina.CODIGO = aproveitamento.COD_ATIV_CURRIC WHERE aproveitamento.MATR_ALUNO = '$grr' GROUP BY disciplina.categoria) as b ON a.categoria = b.categoria;";
+
+
+            $stmt = $conn->prepare($sql);
+            $stmt->execute();
+            $fetch = $stmt->fetchAll();
+
+            foreach ($fetch as $f) {
+                $cat = $f["categoria"];
+                $med = $f["media"];
+                $perc = $f["perc"];
+                $qtd = $f["qtd"];
+                $categoria = new CategoriaDados($cat);
+                $categoria->setQtd($qtd);
+                $categoria->setMediaFinal($med);
+                $categoria->setPercentAprovacao($perc);
+                $this->categorias[] = $categoria;
+                
+            }
+        } catch (Exception $e) {
+            echo $e;
+        }
+
+        foreach ($this->categorias as $cat) {
+            $this->nomeCategorias[] = $cat->getNome() . "";
+        }
+    }
+
+    public function getCategorias() {
+        return $this->categorias;
+    }
+
+    public function getNomeCategorias() {
+
+
+        return $this->nomeCategorias;
+    }
+
+}
