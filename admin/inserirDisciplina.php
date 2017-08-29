@@ -21,6 +21,6 @@ foreach ($fetch as $f) {
     
 }
 
-inserir("disciplina", array("CODIGO" => $codigo, "NOME" => $nome, "categoria" => $categoria, "TOTAL_CARGA_HORARIA" => $ch, "id_curso"=> $id_curso));
+inserir("disciplina", array("CODIGO" => $codigo, "NOME" => $nome, "categoria" => $categoria, "TOTAL_CARGA_HORARIA" => $ch, "id_curso"=> $id_curso, "requisitoCadastrado" => 0));
 
 print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?nome=$nomeCurso&codigo=$codCurso' </script>";

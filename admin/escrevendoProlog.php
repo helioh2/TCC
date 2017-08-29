@@ -60,6 +60,10 @@
         </form>
 <br>
  <button type="button" onclick="window.location.href='listarDisciplinas.php?codigo=<?php echo $codCurso;?>'"> Voltar</button>
+ <br>
+  <br>
+ <button type="button" onclick="window.location.href='excluirReq.php?codigo=<?php echo $codCurso;?>'"> Excluir Todos Requisitos</button>
+
     </center>
 </body>
 

@@ -22,14 +22,17 @@ class Disciplina {
     private $mediaFinalCategoria;
     public $horarios = array();
     private $colisoes = array();
+    
+    private $requisitosCadastrados = 0;
 
-    function __construct($nome, $codigo, $importancia, $cargaHoraria, $percAprovCategoria, $mediaFinalCategoria) {
+    function __construct($nome, $codigo, $importancia, $cargaHoraria, $percAprovCategoria, $mediaFinalCategoria, $requisitosCadastrados) {
         $this->nome = $nome;
         $this->codigo = $codigo;
         $this->importancia = $importancia;
         $this->cargaHoraria = $cargaHoraria;
         $this->percAprovCategoria = $percAprovCategoria;
         $this->mediaFinalCategoria = $mediaFinalCategoria;
+        $this->requisitosCadastrados = $requisitosCadastrados;
     }
 
     function setNome($nome) {
@@ -121,6 +124,10 @@ class Disciplina {
 
     function insereColisao($colisao) {
         $this->colisoes[] = $colisao;
+    }
+
+    function getRequisitosCadastrados() {
+        return $this->requisitosCadastrados;
     }
 
 

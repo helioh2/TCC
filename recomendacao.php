@@ -123,10 +123,10 @@ foreach ($nomeCategoiasCurso as $catCurso) {
     }
 }
 
-
 for ($index1 = 0; $index1 < count($difs); $index1++) {
     echo $categorias[$index1]->getNome() . "- <br>" . $difs[$index1] . "-<br><br>";
 }
+
 
 $cursadas = new BuscaDiscCursadas($grr);
 $strTermo = $cursadas->getTermo() . "";
@@ -135,7 +135,7 @@ $arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             //
 
 
 echo $strTermo;                                                                                     //echoooooo
-        
+
 $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
 $recomendacao = array();
@@ -204,21 +204,21 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
             <td class="alert-info"> Horários </td>
             <td class="alert-info"> Colisão de Horários </td>
         </tr>
-        <?php
-        foreach ($recomendacaoFinal as $rec) {
-            ?>
+<?php
+foreach ($recomendacaoFinal as $rec) {
+    ?>
 
             <tr class="text-center"> 
                 <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
                 <td  class="text-success" ><?php echo $rec->getNome(); ?></td>
-                <td  class="text-success" ><?php echo (Integer)$rec->getImportancia()."%"; ?></td>
-                <td class="text-success"><?php echo (Integer)$rec->getHorasDedicacao(); ?></td>
+                <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
+                <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
                 <td class="text-danger">
-                    <?php
-                    foreach ($rec->getHorarios() as $h) {
-                        echo $h . " ";
-                    }
-                    ?>
+    <?php
+    foreach ($rec->getHorarios() as $h) {
+        echo $h . " ";
+    }
+    ?>
                 </td> <td class="text-danger">
                     <?php
                     foreach ($rec->getColisoes() as $col) {
@@ -230,9 +230,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                     ?>
                 </td>
             </tr>
-            <?php
-        }
-        ?>
+    <?php
+}
+?>
 
     </table>
     <br><br>

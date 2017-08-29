@@ -12,10 +12,14 @@ $idCurso = $_POST["idCurso"];
 
 $listDisciplinas = new ListarDisciplinas($idCurso);
 
-$listaDisciplinas = $listDisciplinas->getDisciplinas();
+//$listaDisciplinas = $listDisciplinas->getDisciplinas();
 
 
-foreach ($listaDisciplinas as $disc) {
+$listaDisciplinasSemRequisitos= $listDisciplinas->getDisciplinasSemRequisito();
+
+
+
+foreach ($listaDisciplinasSemRequisitos as $disc) {
     echo "<option value='".$disc->getCodigo()."' id='codDisciplina'>".$disc->getNome()."</option>";
 }
 

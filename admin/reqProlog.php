@@ -1,5 +1,7 @@
 <?php
 
+include_once '../classes/BD/crudPDO.php';
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,7 +18,7 @@ $codCurso = $_POST["codCurso"];
 
 $listaRequisitos = $codRequisito;
 
-
+alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '$codDisciplina'");
 
 // escrevendo na base de conhecimento de requisitos de disciplinas
 if (!(file_exists("../jar/req" . $codCurso . ".pl"))) {
