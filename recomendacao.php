@@ -63,7 +63,7 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                 foreach ($CH as $c) {
                     $cargaHoraria = $c["TOTAL_CARGA_HORARIA"];
                 }
-                $disc = new Disciplina($nome, $pos, $saida2, $cargaHoraria, $pAprov, $mFinal);
+                $disc = new Disciplina($nome, $pos, $saida2, $cargaHoraria, $pAprov, $mFinal, 0);
 
 
                 $horarios = new BuscaHorariosDisc($pos);
