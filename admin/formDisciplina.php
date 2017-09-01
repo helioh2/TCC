@@ -31,8 +31,8 @@ foreach ($fetch as $f) {
             <div class="modal-header">Alterar <?php echo $nome; ?></div>
             <div class="modal-body">
                 <form id="disc"  name="curso" method="post" action="alterarDisciplina.php">
-                    Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nome" value = "<?php echo $nome; ?>"><br>
-                    Cógido<br><input class="text-success  text-center" name="codigo" type="text" id="codigo" value = "<?php echo $codigo; ?>"><br>
+                    Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nome" value = "<?php echo $nome; ?>">
+                    <input class="text-success  text-center" name="codigo" type="hidden" id="codigo" value = "<?php echo $codigo; ?>"><br>
                     Categoria<br><input class="text-success  text-center" name="categoria" type="text" id="categoria" value = "<?php echo $categoria; ?>"><br>
                     Carga Horaria<br><input class="text-success  text-center" name="CH" type="number" id="CH" value = "<?php echo $ch; ?>" ><br> 
 

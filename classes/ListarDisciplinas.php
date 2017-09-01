@@ -53,7 +53,6 @@ class ListarDisciplinas {
             }
             echo "<tr>"
             . "<td id='codigo" . $linha["CODIGO"] . "'>" . $linha["CODIGO"] . "</td>"
-            . "<td><button class='btn btn-info' data-toggle='modal' data-target='#alt'>Alt</button></td>"
             . "<td><a href='formDisciplina.php?codigo=" . $linha["CODIGO"] . "&idCurso=" . $id_curso . "'>" . $linha["NOME"] . "</a></td>"
             . "<td>" . $linha["categoria"] . "</td>"
             . "<td>" . $linha["TOTAL_CARGA_HORARIA"] . "</td>"

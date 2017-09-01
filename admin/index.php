@@ -24,47 +24,93 @@
 
         <br><br>
 
-        <form class="center-block" method="get" action="listarCursos.php">
 
-            <button class="alert-success" type="submit"> Visualizar Curso</button>
-
-        </form>
+        <button class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#modalListarCursos">Visualizar Curso</button>
     </center>
 
 
+    <?php
+    include_once '../classes/ListarCursos.php';
+    $listCursos = new ListarCursos();
+    ?>
 
 
 
+    <center>
+        <div class="modal fade" id="modalListarCursos">
+            <div class="modal-lg bg-info">
+                <div class="modal-content">
+                    <div class="modal-header bg-success">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title bg-success">Selecionar Curso</h4>
+                    </div>
+                    <div class="modal-body bg-info
+                         ">
+                        <center>
 
-    <div class="modal fade" id="novoCurso">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <center>
-                        <h4 class="modal-title">Novo Curso</h4>
-                    </center>
-                </div>
-                <div class="modal-body">
-                    <center>
-                        <form id="curso" class="container-fluid " name="curso" method="get" action="inserirCurso.php">
-                            Nome<br><input name="nome" class="text-success center-block "  type="text" id="nome" value = ""><br>
-                            Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
-                            <br>
-                            <input type="submit" name="submit" class="alert-success" value="inserir">
-                        </form>
-                        <button class="alert-info center-block" type="button" onclick="window.location.href = 'index.php'"> Voltar</button>
-                    </center>
+                            <table class="table bg-info" >
+                                <tr  class = "alert-success ">
+                                    <th>Código</th><th>Alterar</th><th>Nome</th>
+                                </tr> 
+                                <?php
+                                $listCursos->listar();
+                                ?>
+                            </table>   
+                            <br><br><br>
+                            <form id="curso" class="container-fluid " name="curso" method="get" action="listarDisciplinas.php">
+                                Procurar
+                                <br><input name="nome" class="text-success center-block "  type="hidden" id="nome" value = ""><br>
+                                Cógido do Curso<br><br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
+                                <br><input type="submit" name="submit" class="alert-success" value="Ok">
+                            </form>
+                            <button type="button" class="alert-info center-block " onclick="window.location.href = 'index.php'"> Voltar</button>
 
 
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
+
+
+
+
+
+
+
+        <div class="modal fade" id="novoCurso">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <center>
+                            <h4 class="modal-title">Novo Curso</h4>
+                        </center>
+                    </div>
+                    <div class="modal-body">
+                        <center>
+                            <form id="curso" class="container-fluid " name="curso" method="get" action="inserirCurso.php">
+                                Nome<br><input name="nome" class="text-success center-block "  type="text" id="nome" value = ""><br>
+                                Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
+                                <br>
+                                <input type="submit" name="submit" class="alert-success" value="inserir">
+                            </form>
+                            <button class="alert-info center-block" type="button" onclick="window.location.href = 'index.php'"> Voltar</button>
+                        </center>
+
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
 </body>
 
 

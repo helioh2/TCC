@@ -28,7 +28,7 @@ foreach ($fetch as $f) {
             <div class="modal-body">
                 <form id="disc"  name="curso" method="post" action="alterarCurso.php">
                     Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nome" value = "<?php echo $nome; ?>"><br>
-                    Cógido<br><input class="text-success  text-center" name="codigo" type="text" id="codigo" value = "<?php echo $codigo; ?>"><br>
+                    <br><input class="text-success  text-center" name="codigo" type="hidden" id="codigo" value = "<?php echo $codigo; ?>"><br>
                    
                     
                     <input name="idCurso" class="text-success center-block "  type="hidden" id="idCurso" value ="<?php echo $idCurso; ?>">
