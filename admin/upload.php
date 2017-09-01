@@ -1,7 +1,14 @@
 <?php
+
 include_once '../classes/BD/crudPDO.php';
 
 $idCurso = $_POST["idCurso"];
+
+$fetch = selecionarWHERE("curso", array("codigo"), "id = '$idCurso'");
+foreach ($fetch as $f) {
+    $codCurso = $f["codigo"];
+    
+}
 
 $uploaddir = './CSV/';
 
@@ -44,18 +51,20 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
             $SEXO = $data[20];
             $dados = array("NOME_PESSOA" => $NOME_PESSOA, "MATR_ALUNO" => $MATR_ALUNO, "NUM_VERSAO" => $NUM_VERSAO, "NOME_CURSO" => $NOME_CURSO, "COD_CURSO" => $COD_CURSO, "ID_VERSAO_CURSO" => $ID_VERSAO_CURSO, "ANO" => $ANO, "COD_ATIV_CURRIC" => $COD_ATIV_CURRIC, "NOME_ATIV_CURRIC" => $NOME_ATIV_CURRIC, "MEDIA_FINAL" => $MEDIA_FINAL, "DESCR_SITUACAO" => $DESCR_SITUACAO, "PERIODO" => $PERIODO, "ID_CURSO_ALUNO" => $ID_CURSO_ALUNO, "SITUACAO_ITEM" => $SITUACAO_ITEM, "CH_TEORICA" => $CH_TEORICA, "CH_PRATICA" => $CH_PRATICA, "TOTAL_CARGA_HORARIA" => $TOTAL_CARGA_HORARIA, "ANO_INGRESSO" => $ANO_INGRESSO, "FORMA_EVASAO" => $FORMA_EVASAO, "ANO_EVASAO" => $ANO_EVASAO, "SEXO" => $SEXO, "id_curso" => $idCurso);
 
-            
+
             $inseriu = inserir("aproveitamento", $dados);
             if ($inseriu == FALSE) {
-                echo "problema na inserção dos dados<br>";
-                break;
-            } else {
-               
-               
 
-                          
-               print "<script>alert ('Relatório incluído com sucesso!');</script>";
-                print "<script type = 'text/javascript'> location.href = './listarCursos.php' </script>";
+                echo "<script>alert('problema na inserção dos dados!');</script>";
+
+                print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
+            } else {
+
+
+
+
+                print "<script>alert ('Relatório incluído com sucesso!');</script>";
+                print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
             }
 
 
@@ -67,6 +76,9 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
 
     unlink("./CSV/$arquivo");
 } else {
-    echo "Arquivo não enviado";
+
+    echo "<script>alert('Arquivo não enviado!');</script>";
+
+    print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
 }
 ?>

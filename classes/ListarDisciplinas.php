@@ -38,7 +38,7 @@ class ListarDisciplinas {
 
     public function listar($id_curso) {
 
-        $fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA"), "id_curso = '$id_curso'");
+        $fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA"), "id_curso = '$id_curso' ORDER BY NOME");
         foreach ($fetch as $linha) {
 
             $hora = "";
