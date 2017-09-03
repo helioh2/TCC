@@ -9,7 +9,7 @@ include_once '../classes/BD/crudPDO.php';
 $codigo = $_GET["codigo"];
 $idCurso = $_GET["idCurso"];
 
-$fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA"), "CODIGO='$codigo' LIMIT 1");
+$fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "ativa"), "CODIGO='$codigo' LIMIT 1");
 foreach ($fetch as $f) {
 
     $codigo = $f["CODIGO"];
@@ -17,6 +17,8 @@ foreach ($fetch as $f) {
     $categoria = $f["categoria"];
     $ch = $f["TOTAL_CARGA_HORARIA"];
     $idDisciplina = $f["ID"];
+    
+    $ativa = $f["ativa"];
 }
 ?>
 
@@ -35,8 +37,8 @@ foreach ($fetch as $f) {
                     <input class="text-success  text-center" name="codigo" type="hidden" id="codigo" value = "<?php echo $codigo; ?>"><br>
                     Categoria<br><input class="text-success  text-center" name="categoria" type="text" id="categoria" value = "<?php echo $categoria; ?>"><br>
                     Carga Horaria<br><input class="text-success  text-center" name="CH" type="number" id="CH" value = "<?php echo $ch; ?>" ><br> 
+                    Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativa" value = "1" <?php if ($ativa != 0) echo "checked" ?> ><br> 
 
-                    
                     <input name="idCurso" class="text-success center-block "  type="hidden" id="idCurso" value ="<?php echo $idCurso; ?>">
                     <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplina" value ="<?php echo $idDisciplina; ?>">
                     <br>

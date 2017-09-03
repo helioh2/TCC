@@ -25,12 +25,12 @@ class ListarDisciplinas {
     private $disciplinasSemRequisitos = array();
 
     public function __construct($id_curso) {
-        $fetch = selecionarWHERE("disciplina", array("CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado"), "id_curso = '$id_curso'");
+        $fetch = selecionarWHERE("disciplina", array("CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado", "ativa"), "id_curso = '$id_curso'");
         foreach ($fetch as $linha) {
-            $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"]);
+            $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"], $linha["ativa"]);
             $this->disciplinas[] = $disc;
             if ($linha["requisitoCadastrado"] == 0) {
-                $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"]);
+                $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"],$linha["ativa"]);
                 $this->disciplinasSemRequisitos[] = $disc;
             }
         }

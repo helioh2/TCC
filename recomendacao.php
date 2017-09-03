@@ -41,6 +41,7 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
 }
 
 function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificuldades, $arquivoQTDRequisitoCurso) {
+    $recomendacao = array();
     foreach ($arrayPossibilidades as $pos) {
         $catDisc = new BuscaCategoriaDisc($pos);
         $catPos = $catDisc->getCategoria();
@@ -53,26 +54,32 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                 $comando = "java -jar jar/ImportanciaDisc.jar $pos $arayDificuldades[$index] jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
                 //echo $comando."<br>";
                 $saida2 = exec($comando, $saida2);
-                $disciplina = selecionarWHERE("disciplina", array("NOME"), "CODIGO = '$pos'");
+                $disciplina = selecionarWHERE("disciplina", array("NOME", "ativa"), "CODIGO = '$pos'");
                 $nome = "";
+                $ativa = 0;
                 foreach ($disciplina as $d) {
                     $nome = $d["NOME"];
+                    $ativa = $d["ativa"];
                 }
+                var_dump($ativa);
                 $cargaHoraria = 0;
                 $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$pos'");
                 foreach ($CH as $c) {
                     $cargaHoraria = $c["TOTAL_CARGA_HORARIA"];
                 }
-                $disc = new Disciplina($nome, $pos, $saida2, $cargaHoraria, $pAprov, $mFinal, 0);
+
+                if ($ativa != "0") {
+                    $disc = new Disciplina($nome, $pos, $saida2, $cargaHoraria, $pAprov, $mFinal, 0, $ativa);
 
 
-                $horarios = new BuscaHorariosDisc($pos);
-                $disc->setHorarios($horarios->getHorarios());
+                    $horarios = new BuscaHorariosDisc($pos);
+                    $disc->setHorarios($horarios->getHorarios());
 
-                //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
-                $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / 18);
-                $recomendacao[] = $disc;
-                // $disc->imprimeDisciplina();
+                    //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
+                    $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / 18);
+                    $recomendacao[] = $disc;
+                    // $disc->imprimeDisciplina();
+                }
             }
         }
     }
@@ -204,9 +211,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
             <td class="alert-info"> Horários </td>
             <td class="alert-info"> Colisão de Horários </td>
         </tr>
-<?php
-foreach ($recomendacaoFinal as $rec) {
-    ?>
+        <?php
+        foreach ($recomendacaoFinal as $rec) {
+            ?>
 
             <tr class="text-center"> 
                 <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
@@ -214,11 +221,11 @@ foreach ($recomendacaoFinal as $rec) {
                 <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
                 <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
                 <td class="text-danger">
-    <?php
-    foreach ($rec->getHorarios() as $h) {
-        echo $h . " ";
-    }
-    ?>
+                    <?php
+                    foreach ($rec->getHorarios() as $h) {
+                        echo $h . " ";
+                    }
+                    ?>
                 </td> <td class="text-danger">
                     <?php
                     foreach ($rec->getColisoes() as $col) {
@@ -230,9 +237,9 @@ foreach ($recomendacaoFinal as $rec) {
                     ?>
                 </td>
             </tr>
-    <?php
-}
-?>
+            <?php
+        }
+        ?>
 
     </table>
     <br><br>

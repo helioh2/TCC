@@ -159,30 +159,6 @@ foreach ($fetch as $f) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             <center>
                 <div class="modal fade" id="mostrarDisciplinas">
                     <div class="modal-lg bg-info">
@@ -252,16 +228,8 @@ foreach ($fetch as $f) {
 
 
 
-
-
-
-
                 <div class="bg-success">
                     <br>
-
-
-
-
 
 
 
@@ -280,7 +248,7 @@ foreach ($fetch as $f) {
                                             Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = ""><br>
                                             Categoria<br><input class="text-success center-block" name="categoria" type="text" id="categoria" value = ""><br>
                                             Carga Horaria<br><input class="text-success center-block" name="CH" type="number" id="CH" value = ""> 
-
+                                            Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativa" value = "1" ?> <br> 
                                             <input name="codCurso" class="text-success center-block "  type="hidden" id="codCurso" value ="<?php echo $codCurso; ?>" >
                                             <input name="nomeCurso" class="text-success center-block "  type="hidden" id="nomeCurso" value ="<?php echo $nomeCurso; ?>">
                                             <br>
