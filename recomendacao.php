@@ -35,7 +35,7 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
 
     $tamanho = strlen($saida2);
     $possibilidades = substr($saida2, 1, $tamanho - 2);
-    echo "possibilidades de cursar <br>" . $possibilidades . "<br><br><br>";                             //echooooooooo
+  //  echo "possibilidades de cursar <br>" . $possibilidades . "<br><br><br>";                             //echooooooooo
     $arrayPoss = explode(", ", $possibilidades);
     return $arrayPoss;
 }
@@ -61,7 +61,6 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                     $nome = $d["NOME"];
                     $ativa = $d["ativa"];
                 }
-                var_dump($ativa);
                 $cargaHoraria = 0;
                 $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$pos'");
                 foreach ($CH as $c) {
@@ -141,7 +140,7 @@ $strTermo = $cursadas->getTermo() . "";
 $arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
 
 
-echo $strTermo;                                                                                     //echoooooo
+//echo $strTermo;                                                                                     //echoooooo
 
 $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
@@ -186,7 +185,7 @@ foreach ($recomendacao as $d) {
   }
  */
 
-echo "<br><br><br><br><br><br><br><br>";
+//echo "<br><br><br><br><br><br><br><br>";
 for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     $antigo = $recomendacaoFinal[$i]->getHorarios();
     foreach ($antigo as $h) {
@@ -202,46 +201,54 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
 ?>
 <body>
 <center>
-    <table class="table table-striped">
-        <tr class="text-center">
-            <td class="alert-info"> Código </td>
-            <td class="alert-info"> Disciplina </td>
-            <td class="alert-info"> Recomendação </td>
-            <td class="alert-info"> Horas de Dedicação Semanal </td>
-            <td class="alert-info"> Horários </td>
-            <td class="alert-info"> Colisão de Horários </td>
-        </tr>
-        <?php
-        foreach ($recomendacaoFinal as $rec) {
-            ?>
+    <div class="col-lg-1">
 
-            <tr class="text-center"> 
-                <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
-                <td  class="text-success" ><?php echo $rec->getNome(); ?></td>
-                <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
-                <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
-                <td class="text-danger">
-                    <?php
-                    foreach ($rec->getHorarios() as $h) {
-                        echo $h . " ";
-                    }
+    </div>
+    <div class="container-fluid">
+        <div class="col-lg-10">
+            <table class="table table-striped">
+                <tr class="text-center">
+                    <td class="alert-info"> Código </td>
+                    <td class="alert-info"> Disciplina </td>
+                    <td class="alert-info"> Recomendação </td>
+                    <td class="alert-info"> Horas de Dedicação Semanal </td>
+                    <td class="alert-info"> Horários </td>
+                    <td class="alert-info"> Colisão de Horários </td>
+                </tr>
+                <?php
+                foreach ($recomendacaoFinal as $rec) {
                     ?>
-                </td> <td class="text-danger">
-                    <?php
-                    foreach ($rec->getColisoes() as $col) {
-                        $fetch = selecionarWHERE("disciplina", array("NOME"), "CODIGO = '$col' LIMIT 1");
-                        foreach ($fetch as $f) {
-                            echo $f["NOME"] . "<br> ";
-                        }
-                    }
-                    ?>
-                </td>
-            </tr>
-            <?php
-        }
-        ?>
 
-    </table>
+                    <tr class="text-center"> 
+                        <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
+                        <td  class="text-success" ><?php echo $rec->getNome(); ?></td>
+                        <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
+                        <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
+                        <td class="text-danger">
+                            <?php
+                            foreach ($rec->getHorarios() as $h) {
+                                echo $h . " ";
+                            }
+                            ?>
+                        </td> <td class="text-danger">
+                            <?php
+                            foreach ($rec->getColisoes() as $col) {
+                                $fetch = selecionarWHERE("disciplina", array("NOME"), "CODIGO = '$col' LIMIT 1");
+                                foreach ($fetch as $f) {
+                                    echo $f["NOME"] . "<br> ";
+                                }
+                            }
+                            ?>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+
+            </table>
+        </div>
+    </div>
+
     <br><br>
     <a href="index.php">VOLTAR</a>
 </center>

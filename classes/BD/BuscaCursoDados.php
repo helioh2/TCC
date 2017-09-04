@@ -26,7 +26,7 @@ class BuscaCursoDados {
         try {
             $conn = DataBase::getInstance()->getDb();
             $sql = "  SELECT curso.codigo, curso.nome FROM curso, aproveitamento WHERE aproveitamento.MATR_ALUNO= '$grr' and curso.id=aproveitamento.id_curso LIMIT 1;";
-           echo $sql;
+          
 
             $stmt = $conn->prepare($sql);
             $stmt->execute();

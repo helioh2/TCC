@@ -26,7 +26,7 @@ foreach ($fetch as $f) {
 ?>
 
 <html>
-    <head class="bg-info">
+    <head>
         <meta charset="UTF-8">
         <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
@@ -34,19 +34,15 @@ foreach ($fetch as $f) {
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
 
-        <script>
-            function setaDadosModal(valor) {
-                document.getElementById('nome').value = valor;
-            }
-        </script>
+        
 
 
     </head>
 
 
-    <body class="bg-info">
+    <body class="bg-success">
 
-        <div class="col-lg-2">
+        <div class="col-lg-2 bg-success">
             <center>
                 <div class="navbar navbar-fixed-top" style="margin-right: 80%">
                     <div >
@@ -54,12 +50,12 @@ foreach ($fetch as $f) {
 
                         <div class="navbar-header">
 
-                            <div id ="menu" class="nav navbar-left" >
+                            <div id ="menu" class="nav navbar-left ">
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
                                     <li class=" dropdown" style="margin-right: 10px; ">
                                         <br><br><br>
                                         <a href="#" class="dropdown-toggle bg-primary btn-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Disciplinas <span class="caret"></span></a>
-                                        <ul class="dropdown-menu bg-success">
+                                        <ul class="dropdown-menu">
                                             <center>
                                                 <div>
                                                     <!--                                                    <br>
@@ -90,7 +86,7 @@ foreach ($fetch as $f) {
 
         <div class="col-lg-10">
             <br><br><br>
-            <div id="listaDisciplinas" class="bg-info">
+            <div id="listaDisciplinas" >
                 <table class="table bg-info" >
                     <tr  class = "alert-success ">
                         <th>Código</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th>              

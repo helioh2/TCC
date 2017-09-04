@@ -30,7 +30,7 @@ class ListarDisciplinas {
             $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"], $linha["ativa"]);
             $this->disciplinas[] = $disc;
             if ($linha["requisitoCadastrado"] == 0) {
-                $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"],$linha["ativa"]);
+                $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"], $linha["ativa"]);
                 $this->disciplinasSemRequisitos[] = $disc;
             }
         }
