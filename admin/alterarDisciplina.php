@@ -22,7 +22,6 @@ if (isset($_POST["ativa"])) {
 } else {
     $ativa = 0;
 }
-echo $ativa;
 alterar("disciplina", array("CODIGO" => $codigo, "NOME" => $nome, "categoria" => $categoria, "TOTAL_CARGA_HORARIA" => $CH, "ativa" => $ativa), "ID = '$id'");
 
 $fetch = selecionarWHERE("curso", array("nome", "codigo"), "id='" . $idCurso . "'");
