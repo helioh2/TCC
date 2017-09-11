@@ -19,7 +19,6 @@ function inserir($tabela, array $dados) {
     }
     if ($stmt->execute()) {
         return $conn->lastInsertId();
-        
     }
     return FALSE;
 }
@@ -37,7 +36,7 @@ function alterar($tabela, $dados, $condicao) {
 
     $sql = "UPDATE {$tabela} SET {$parametro} WHERE {$condicao}";
 
-    
+
     $stmt = $conn->prepare($sql);
 
     foreach ($dados as $chave => $valor) {
@@ -86,18 +85,40 @@ function selecionarWHERE($tabela, $array, $condicao) {
     $linhas = implode(",", array_values($array));
 
     $sql = "SELECT {$linhas} FROM {$tabela} WHERE {$condicao}";
-  // echo "<br>".$sql;
+
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
     $fetch = $stmt->fetchAll();
 
-    /*foreach ($fetch as $cli) {
-        foreach ($array as $l) {
-            echo $cli[$l] . "<br>";
-        }
-        echo '<br>';
-    }*/
+    /* foreach ($fetch as $cli) {
+      foreach ($array as $l) {
+      echo $cli[$l] . "<br>";
+      }
+      echo '<br>';
+      } */
 
     return $fetch;
+}
+
+function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
+
+    $conn = DataBase::getInstance()->getDb();
+    $linhas = implode(",", array_values($array));
+
+    $sql = "SELECT {$linhas} FROM {$tabela} WHERE {$condicao}";
+    echo "<br>" . $sql;
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $line = $stmt->rowCount();
+
+    /* foreach ($fetch as $cli) {
+      foreach ($array as $l) {
+      echo $cli[$l] . "<br>";
+      }
+      echo '<br>';
+      } */
+    echo "linhas " . $line . "<br>";
+    return $line;
 }

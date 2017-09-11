@@ -2,7 +2,10 @@
 <head>
     <meta charset="UTF-8">
     <title>Recomendações de Disciplinas</title>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <script src="./js/jquery-3.2.0.min.js"></script>
+    <script src="./js/bootstrap.min.js"></script>
 
 </head>
 <?php
@@ -14,10 +17,12 @@ require_once 'classes/Disciplina.php';
 require_once 'classes/BD/BuscaCursoDados.php';
 require_once 'classes/BD/BuscaCategoriasCurso.php';
 require_once './classes/BD/BuscaHorariosDisc.php';
+require_once './classes/Dificuldades.php';
 
 
 $grr = $_POST["grr"];
-$horasDedicacao = $_POST["horas"];
+
+//$horasDedicacao = $_POST["horas"];
 
 function calculaDificuldade($categoria) {
     $media = $categoria->getMediaFinal() . "";
@@ -35,7 +40,7 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
 
     $tamanho = strlen($saida2);
     $possibilidades = substr($saida2, 1, $tamanho - 2);
-  //  echo "possibilidades de cursar <br>" . $possibilidades . "<br><br><br>";                             //echooooooooo
+    //  echo "possibilidades de cursar <br>" . $possibilidades . "<br><br><br>";                             //echooooooooo
     $arrayPoss = explode(", ", $possibilidades);
     return $arrayPoss;
 }
@@ -128,18 +133,12 @@ foreach ($nomeCategoiasCurso as $catCurso) {
         $difs[] = 0;
     }
 }
-
-for ($index1 = 0; $index1 < count($difs); $index1++) {
-    echo $categorias[$index1]->getNome() . "- <br>" . $difs[$index1] . "-<br><br>";
-}
-
+$dificuldade = new Dificuldades($categorias, $difs);
 
 $cursadas = new BuscaDiscCursadas($grr);
 $strTermo = $cursadas->getTermo() . "";
 //echo $strTermo;
 $arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
-
-
 //echo $strTermo;                                                                                     //echoooooo
 
 $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
@@ -250,7 +249,41 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     </div>
 
     <br><br>
+
+
+
+    <button class="btn-primary" data-toggle="modal" data-target="#modalDifs">Dificuldade</button>
+    <br>
+    <br>
+
+    <center>
+        <div class="modal fade" id="modalDifs">
+            <div class="modal-lg bg-info">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title bg-info">Dificuldade por Categoria</h4>
+                    </div>
+                    <div class="modal-body bg-info
+                         ">
+                        <center>
+
+                            <?php
+                            $dificuldade->imprimeDificuldades();
+                            ?>
+
+                        </center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </center>
+
+
+
     <a href="index.php">VOLTAR</a>
-</center>
 </body>
 

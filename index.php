@@ -20,7 +20,7 @@ and open the template in the editor.
     <center><br><br><br>
         <form id="categorias" class="bg-primary container-fluid " name="possibilidades" method="post" action="recomendacao.php">
             GRR <br><input name="grr" class="text-success center-block "  type="text" id="grr" value = ""><br>
-            Horas de Dedicação Semanais<br><input class="text-success center-block" name="horas" type="number" id="horas" value = "">
+<!--            <br><input class="text-success center-block" name="horas" type="number" id="horas" value = "">-->
             <input type="submit" name="submit" class="alert-success" value="Enviar">
         </form>
     </center>
