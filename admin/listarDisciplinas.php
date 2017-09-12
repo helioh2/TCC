@@ -189,39 +189,6 @@ foreach ($fetch as $f) {
 
 
 
-                <div class="modal fade" id="alt">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                <h4 class="modal-title">Título da mensagem</h4>
-                            </div>
-                            <div class="modal-body">
-                                <center>
-                                    <form id="curso" class="container-fluid bg-info" name="curso" method="post" action="alterarDisciplina.php">
-                                        Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nome" value = ""><br>
-                                        Cógido<br><input class="text-success  text-center" name="codigo" type="text" id="codigo" value = "<?php echo $codigo; ?>"><br>
-                                        Categoria<br><input class="text-success  text-center" name="categoria" type="text" id="categoria" value = "<?php echo $categoria; ?>"><br>
-                                        Carga Horaria<br><input class="text-success  text-center" name="CH" type="number" id="CH" value = "<?php echo $ch; ?>" ><br> 
-
-                                        <input name="codCurso" class="text-success center "  type="hidden" id="codCurso" value ="<?php echo $codCurso; ?>" >
-                                        <input name="nomeCurso" class="text-success center-block "  type="hidden" id="nomeCurso" value ="<?php echo $nomeCurso; ?>">
-
-                                        <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplina" value ="">
-
-                                        <br>
-                                        <input type="submit" name="submit" class="alert-success" value="Alterar">
-                                    </form>
-                                </center>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-
 
 
 

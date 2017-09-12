@@ -10,8 +10,13 @@ $codCurso = $_POST["codigo"];
 $idDisciplina = $_POST["idDisciplina"];
 deletar("disc_horario", "id_disciplina = '" . $idDisciplina . "'");
 
-foreach ($idHorario as $horario) {
+if ($idHorario != "") {
+    foreach ($idHorario as $horario) {
 
-    inserir("disc_horario", array("id_disciplina" => $idDisciplina, "id_horario" => $horario));
+        inserir("disc_horario", array("id_disciplina" => $idDisciplina, "id_horario" => $horario));
+    }
+}else{
+    deletar("disc_horario", "id_disciplina = '$idDisciplina'");
 }
+    
 print "<script type = 'text/javascript'> location.href = './horarios.php?idDisciplina=$idDisciplina&codigo=$codCurso'</script>";

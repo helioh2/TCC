@@ -99,7 +99,7 @@
                                 <br>
                                 <input type="submit" name="submit" class="alert-success" value="inserir">
                             </form>
-                            <button class="alert-info center-block" type="button" onclick="window.location.href = 'index.php'"> Voltar</button>
+                           
                         </center>
 
 

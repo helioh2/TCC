@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -15,7 +14,6 @@
 
 
 <?php
-
 include_once '../classes/Disciplina.php';
 include_once '../classes/BD/crudPDO.php';
 
@@ -51,6 +49,7 @@ class ListarDisciplinas {
             foreach ($codigoCurso as $cod) {
                 $codCurso = $cod["codigo"];
             }
+           
             echo "<tr>"
             . "<td id='codigo" . $linha["CODIGO"] . "'>" . $linha["CODIGO"] . "</td>"
             . "<td><a href='formDisciplina.php?codigo=" . $linha["CODIGO"] . "&idCurso=" . $id_curso . "'>" . $linha["NOME"] . "</a></td>"
@@ -70,3 +69,4 @@ class ListarDisciplinas {
     }
 
 }
+?>
