@@ -107,7 +107,7 @@ function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
     $linhas = implode(",", array_values($array));
 
     $sql = "SELECT {$linhas} FROM {$tabela} WHERE {$condicao}";
-    echo "<br>" . $sql;
+   
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -119,6 +119,5 @@ function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
       }
       echo '<br>';
       } */
-    echo "linhas " . $line . "<br>";
     return $line;
 }

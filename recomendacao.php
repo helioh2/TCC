@@ -90,7 +90,17 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
     return $recomendacao;
 }
 
+$existe = numLinhasSelecionarWHERE("aproveitamento", array("ID"), "MATR_ALUNO = '$grr'");
+if ($existe == 0) {
+
+    echo "<script>alert('GRR não encontrado');</script>";
+   print "<script type = 'text/javascript'> location.href = './index.php' </script>";
+    die();
+
+}
+
 $curso = new BuscaCursoDados($grr);
+
 
 $bcd = new BuscaCategoriaAluno($grr);
 $categorias = $bcd->getCategorias();
@@ -214,9 +224,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                     <td class="alert-info"> Horários </td>
                     <td class="alert-info"> Colisão de Horários </td>
                 </tr>
-                <?php
-                foreach ($recomendacaoFinal as $rec) {
-                    ?>
+<?php
+foreach ($recomendacaoFinal as $rec) {
+    ?>
 
                     <tr class="text-center"> 
                         <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
@@ -224,11 +234,11 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                         <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
                         <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
                         <td class="text-danger">
-                            <?php
-                            foreach ($rec->getHorarios() as $h) {
-                                echo $h . " ";
-                            }
-                            ?>
+    <?php
+    foreach ($rec->getHorarios() as $h) {
+        echo $h . " ";
+    }
+    ?>
                         </td> <td class="text-danger">
                             <?php
                             foreach ($rec->getColisoes() as $col) {
@@ -240,9 +250,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                             ?>
                         </td>
                     </tr>
-                    <?php
-                }
-                ?>
+    <?php
+}
+?>
 
             </table>
         </div>
@@ -268,9 +278,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                          ">
                         <center>
 
-                            <?php
-                            $dificuldade->imprimeDificuldades();
-                            ?>
+<?php
+$dificuldade->imprimeDificuldades();
+?>
 
                         </center>
                     </div>
