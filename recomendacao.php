@@ -45,7 +45,7 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
     return $arrayPoss;
 }
 
-function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificuldades, $arquivoQTDRequisitoCurso) {
+function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
     $recomendacao = array();
     foreach ($arrayPossibilidades as $pos) {
         $catDisc = new BuscaCategoriaDisc($pos);
@@ -80,7 +80,8 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                     $disc->setHorarios($horarios->getHorarios());
 
                     //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
-                    $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / 18);
+                    
+                    $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / $numeroSemanas);
                     $recomendacao[] = $disc;
                     // $disc->imprimeDisciplina();
                 }
@@ -155,7 +156,7 @@ $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
 $recomendacao = array();
 
-$recomendacao = calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso);
+$recomendacao = calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
 
 
 
@@ -291,9 +292,6 @@ $dificuldade->imprimeDificuldades();
             </div>
         </div>
     </center>
-
-
-
     <a href="index.php">VOLTAR</a>
 </body>
 

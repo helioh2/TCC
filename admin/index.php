@@ -96,6 +96,8 @@
                             <form id="curso" class="container-fluid " name="curso" method="get" action="inserirCurso.php">
                                 Nome<br><input name="nome" class="text-success center-block "  type="text" id="nome" value = ""><br>
                                 Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
+                                Número de Semanas por Semestre<br>
+                                <input class="text-success center-block" name="semanas" type="number" id="semanas" value = "0">
                                 <br>
                                 <input type="submit" name="submit" class="alert-success" value="inserir">
                             </form>

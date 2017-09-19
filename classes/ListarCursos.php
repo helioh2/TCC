@@ -25,9 +25,9 @@ class ListarCursos {
     private $cursos = array();
 
     public function __construct() {
-        $fetch = selecionar("curso", array("id","codigo", "nome"));
+        $fetch = selecionar("curso", array("id","codigo", "nome", "semanas"));
         foreach ($fetch as $linha) {
-            $disc = new Curso($linha["nome"], $linha["codigo"],$linha["id"]);
+            $disc = new Curso($linha["nome"], $linha["codigo"],$linha["id"], $linha["semanas"]);
             $this->cursos[] = $disc;
         }
     }

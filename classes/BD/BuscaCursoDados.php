@@ -18,14 +18,14 @@ class BuscaCursoDados {
     
     private $codigo;
     private $nome;
-    
+    private $semanas;
    
 
      public function __construct($grr) {
 
         try {
             $conn = DataBase::getInstance()->getDb();
-            $sql = "  SELECT curso.codigo, curso.nome FROM curso, aproveitamento WHERE aproveitamento.MATR_ALUNO= '$grr' and curso.id=aproveitamento.id_curso LIMIT 1;";
+            $sql = "  SELECT curso.codigo, curso.nome, curso.semanas FROM curso, aproveitamento WHERE aproveitamento.MATR_ALUNO= '$grr' and curso.id=aproveitamento.id_curso LIMIT 1;";
           
 
             $stmt = $conn->prepare($sql);
@@ -35,6 +35,7 @@ class BuscaCursoDados {
             foreach ($fetch as $f) {
                 $this->codigo = $f["codigo"];
                 $this->nome = $f["nome"];
+                $this->semanas = $f["semanas"];
                 //echo $f["COD_CURSO"]."<br>";
             }
             //echo $this->nome;
@@ -57,6 +58,10 @@ class BuscaCursoDados {
     function setNome($nome) {
         $this->nome = $nome;
     }
+    function getSemanas() {
+        return $this->semanas;
+    }
+
 
 
 }

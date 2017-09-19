@@ -16,11 +16,13 @@ class Curso {
     private $nome;
     private $codigo;
     private $id;
+    private $semanas;
 
-    function __construct($nome, $codigo, $id) {
+    function __construct($nome, $codigo, $id, $semanas) {
         $this->nome = $nome;
         $this->codigo = $codigo;
         $this->id = $id;
+        $this->semanas = $semanas;
     }
 
     function setNome($nome) {
