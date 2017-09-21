@@ -1,10 +1,6 @@
 <?php
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 /**
  * Description of BuscaCategoriaDados
@@ -12,15 +8,13 @@
  * @author danielkarling
  */
 
-//set_include_path('./opt/lampp/lib/php');
 
-//include ($SERVER["DOCUMENTROOT"].'./DataBase.php');
 include_once 'config.php';
 
 include_once URL.'/classes/CategoriaDados.php';
 include_once URL.'/classes/BD/DataBase.php';
 
-class BuscaCategoriaAluno {
+class BuscaCategoriasAluno {
 
     public $categorias;
     public $nomeCategorias;

@@ -14,7 +14,7 @@ require_once 'classes/BD/BuscaDiscCursadas.php';
 require_once 'classes/BD/BuscaCategoriaDisc.php';
 require_once 'classes/BD/crudPDO.php';
 require_once 'classes/Disciplina.php';
-require_once 'classes/BD/BuscaCursoDados.php';
+require_once './classes/Curso.php';
 require_once 'classes/BD/BuscaCategoriasCurso.php';
 require_once './classes/BD/BuscaHorariosDisc.php';
 require_once './classes/Dificuldades.php';
@@ -47,8 +47,8 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
 
 function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
     $recomendacao = array();
-    foreach ($arrayPossibilidades as $pos) {
-        $catDisc = new BuscaCategoriaDisc($pos);
+    foreach ($arrayPossibilidades as $possibilidade) {
+        $catDisc = new BuscaCategoriaDisc($possibilidade);
         $catPos = $catDisc->getCategoria();
         for ($index = 0; $index < count($arrayCategorias); $index++) {
 
@@ -56,10 +56,11 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                 $dificuldade = $arayDificuldades[$index];
                 $pAprov = $arrayCategorias[$index]->getPercentAprovacao();
                 $mFinal = $arrayCategorias[$index]->getMediaFinal();
-                $comando = "java -jar jar/ImportanciaDisc.jar $pos $arayDificuldades[$index] jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
+                $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $arayDificuldades[$index] jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
                 //echo $comando."<br>";
                 $saida2 = exec($comando, $saida2);
-                $disciplina = selecionarWHERE("disciplina", array("NOME", "ativa"), "CODIGO = '$pos'");
+
+                $disciplina = selecionarWHERE("disciplina", array("NOME", "ativa"), "CODIGO = '$possibilidade'");
                 $nome = "";
                 $ativa = 0;
                 foreach ($disciplina as $d) {
@@ -67,20 +68,22 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
                     $ativa = $d["ativa"];
                 }
                 $cargaHoraria = 0;
-                $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$pos'");
+                $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$possibilidade'");
                 foreach ($CH as $c) {
                     $cargaHoraria = $c["TOTAL_CARGA_HORARIA"];
                 }
 
                 if ($ativa != "0") {
-                    $disc = new Disciplina($nome, $pos, $saida2, $cargaHoraria, $pAprov, $mFinal, 0, $ativa);
 
 
-                    $horarios = new BuscaHorariosDisc($pos);
+                    $disc = new Disciplina($nome, $possibilidade, $saida2, $cargaHoraria, $pAprov, $mFinal, 0, $ativa);
+
+
+                    $horarios = new BuscaHorariosDisc($possibilidade);
                     $disc->setHorarios($horarios->getHorarios());
 
                     //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
-                    
+
                     $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / $numeroSemanas);
                     $recomendacao[] = $disc;
                     // $disc->imprimeDisciplina();
@@ -95,15 +98,15 @@ $existe = numLinhasSelecionarWHERE("aproveitamento", array("ID"), "MATR_ALUNO = 
 if ($existe == 0) {
 
     echo "<script>alert('GRR não encontrado');</script>";
-   print "<script type = 'text/javascript'> location.href = './index.php' </script>";
+    print "<script type = 'text/javascript'> location.href = './index.php' </script>";
     die();
-
 }
 
-$curso = new BuscaCursoDados($grr);
+//$cursoDados = new BuscaCursoDados($grr);
+$curso = new Curso();
+$curso->buscarPorGRR($grr);
 
-
-$bcd = new BuscaCategoriaAluno($grr);
+$bcd = new BuscaCategoriasAluno($grr);
 $categorias = $bcd->getCategorias();
 
 $bcc = new BuscaCategoriasCurso($curso->getCodigo());
@@ -122,16 +125,6 @@ foreach ($categorias as $cat) {
 $nomeCategoiasCurso = $bcc->getNomeCategorias();
 $nomeCategorias = $bcd->getNomeCategorias();
 
-/*
-  foreach ($nomeCategorias as $nome) {
-  echo "CATALUNO " . $nome . "<br>";
-  }
-  echo "<br>";
-  foreach ($nomeCategoiasCurso as $nome1) {
-  echo "CATCURSO " . $nome1 . "<br>";
-  }
-  echo "<br>";
- */
 foreach ($nomeCategoiasCurso as $catCurso) {
     if ((in_array($catCurso, $nomeCategorias))) {
         
@@ -168,41 +161,19 @@ $recomendacaoFinal = array();
 
 
 foreach ($recomendacao as $d) {
-    //if ($horas + $d->getHorasDedicacao() <= $horasDedicacao) {
 
     $recomendacaoFinal[] = $d;
     $horas += $d->getHorasDedicacao();
-    // }
 }
 
 
-/*
-  foreach ($recomendacaoFinal as $disciplina) {
-  $matriz = array($disciplina->getNome() => array());
-  }
-  foreach ($recomendacaoFinal as $disciplina) {
-
-  foreach ($disciplina->getHorarios() as $h) {
-  $matriz[$disciplina->getNome()][] = $h;
-  }
-  }
-
-  foreach ($recomendacaoFinal as $d) {
-  foreach ($matriz[$d->getNome()] as $hora) {
-  echo $hora . " ";
-  }
-  echo "<br>";
-  }
- */
-
-//echo "<br><br><br><br><br><br><br><br>";
 for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     $antigo = $recomendacaoFinal[$i]->getHorarios();
     foreach ($antigo as $h) {
         for ($i2 = $i + 1; $i2 < count($recomendacaoFinal); $i2++) {
 
             if (in_array($h, $recomendacaoFinal[$i2]->getHorarios()) != FALSE) {
-                //echo "<br>colisão de horários com ".$recomendacaoFinal[$i]->getNome()." e ".$recomendacaoFinal[$i2]->getNome()."<br>";
+
                 $recomendacaoFinal[$i2]->insereColisao($recomendacaoFinal[$i]->getCodigo());
             }
         }
@@ -225,9 +196,9 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                     <td class="alert-info"> Horários </td>
                     <td class="alert-info"> Colisão de Horários </td>
                 </tr>
-<?php
-foreach ($recomendacaoFinal as $rec) {
-    ?>
+                <?php
+                foreach ($recomendacaoFinal as $rec) {
+                    ?>
 
                     <tr class="text-center"> 
                         <td  class="text-success" ><?php echo $rec->getCodigo(); ?></td>
@@ -235,11 +206,11 @@ foreach ($recomendacaoFinal as $rec) {
                         <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
                         <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
                         <td class="text-danger">
-    <?php
-    foreach ($rec->getHorarios() as $h) {
-        echo $h . " ";
-    }
-    ?>
+                            <?php
+                            foreach ($rec->getHorarios() as $h) {
+                                echo $h . " ";
+                            }
+                            ?>
                         </td> <td class="text-danger">
                             <?php
                             foreach ($rec->getColisoes() as $col) {
@@ -251,9 +222,9 @@ foreach ($recomendacaoFinal as $rec) {
                             ?>
                         </td>
                     </tr>
-    <?php
-}
-?>
+                    <?php
+                }
+                ?>
 
             </table>
         </div>
@@ -273,15 +244,14 @@ foreach ($recomendacaoFinal as $rec) {
                 <div class="modal-content">
                     <div class="modal-header bg-info">
                         <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                        <h4 class="modal-title bg-info">Dificuldade por Categoria</h4>
+                        <h4 class="modal-title text-info bg-info">Dificuldade por Categoria</h4>
                     </div>
-                    <div class="modal-body bg-info
-                         ">
+                    <div class="modal-body bg-warning">
                         <center>
 
-<?php
-$dificuldade->imprimeDificuldades();
-?>
+                            <?php
+                            $dificuldade->imprimeDificuldades();
+                            ?>
 
                         </center>
                     </div>

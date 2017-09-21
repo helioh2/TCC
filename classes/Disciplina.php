@@ -96,18 +96,7 @@ class Disciplina {
         $this->mediaFinalCategoria = $mediaFinalCategoria;
     }
 
-    public function imprimeDisciplina() {
-        echo "nome " . $this->nome . "<br>codigo " . $this->codigo . "<br> Carga Horaria " . $this->cargaHoraria .
-        "<br> Media na Categoria " . $this->mediaFinalCategoria . "<br> Aprovacao na categoria " . $this->percAprovCategoria . "<br>" .
-        " Importancia " . $this->importancia . "<br>Horas de Dedicação Semanais ".$this->getHorasDedicacao()."<br><br>"
-        . "Horários <br>";
-
-        foreach ($this->horarios as $horario) {
-         echo $horario;
-           
-        }
-        "<br><br>";
-    }
+   
 
     public function ordenaDisciplinas(Disciplina $d1, Disciplina $d2) {
         if ($d1->getImportancia() == $d2->getImportancia()) {
