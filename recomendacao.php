@@ -146,11 +146,11 @@ $cursadas = new DiscCursadasAluno($grr);
 $strTermo = $cursadas->getTermo() . "";
 
 //nome dinâmico do arquivo de requisitos do curso
-$arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             
+$arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";
 $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 
 //nome dinâmico do arquivo de requisitos do curso
-$arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             
+$arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
 $recomendacao = calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
@@ -168,8 +168,6 @@ foreach ($recomendacao as $d) {
     $horas += $d->getHorasDedicacao();
 }
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
-
-
 //cria lista de colisao de horarios para cada disciplina
 for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     $antigo = $recomendacaoFinal[$i]->getHorarios();

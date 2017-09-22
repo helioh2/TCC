@@ -109,41 +109,28 @@ foreach ($fetch as $f) {
 
         <center>
             <div class="modal fade" id="modalListarCursos">
-                <div class="modal-lg bg-info">
-                    <div class="modal-content">
-                        <div class="modal-header bg-success">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title bg-success">Selecionar Curso</h4>
-                        </div>
-                        <div class="modal-body bg-info
-                             ">
-                            <center>
+                 <div class="modal-lg bg-info">
+                <div class="modal-content">
+                    <div class="modal-header bg-info">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title text-info bg-info">Selecionar Curso</h4>
+                    </div>
+                    <div class="modal-body bg-warning">
+                        <center>
 
-                                <table class="table bg-info" >
-                                    <tr  class = "alert-success ">
-                                        <th>Código</th><th>Alterar</th><th>Nome</th>
-                                    </tr> 
-                                    <?php
-                                    $listCursos->listar();
-                                    ?>
-                                </table>   
-                                <br><br><br>
-                                <form id="curso" class="container-fluid " name="curso" method="get" action="listarDisciplinas.php">
-                                    Procurar
-                                    <br><input name="nome" class="text-success center-block "  type="hidden" id="nome" value = ""><br>
-                                    Cógido do Curso<br><br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
-                                    <br><input type="submit" name="submit" class="alert-success" value="Ok">
-                                </form>
-                                <button type="button" class="alert-info center-block " onclick="window.location.href = 'index.php'"> Voltar</button>
+                                 
+                                <?php
+                                $listCursos->listar();
+                                ?>
+                              
 
-
-                            </center>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        </div>
+                        </center>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                     </div>
                 </div>
+            </div>
             </div>
 
 
