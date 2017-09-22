@@ -9,13 +9,13 @@
 
 </head>
 <?php
-require_once 'classes/BD/BuscaCategoriaAluno.php';
-require_once 'classes/BD/BuscaDiscCursadas.php';
+require_once 'classes/BD/ListaCategoriasDados.php';
+require_once 'classes/BD/DiscCursadasAluno.php';
 require_once 'classes/BD/BuscaCategoriaDisc.php';
 require_once 'classes/BD/crudPDO.php';
 require_once 'classes/Disciplina.php';
 require_once './classes/Curso.php';
-require_once 'classes/BD/BuscaCategoriasCurso.php';
+require_once 'classes/BD/ListaCategoriasCurso.php';
 require_once './classes/BD/BuscaHorariosDisc.php';
 require_once './classes/Dificuldades.php';
 
@@ -40,12 +40,11 @@ function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
 
     $tamanho = strlen($saida2);
     $possibilidades = substr($saida2, 1, $tamanho - 2);
-    //  echo "possibilidades de cursar <br>" . $possibilidades . "<br><br><br>";                             //echooooooooo
     $arrayPoss = explode(", ", $possibilidades);
     return $arrayPoss;
 }
 
-function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
+function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arrayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
     $recomendacao = array();
     foreach ($arrayPossibilidades as $possibilidade) {
         $catDisc = new BuscaCategoriaDisc($possibilidade);
@@ -53,45 +52,46 @@ function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arayDificu
         for ($index = 0; $index < count($arrayCategorias); $index++) {
 
             if ($arrayCategorias[$index]->getNome() == $catPos) {
-                $dificuldade = $arayDificuldades[$index];
-                $pAprov = $arrayCategorias[$index]->getPercentAprovacao();
-                $mFinal = $arrayCategorias[$index]->getMediaFinal();
-                $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $arayDificuldades[$index] jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
-                //echo $comando."<br>";
-                $saida2 = exec($comando, $saida2);
-
-                $disciplina = selecionarWHERE("disciplina", array("NOME", "ativa"), "CODIGO = '$possibilidade'");
-                $nome = "";
-                $ativa = 0;
-                foreach ($disciplina as $d) {
-                    $nome = $d["NOME"];
-                    $ativa = $d["ativa"];
-                }
-                $cargaHoraria = 0;
-                $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$possibilidade'");
-                foreach ($CH as $c) {
-                    $cargaHoraria = $c["TOTAL_CARGA_HORARIA"];
-                }
-
-                if ($ativa != "0") {
-
-
-                    $disc = new Disciplina($nome, $possibilidade, $saida2, $cargaHoraria, $pAprov, $mFinal, 0, $ativa);
-
-
-                    $horarios = new BuscaHorariosDisc($possibilidade);
-                    $disc->setHorarios($horarios->getHorarios());
-
-                    //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
-
-                    $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / $numeroSemanas);
-                    $recomendacao[] = $disc;
-                    // $disc->imprimeDisciplina();
-                }
+                importancia($recomendacao, $arrayDificuldades[$index], $arrayCategorias[$index], $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas);
             }
         }
     }
     return $recomendacao;
+}
+
+function importancia(&$recomendacao, $dificuldade, $categoria, $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas) {
+
+    $pAprov = $categoria->getPercentAprovacao();
+    $mFinal = $categoria->getMediaFinal();
+    $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $dificuldade jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
+
+    $saida2 = exec($comando, $saida2);
+
+    $disciplina = selecionarWHERE("disciplina", array("NOME", "ativa"), "CODIGO = '$possibilidade'");
+    $nome = "";
+    $ativa = 0;
+    foreach ($disciplina as $d) {
+        $nome = $d["NOME"];
+        $ativa = $d["ativa"];
+    }
+    $cargaHoraria = 0;
+    $CH = selecionarWHERE("disciplina", array("TOTAL_CARGA_HORARIA"), "CODIGO = '$possibilidade'");
+    foreach ($CH as $c) {
+        $cargaHoraria = $c["TOTAL_CARGA_HORARIA"];
+    }
+
+    if ($ativa != "0") {
+        $disc = new Disciplina($nome, $possibilidade, $saida2, $cargaHoraria, $pAprov, $mFinal, 0, $ativa);
+        $horarios = new BuscaHorariosDisc($possibilidade);
+        $disc->setHorarios($horarios->getHorarios());
+
+        //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
+
+        $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / $numeroSemanas);
+        if ($disc != NULL) {
+            $recomendacao[] = $disc;
+        }
+    }
 }
 
 $existe = numLinhasSelecionarWHERE("aproveitamento", array("ID"), "MATR_ALUNO = '$grr'");
@@ -102,29 +102,27 @@ if ($existe == 0) {
     die();
 }
 
-//$cursoDados = new BuscaCursoDados($grr);
 $curso = new Curso();
 $curso->buscarPorGRR($grr);
 
-$bcd = new BuscaCategoriasAluno($grr);
-$categorias = $bcd->getCategorias();
+$listaCategoriasDados = new ListaCategoriasDados($grr);
+$categorias = $listaCategoriasDados->getCategorias();
 
-$bcc = new BuscaCategoriasCurso($curso->getCodigo());
-$categoiasCurso = $bcc->getCategorias();
+$listaCategoriasCurso = new ListaCategoriasCurso($curso->getCodigo());
+$categoiasCurso = $listaCategoriasCurso->getCategorias();
 
 $difs = array();
-echo "<center>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</center>";
+echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 
 
 foreach ($categorias as $cat) {
     $difs[] = calculaDificuldade($cat);
 }
 
+$nomeCategoiasCurso = $listaCategoriasCurso->getNomeCategorias();
+$nomeCategorias = $listaCategoriasDados->getNomeCategorias();
 
-
-$nomeCategoiasCurso = $bcc->getNomeCategorias();
-$nomeCategorias = $bcd->getNomeCategorias();
-
+//inserir categorias nao cursadas ainda na lista 
 foreach ($nomeCategoiasCurso as $catCurso) {
     if ((in_array($catCurso, $nomeCategorias))) {
         
@@ -137,36 +135,42 @@ foreach ($nomeCategoiasCurso as $catCurso) {
         $difs[] = 0;
     }
 }
-$dificuldade = new Dificuldades($categorias, $difs);
 
-$cursadas = new BuscaDiscCursadas($grr);
+//cria tabela dificuldade por disciplina
+$listaDificuldade = new Dificuldades($categorias, $difs);
+
+//lista de disciplinas cursadas pelo aluno
+$cursadas = new DiscCursadasAluno($grr);
+
+//construcao da string para usar no prolog
 $strTermo = $cursadas->getTermo() . "";
-//echo $strTermo;
-$arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
-//echo $strTermo;                                                                                     //echoooooo
 
+//nome dinâmico do arquivo de requisitos do curso
+$arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";             
 $arrayPossibilidades = calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
-$arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             //nome dinâmico do arquivo de requisitos do curso
-$recomendacao = array();
 
+//nome dinâmico do arquivo de requisitos do curso
+$arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";             
+
+//calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
 $recomendacao = calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
 
-
-
+//ordenar a lista de recomendacao
 usort($recomendacao, "Disciplina::ordenaDisciplinas");
 
 $horas = 0;
 $recomendacaoFinal = array();
 
 
-
+//NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
 foreach ($recomendacao as $d) {
-
     $recomendacaoFinal[] = $d;
     $horas += $d->getHorasDedicacao();
 }
+//NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
 
 
+//cria lista de colisao de horarios para cada disciplina
 for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     $antigo = $recomendacaoFinal[$i]->getHorarios();
     foreach ($antigo as $h) {
@@ -180,6 +184,8 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     }
 }
 ?>
+
+
 <body>
 <center>
     <div class="col-lg-1">
@@ -250,7 +256,7 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                         <center>
 
                             <?php
-                            $dificuldade->imprimeDificuldades();
+                            $listaDificuldade->imprimeDificuldades();
                             ?>
 
                         </center>

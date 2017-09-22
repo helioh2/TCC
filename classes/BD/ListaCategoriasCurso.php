@@ -13,7 +13,7 @@
  */
 include_once URL.'/classes/CategoriaDados.php';
 
-class BuscaCategoriasCurso {
+class ListaCategoriasCurso {
 
     private $categoriasCurso;
     private $nomeCategorias;

@@ -1,7 +1,7 @@
 <?php
 
 
-class BuscaDiscCursadas {
+class DiscCursadasAluno {
 
     private $cursadas;
     private $termo = "";

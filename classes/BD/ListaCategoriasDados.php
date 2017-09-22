@@ -14,7 +14,7 @@ include_once 'config.php';
 include_once URL.'/classes/CategoriaDados.php';
 include_once URL.'/classes/BD/DataBase.php';
 
-class BuscaCategoriasAluno {
+class ListaCategoriasDados {
 
     public $categorias;
     public $nomeCategorias;
@@ -64,8 +64,6 @@ SELECT categoria , COUNT(disciplina.categoria) as qtd FROM disciplina LEFT JOIN 
     }
 
     public function getNomeCategorias() {
-
-
         return $this->nomeCategorias;
     }
 
