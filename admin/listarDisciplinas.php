@@ -7,12 +7,19 @@
 
 
 include_once '../classes/ListarDisciplinas.php';
+include_once '../classes/BD/crudPDO.php';
 
 
 
 $codCurso = $_GET["codigo"];
 
+$existe = numLinhasSelecionarWHERE("curso", array("ID"), "codigo = '$codCurso'");
+if ($existe == 0) {
 
+    echo "<script>alert('Curso não encontrado');</script>";
+    print "<script type = 'text/javascript'> location.href = './index.php' </script>";
+    die();
+}
 $id_curso = "";
 $fetch = selecionarWHERE("curso", array("id"), "codigo = '" . $codCurso . "' limit 1;");
 foreach ($fetch as $f) {
@@ -109,28 +116,28 @@ foreach ($fetch as $f) {
 
         <center>
             <div class="modal fade" id="modalListarCursos">
-                 <div class="modal-lg bg-info">
-                <div class="modal-content">
-                    <div class="modal-header bg-info">
-                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                        <h4 class="modal-title text-info bg-info">Selecionar Curso</h4>
-                    </div>
-                    <div class="modal-body bg-warning">
-                        <center>
+                <div class="modal-lg bg-info">
+                    <div class="modal-content">
+                        <div class="modal-header bg-info">
+                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                            <h4 class="modal-title text-info bg-info">Selecionar Curso</h4>
+                        </div>
+                        <div class="modal-body bg-warning">
+                            <center>
 
-                                 
+
                                 <?php
                                 $listCursos->listar();
                                 ?>
-                              
 
-                        </center>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+
+                            </center>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        </div>
                     </div>
                 </div>
-            </div>
             </div>
 
 

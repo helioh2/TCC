@@ -180,6 +180,9 @@ class Recomendacao {
             $horas += $d->getHorasDedicacao();
         }
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
+//
+//
+//
 //cria lista de colisao de horarios para cada disciplina
         for ($i = 0; $i < count($this->recomendacaoFinal); $i++) {
             $antigo = $this->recomendacaoFinal[$i]->getHorarios();
