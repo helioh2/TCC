@@ -19,4 +19,4 @@ if ($idHorario != "") {
     deletar("disc_horario", "id_disciplina = '$idDisciplina'");
 }
     
-print "<script type = 'text/javascript'> location.href = './horarios.php?idDisciplina=$idDisciplina&codigo=$codCurso'</script>";
+print "<script type = 'text/javascript'> location.href = 'listarDisciplinas.php?codigo=$codCurso'</script>";
