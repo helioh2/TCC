@@ -9,19 +9,11 @@
 
 </head>
 <?php
-require_once 'classes/BD/ListaCategoriasDados.php';
-require_once 'classes/BD/DiscCursadasAluno.php';
-require_once 'classes/BD/BuscaCategoriaDisc.php';
-require_once 'classes/BD/crudPDO.php';
-require_once 'classes/Disciplina.php';
-require_once './classes/Curso.php';
-require_once 'classes/BD/ListaCategoriasCurso.php';
-require_once './classes/BD/BuscaHorariosDisc.php';
-require_once './classes/Dificuldades.php';
+
 
 
 $grr = $_POST["grr"];
-
+/*
 //$horasDedicacao = $_POST["horas"];
 
 function calculaDificuldade($categoria) {
@@ -182,7 +174,12 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
     }
 }
 ?>
-
+*/
+require_once './Recomendacao.php';
+$recomendacao = new Recomendacao($grr);
+$recomendacao->start();
+        
+?>
 
 <body>
 <center>
@@ -201,7 +198,7 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                     <td class="alert-info"> Colisão de Horários </td>
                 </tr>
                 <?php
-                foreach ($recomendacaoFinal as $rec) {
+                foreach ($recomendacao->getRecomendacaoFinal() as $rec) {
                     ?>
 
                     <tr class="text-center"> 
@@ -254,7 +251,7 @@ for ($i = 0; $i < count($recomendacaoFinal); $i++) {
                         <center>
 
                             <?php
-                            $listaDificuldade->imprimeDificuldades();
+                            $recomendacao->getListaDificuldade()->imprimeDificuldades();
                             ?>
 
                         </center>
