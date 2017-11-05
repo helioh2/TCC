@@ -1387,12 +1387,22 @@ a.bg-success:focus {
   background-color: #c1e2b3;
 }
 .bg-info {
-  background-color: #d9edf7;
+  background-color: #d9eae4;
 }
 a.bg-info:hover,
 a.bg-info:focus {
   background-color: #afd9ee;
 }
+
+
+.bg-info2 {
+  background-color: #effceb;
+}
+a.bg-info2:hover,
+a.bg-info2:focus {
+  background-color: #ffffff;
+}
+
 .bg-warning {
   background-color: #fcf8e3;
 }

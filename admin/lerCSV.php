@@ -5,7 +5,7 @@ $idCurso = $_GET["idCurso"];
 <html>
     <head>
         <meta charset="UTF-8">
-        <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
+        <title>Inserir Históricos</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
 
         <script src="../js/jquery-3.2.0.min.js"></script>
@@ -20,18 +20,21 @@ $idCurso = $_GET["idCurso"];
 
     </head>
 
-    <body class="bg-info">
+    <body class="bg-warning">
 
     <center>
         <form action="upload.php" enctype="multipart/form-data" method="POST">
-            Enviar o arquivo: 
             <br>
-            <input name="arquivo" id="arquivo" class="alert-info" type="file" />
+            <label>Enviar o arquivo: </label>
+            <br>
+            <input name="arquivo" id="arquivo" class="alert-warning" type="file" />
 
             <input type="hidden" name="idCurso" id="idCurso" value="<?php echo $idCurso; ?>"/>
             <br>
-            <input type="submit" value="Enviar" /> 
+            <input type="submit" class="bg-success" value="Enviar" /> 
         </form>
+        <br>
+        <button type="button" class="bg-success  btn-lg" onclick="window.location.href = 'CSV/modelo/modelo.xlsx'"> Modelo da Planília</button>
     </center>
 </body>
 </html>

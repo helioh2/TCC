@@ -45,9 +45,10 @@ class ListarDisciplinas {
             foreach ($horarios as $h) {
                 $hora = $hora . $h["dia"] . " " . $h["hora_inicio"] . " - ";
             }
-            $codigoCurso = selecionarWHERE("curso", array("codigo"), "curso.id = '" . $id_curso . "' LIMIT 1");
+            $codigoCurso = selecionarWHERE("curso", array("codigo", "nome"), "curso.id = '" . $id_curso . "' LIMIT 1");
             foreach ($codigoCurso as $cod) {
                 $codCurso = $cod["codigo"];
+                $nomeCurso = $cod["nome"];
             }
            
             echo "<tr>"
@@ -56,6 +57,7 @@ class ListarDisciplinas {
             . "<td>" . $linha["categoria"] . "</td>"
             . "<td>" . $linha["TOTAL_CARGA_HORARIA"] . "</td>"
             . "<td><a href='horarios.php?idDisciplina=" . $linha["ID"] . "&codigo=" . $codCurso . "'>Horário<br>" . $hora . "</a></td>"
+            . "<td><a href='excluirDisciplina.php?idDisciplina=" . $linha["ID"] . "&codigo=" . $codCurso . "&nomeCurso='".$nomeCurso."'>Deletar</a></td>"
             . "</tr>";
         }
     }

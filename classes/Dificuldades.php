@@ -1,9 +1,4 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 
 /**
  * Description of Dificuldades
@@ -28,7 +23,7 @@ class Dificuldades {
             <div class="container-fluid">
 
                 <table class="table table-striped">
-                   
+
                     <?php
                     for ($index1 = 0; $index1 < count($this->difs); $index1++) {
                         ?>   

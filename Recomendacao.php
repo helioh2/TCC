@@ -1,6 +1,5 @@
 <?php
 
-
 require_once 'classes/BD/ListaCategoriasDados.php';
 require_once 'classes/BD/DiscCursadasAluno.php';
 require_once 'classes/BD/BuscaCategoriaDisc.php';
@@ -28,25 +27,29 @@ class Recomendacao {
     function getRecomendacaoFinal() {
         return $this->recomendacaoFinal;
     }
+
     function setListaDificuldade($listaDificuldade) {
         $this->listaDificuldade = $listaDificuldade;
     }
 
-        function setRecomendacaoFinal($recomendacaoFinal) {
+    function setRecomendacaoFinal($recomendacaoFinal) {
         $this->recomendacaoFinal = $recomendacaoFinal;
     }
 
+    //calcula dificuldade nas categorias 
     public function calculaDificuldade($categoria) {
         $media = $categoria->getMediaFinal() . "";
         $percApr = $categoria->getPercentAprovacao() . "";
         $qtdDiscCursadas = $categoria->getQtd();
+    //comando .jar, arquivo fuzzy, media, aprovacao, qtdade de disciplina cursada
         $comando = "java -jar jar/Dificuldade.jar jar/Dificuldade.fcl $media $percApr $qtdDiscCursadas";
         $saida = exec($comando, $saida);
         return $saida;
     }
 
+    //verifica disciplinas que podem ser matriculadas a partir dos pre requisitos ja cursados
     public function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
-
+    //comando .jar, arquivo Prolog, string disciplinas cursadas
         $strExec = "java -jar jar/Possibilidade.jar $arquivoRequisitoCurso \"$strTermo\"";
         $saida2 = exec($strExec, $saida2);
 
@@ -56,6 +59,7 @@ class Recomendacao {
         return $arrayPoss;
     }
 
+    //calcula as importancias das possibilidades de matricula, baseado na dificuldade, qtdade de requisicoes ...
     public function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arrayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
         $recomendacao = array();
         foreach ($arrayPossibilidades as $possibilidade) {
@@ -71,10 +75,12 @@ class Recomendacao {
         return $recomendacao;
     }
 
+    //calcula a importancia da disciplina, chamada pela funcao calculaImportancias()
     public function importancia(&$recomendacao, $dificuldade, $categoria, $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas) {
 
         $pAprov = $categoria->getPercentAprovacao();
         $mFinal = $categoria->getMediaFinal();
+    //comando .jar, possibilidade, dificuldade, arquivo Fuzzy, arquivo Prolog
         $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $dificuldade jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
 
         $saida2 = exec($comando, $saida2);
@@ -106,6 +112,7 @@ class Recomendacao {
         }
     }
 
+//funcao que inicia processo de recomendacao do objeto
     public function start() {
 
         $existe = numLinhasSelecionarWHERE("aproveitamento", array("ID"), "MATR_ALUNO = '$this->grr'");
@@ -128,15 +135,15 @@ class Recomendacao {
         $difs = array();
         echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 
-
+// +++++++++++++++++++++++++++++++ CHAMA MODULO DIFICULDADE ++++++++++++++++++++++++++++++++++++
         foreach ($categorias as $cat) {
             $difs[] = $this->calculaDificuldade($cat);
         }
-
-        $nomeCategoiasCurso = $listaCategoriasCurso->getNomeCategorias();
         $nomeCategorias = $listaCategoriasDados->getNomeCategorias();
+        $nomeCategoiasCurso = $listaCategoriasCurso->getNomeCategorias();
 
-//inserir categorias nao cursadas ainda na lista 
+
+//inserir categorias ainda nao cursadas na lista 
         foreach ($nomeCategoiasCurso as $catCurso) {
             if ((in_array($catCurso, $nomeCategorias))) {
                 
@@ -161,12 +168,17 @@ class Recomendacao {
 
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";
+
+// +++++++++++++++++++++++++++++++ CHAMA MODULO POSSIBILIDADE ++++++++++++++++++++++++++++++++++++
         $arrayPossibilidades = $this->calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
+
+
 
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
+// +++++++++++++++++++++++++++++++ CHAMA MODULO IMPORTANCIADISC ++++++++++++++++++++++++++++++++++++
         $recomendacao = $this->calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
 
 //ordenar a lista de recomendacao
@@ -180,9 +192,9 @@ class Recomendacao {
             $horas += $d->getHorasDedicacao();
         }
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
-//
-//
-//
+
+        
+
 //cria lista de colisao de horarios para cada disciplina
         for ($i = 0; $i < count($this->recomendacaoFinal); $i++) {
             $antigo = $this->recomendacaoFinal[$i]->getHorarios();

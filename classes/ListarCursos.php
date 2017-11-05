@@ -33,24 +33,22 @@ class ListarCursos {
 
     public function listar() {
         ?>
-        <center>
-            <div class="container-fluid">
-                <table class="table table-striped ">
-                    <tr  class = "text-info text-center">
-                        <th class="text-center">Código</th><th class="text-center">Alterar</th><th class="text-center">Nome</th>
+        <center>            
+                <table class="table table-hover">
+                    <tr class = "text-center bg-info2">
+                        <th class="text-center ">Código</th><th class="text-center">Alterar</th><th class="text-center">Nome</th>
                     </tr>
                     <?php
                     foreach ($this->getCursos() as $curso) {
 
-                        echo "<tr class='text-center bg-warning'>"
-                        . "<td class='text-success'" . $curso->getCodigo() . "'>" . $curso->getCodigo() . "</td>"
-                        . "<td class='text-success'><a href='formCurso.php?idCurso=" . $curso->getId() . "'> Alterar</a></td>"
-                        . "<td class='text-success'><a href='listarDisciplinas.php?codigo=" . $curso->getCodigo() . "'>" . $curso->getNome() . "</td>"
+                        echo "<tr class='text-center bg-info2'>"
+                        . "<td>" . $curso->getCodigo() . "</td>"
+                        . "<td class='text-warning'><a href='formCurso.php?idCurso=" . $curso->getId() . "'> Alterar</a></td>"
+                        . "<td class='text-warning'><a href='listarDisciplinas.php?codigo=" . $curso->getCodigo() . "'>" . $curso->getNome() . "</td>"
                         . "</tr>";
                     }
                     ?>
-                </table>
-            </div>
+                </table>           
         </center>
         <?php
     }

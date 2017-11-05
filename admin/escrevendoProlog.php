@@ -44,6 +44,8 @@
 
     <center>
         <form id="lista" class="container-fluid center-block" name="prolog" method="post" action="reqProlog.php">
+            <label>Cadastre os requisitos de todas as disciplinas</label><br>
+            <label>Caso a disciplina não tenha nenhum, insira sem selecionar nenhum requisito</label>
             <h4>Disciplina</h4>
             <select   class="active" name="codDisciplina">
 

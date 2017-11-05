@@ -17,7 +17,7 @@ if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
         foreach ($fetch as $f) {
             $id = $f["id"];
         }
-        alterar("disciplina", array("requisitoCadastrado" => 0), "id_curso = '$id'");
+        alterar("disciplina", array("requisitoCadastrado" => 0, "requisitada" => 0), "id_curso = '$id'");
         
         echo  "<script>alert('Excluído com sucesso');</script>";
        

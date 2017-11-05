@@ -8,6 +8,18 @@
 
 include_once '../classes/BD/crudPDO.php';
 
+
+//$data = json_decode(file_get_contents("php://input"));
+//$nome = mysql_real_escape_string($data->nome);
+//$codigo = mysql_real_escape_string($data->codigo);
+//$categoria = mysql_real_escape_string($data->categoria);
+//$ch = mysql_real_escape_string($data->CH);
+//$codCurso = mysql_real_escape_string($data->codCurso);
+//$nomeCurso = mysql_real_escape_string($data->nomeCurso);
+//
+//
+
+
 $nome = $_POST["nome"];
 $codigo = $_POST["codigo"];
 $categoria = $_POST["categoria"];

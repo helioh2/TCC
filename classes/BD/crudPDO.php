@@ -18,9 +18,13 @@ function inserir($tabela, array $dados) {
         $stmt->bindValue(":$chave", $valor, $tipo);
     }
     if ($stmt->execute()) {
+        //print"<script> alert('Insedira com sucesso'); </script>";
         return $conn->lastInsertId();
+    }else{
+        
+        print"<script> alert('Falha na inserção'); </script>";
+        return FALSE;
     }
-    return FALSE;
 }
 
 function alterar($tabela, $dados, $condicao) {
@@ -55,7 +59,15 @@ function deletar($tabela, $condicao) {
 
 
     $stmt = $conn->prepare($sql);
-    return $stmt->execute();
+    if ($stmt->execute()){
+        return TRUE;
+        //print"<script> alert('Excluida com sucesso'); </script>";
+        
+    }else{
+        print"<script> alert('Falha na exclusão'); </script>";
+        return FALSE;
+        
+    }
 }
 
 function selecionar($tabela, $array) {

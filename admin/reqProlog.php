@@ -111,6 +111,7 @@ countReq(X,Acc):- findall(Y,(requisito(X,Y)),L),retiraRepetidos(L,LUnique),  cou
 } else {
     foreach ($listaRequisitos as $requisito) {
         fwrite($fp2, "\n\nrequisitoDireto('".$requisito."', X) :- X = '".$codDisciplina."'. \n");
+        alterar("disciplina", array("requisitada" => 1), "CODIGO = '$requisito'");
     }
 }
 fclose($fp2);
