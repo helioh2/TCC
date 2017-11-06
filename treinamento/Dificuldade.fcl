@@ -1,0 +1,71 @@
+FUNCTION_BLOCK dificuldade
+
+	VAR_INPUT				
+		media : REAL;
+		perc : REAL; //aprovacao
+		qtdDiscCursada : REAL;
+	END_VAR
+
+	VAR_OUTPUT				
+		dificuldade : REAL;
+	END_VAR
+
+	FUZZIFY media
+		TERM ALTA  := (70,0) (95,1) (100,1);
+		TERM MEDIA  := (55,0) (70,1) (85,0);	
+                TERM BAIXA  := (0,1)  (30, 1) (70,0);
+	END_FUZZIFY
+
+	FUZZIFY perc
+		TERM A  := (0,0) (100,1);
+		TERM B  := (0,1) (100,0);
+	END_FUZZIFY
+
+	FUZZIFY qtdDiscCursada
+		TERM MUITA  := (0,0) (1, 0.1) (2, 0.2) (3, 1) (20, 1);
+		//TERM POUCA  := sigm  -3 2;			//(0,1) (1, 1) (2, 0.7) (3, 0) (20, 0);
+	END_FUZZIFY
+
+
+	DEFUZZIFY dificuldade
+		TERM MA := (80,0)  (100,1);
+		TERM A  := (50,0)  (75,1) (100,0);
+		TERM M  := (20,0)  (50,1) (80,0);
+		TERM B  := (0,0)   (25,1) (50,0);
+		TERM MB := (0,1)   (20,0);
+		
+		// Use 'Center Of Gravity' defuzzification method
+		METHOD : COG;
+		// Default value is 0 (if no rule activates defuzzifier)
+		DEFAULT := 0;
+	END_DEFUZZIFY
+	
+	RULEBLOCK regras
+		// Use 'min' for 'and' (also implicit use 'max'
+		// for 'or' to fulfill DeMorgan's Law)
+		AND : MIN;
+		// Use 'min' activation method
+		ACT : MIN;
+		// Use 'max' accumulation method
+		ACCU : MAX;
+		
+		RULE 1: IF perc IS A AND media IS ALTA AND qtdDiscCursada IS MUITA THEN dificuldade IS MB;
+		RULE 2: IF perc IS A AND media IS MEDIA AND qtdDiscCursada IS MUITA THEN dificuldade IS B;
+		RULE 3: IF perc IS A AND media IS BAIXA AND qtdDiscCursada IS MUITA THEN dificuldade IS M;
+
+		RULE 4: IF perc IS B AND media IS ALTA AND qtdDiscCursada IS MUITA THEN dificuldade IS M;
+		RULE 5: IF perc IS B AND media IS MEDIA AND qtdDiscCursada IS MUITA THEN dificuldade IS A;
+		RULE 6: IF perc IS B AND media IS BAIXA AND qtdDiscCursada IS MUITA THEN dificuldade IS MA;
+
+
+		//RULE 7: IF perc IS A AND media IS ALTA AND qtdDiscCursada IS POUCA THEN dificuldade IS B;
+		//RULE 8: IF perc IS A AND media IS MEDIA AND qtdDiscCursada IS POUCA THEN dificuldade IS B;
+		//RULE 9: IF perc IS A AND media IS BAIXA AND qtdDiscCursada IS POUCA THEN dificuldade IS M;
+
+		//RULE 10: IF perc IS B AND media IS ALTA AND qtdDiscCursada IS POUCA THEN dificuldade IS M;
+		//RULE 11: IF perc IS B AND media IS MEDIA AND qtdDiscCursada IS POUCA THEN dificuldade IS M;
+		//RULE 12: IF perc IS B AND media IS BAIXA AND qtdDiscCursada IS POUCA THEN dificuldade IS A;			
+	
+	END_RULEBLOCK	
+	
+END_FUNCTION_BLOCK

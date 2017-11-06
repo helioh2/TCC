@@ -133,7 +133,7 @@ class Recomendacao {
         $categoiasCurso = $listaCategoriasCurso->getCategorias();
 
         $difs = array();
-        echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
+       // echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 
 // +++++++++++++++++++++++++++++++ CHAMA MODULO DIFICULDADE ++++++++++++++++++++++++++++++++++++
         foreach ($categorias as $cat) {
