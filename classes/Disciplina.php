@@ -23,7 +23,6 @@ class Disciplina {
     private $mediaFinalCategoria;
     public $horarios = array();
     private $colisoes = array();
-    
     private $requisitosCadastrados = 0;
 
     function __construct($nome, $codigo, $importancia, $cargaHoraria, $percAprovCategoria, $mediaFinalCategoria, $requisitosCadastrados, $ativa) {
@@ -84,19 +83,18 @@ class Disciplina {
     function getMediaFinalCategoria() {
         return $this->mediaFinalCategoria;
     }
+
     function getAtiva() {
         return $this->ativa;
     }
 
-        function setPercAprovCategoria($percAprovCategoria) {
+    function setPercAprovCategoria($percAprovCategoria) {
         $this->percAprovCategoria = $percAprovCategoria;
     }
 
     function setMediaFinalCategoria($mediaFinalCategoria) {
         $this->mediaFinalCategoria = $mediaFinalCategoria;
     }
-
-   
 
     public function ordenaDisciplinas(Disciplina $d1, Disciplina $d2) {
         if ($d1->getImportancia() == $d2->getImportancia()) {
@@ -105,28 +103,31 @@ class Disciplina {
         return ($d1->getImportancia()) >
                 ($d2->getImportancia()) ? -1 : 1;
     }
+
     function getHorarios() {
         return $this->horarios;
     }
+
     function setAtiva($ativa) {
         $this->ativa = $ativa;
     }
 
-        function setHorarios($horarios) {
+    function setHorarios($horarios) {
         $this->horarios = $horarios;
     }
+
     function getColisoes() {
         return $this->colisoes;
     }
 
     function insereColisao($colisao) {
-        $this->colisoes[] = $colisao;
+        if (!(in_array($colisao, $this->colisoes))) {
+            $this->colisoes[] = $colisao;
+        }
     }
 
     function getRequisitosCadastrados() {
         return $this->requisitosCadastrados;
     }
-
-
 
 }

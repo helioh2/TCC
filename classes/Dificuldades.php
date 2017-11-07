@@ -29,13 +29,15 @@ class Dificuldades {
 
                     <?php
                     for ($index1 = 0; $index1 < count($this->difs); $index1++) {
-                        ?>   
-                        <tr class="text-center bg-warning"> 
-                            <td  class="text-success" ><?php echo $this->categorias[$index1]->getNome(); ?></td>
-                            <td  class="text-success" ><?php echo $this->difs[$index1]; ?></td>
+                        if ($this->categorias[$index1]->getQtd() > 0) {
+                            ?>   
+                            <tr class="text-center bg-warning"> 
+                                <td  class="text-success" ><?php echo $this->categorias[$index1]->getNome(); ?></td>
+                                <td  class="text-success" ><?php echo $this->difs[$index1]; ?></td>
 
-                        </tr>
-                        <?php
+                            </tr>
+                            <?php
+                        }
                     }
                     ?>
                 </table>
@@ -52,22 +54,24 @@ class Dificuldades {
                 <div class="row">
                     <?php
                     for ($index = 0; $index < count($this->categorias); $index++) {
-                        ?>
-                        <tr class="text-center bg-warning"> 
-                            <td class = "text-success" >
-                                <?php
-                                $grafico = new graficoPizza();
-                                $valor = $this->difs[$index];
-                                $legenda = $this->categorias[$index]->getNome() . "";
-                                $grafico->setValor($valor);
-                                $grafico->setLegenda($legenda);
-                                $grafico->setTitulo("Dificuldade em " . $legenda);
-                                $grafico->desenhar();
-                                ?>
-                            </td>
-                        </tr>
+                        if ($this->categorias[$index]->getQtd() > 0) {
+                            ?>
+                            <tr class="text-center bg-warning"> 
+                                <td class = "text-success" >
+                                    <?php
+                                    $grafico = new graficoPizza();
+                                    $valor = $this->difs[$index];
+                                    $legenda = $this->categorias[$index]->getNome() . "";
+                                    $grafico->setValor($valor);
+                                    $grafico->setLegenda($legenda);
+                                    $grafico->setTitulo("Dificuldade em " . $legenda);
+                                    $grafico->desenhar();
+                                    ?>
+                                </td>
+                            </tr>
 
-                        <?php
+                            <?php
+                        }
                     }
                     ?>
                 </div>
@@ -90,15 +94,15 @@ class Dificuldades {
                         </tr>
                         <?php
                         for ($index1 = 0; $index1 < count($this->difs); $index1++) {
-                            if($this->categorias[$index1]->getQtd()>0){
-                            ?>   
-                            <tr class="text-center bg-warning"> 
-                                <td  class="text-success" ><?php echo $this->categorias[$index1]->getNome(); ?></td>
-                                <td  class="text-success" ><?php echo $this->categorias[$index1]->getPercentAprovacao(); ?></td>
-                                <td  class="text-success" ><?php echo $this->categorias[$index1]->getMediaFinal(); ?></td>
+                            if ($this->categorias[$index1]->getQtd() > 0) {
+                                ?>   
+                                <tr class="text-center bg-warning"> 
+                                    <td  class="text-success" ><?php echo $this->categorias[$index1]->getNome(); ?></td>
+                                    <td  class="text-success" ><?php echo $this->categorias[$index1]->getPercentAprovacao(); ?></td>
+                                    <td  class="text-success" ><?php echo $this->categorias[$index1]->getMediaFinal(); ?></td>
 
-                            </tr>
-                            <?php
+                                </tr>
+                                <?php
                             }
                         }
                         ?>
