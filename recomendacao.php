@@ -150,7 +150,7 @@ $recomendacao->start();
             <div class="modal-content">
                 <div class="modal-header bg-info">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title text-info bg-info">Gráficos de dificuldades</h4>
+                    <h4 class="modal-title text-info bg-info">Percentuais de Aprovação e Médias</h4>
                 </div>
                 <div class="modal-body bg-warning">
                     <center>

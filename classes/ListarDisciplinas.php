@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -11,9 +12,42 @@
  * @author danielkarling
  */
 ?>
-
+<style type="text/css">
+<!--
+a.dcontexto {
+	position: relative;
+	font: 16px arial, verdana, helvetica, sans-serif;
+	padding: 0;
+	color: #039;
+	text-decoration: none;
+	cursor: help;
+	z-index: 24;
+}
+a.dcontexto:hover {
+	background: transparent;
+	z-index: 25;
+}
+a.dcontexto span {
+	display: none;
+}
+a.dcontexto:hover span {
+	display: block;
+	position: absolute;
+	width: 230px;
+	top: 0em;
+	text-align: justify;
+	left: 6em;
+	font: 14px Verdana, arial, helvetica, sans-serif;
+	padding: 5px 10px;
+	border: 0.5px solid #999;
+	background: #E8EBF2;
+	color: #000;
+}
+-->
+</style>
 
 <?php
+
 include_once '../classes/Disciplina.php';
 include_once '../classes/BD/crudPDO.php';
 
@@ -36,7 +70,7 @@ class ListarDisciplinas {
 
     public function listar($id_curso) {
 
-        $fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA"), "id_curso = '$id_curso' ORDER BY NOME");
+        $fetch = selecionarWHERE("disciplina", array("ID", "CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado"), "id_curso = '$id_curso' ORDER BY NOME");
         foreach ($fetch as $linha) {
 
             $hora = "";
@@ -50,14 +84,24 @@ class ListarDisciplinas {
                 $codCurso = $cod["codigo"];
                 $nomeCurso = $cod["nome"];
             }
-           
+
             echo "<tr>"
-            . "<td id='codigo" . $linha["CODIGO"] . "'>" . $linha["CODIGO"] . "</td>"
-            . "<td><a href='formDisciplina.php?codigo=" . $linha["CODIGO"] . "&idCurso=" . $id_curso . "'>" . $linha["NOME"] . "</a></td>"
+            . "<td ";
+            if ($linha["requisitoCadastrado"] == 0) {
+                echo " class='text-danger'";
+            }
+            echo " id='codigo" . $linha["CODIGO"] . "'>" . $linha["CODIGO"] . "</td>"
+            . "<td><a href='formDisciplina.php?codigo=" . $linha["CODIGO"] . "&idCurso=" . $id_curso . "'";
+             if ($linha["requisitoCadastrado"] == 0) {
+                echo " class='text-danger dcontexto'><span>Requisitos não cadastrados!!!!</span>";
+            }else{
+                echo  ">";
+            }
+            echo  $linha["NOME"] . "</a></td>"
             . "<td>" . $linha["categoria"] . "</td>"
             . "<td>" . $linha["TOTAL_CARGA_HORARIA"] . "</td>"
             . "<td><a href='horarios.php?idDisciplina=" . $linha["ID"] . "&codigo=" . $codCurso . "'>Horário<br>" . $hora . "</a></td>"
-            . "<td><a href='excluirDisciplina.php?idDisciplina=" . $linha["ID"] . "&codigo=" . $codCurso . "&nomeCurso='".$nomeCurso."'>Deletar</a></td>"
+            . "<td><a href='excluirDisciplina.php?idDisciplina=" . $linha["ID"] . "&codigo=" . $codCurso . "&nomeCurso='" . $nomeCurso . "'>Deletar</a></td>"
             . "</tr>";
         }
     }
