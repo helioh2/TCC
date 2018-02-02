@@ -21,7 +21,7 @@ foreach ($horarios as $h) {
     $(document).ready(function () {
         $.ajax({
             type: "post",
-            url: "listarHorariosAjax.php",
+            url: "../ajax/listarHorariosAjax.php",
             data: {idDisciplina: "<?php echo $idDisciplina; ?>"},
         }).done(function (data) {
             $(".alert-info").html(data);

@@ -33,4 +33,4 @@ if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
      echo  "<script>alert('Arquivo não encontrado');</script>";
      
 }
-print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=$codCurso'</script>";
+print "<script type = 'text/javascript'> location.href = '../admin/listarDisciplinas.php?codigo=$codCurso'</script>";

@@ -97,7 +97,7 @@ function selecionarWHERE($tabela, $array, $condicao) {
     $linhas = implode(",", array_values($array));
 
     $sql = "SELECT {$linhas} FROM {$tabela} WHERE {$condicao}";
-
+//    print "<script>alert($sql);</script>";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();

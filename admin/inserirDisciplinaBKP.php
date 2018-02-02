@@ -23,19 +23,21 @@ include_once '../classes/BD/crudPDO.php';
 $nome = $_POST["nome"];
 $codigo = $_POST["codigo"];
 $categoria = $_POST["categoria"];
-$ch = $_POST["ch"];
-$idCurso = $_POST["idCurso"];
-$ativa = 1;
-    
+$ch = $_POST["CH"];
+$codCurso = $_POST["codCurso"];
+$nomeCurso = $_POST["nomeCurso"];
+if (isset($_POST["ativa"])) {
+    $ativa = 1;
+} else {
+    $ativa = 0;
+}
 
-
-
-
-if (inserir("disciplina", array("CODIGO" => $codigo, "NOME" => $nome, "categoria" => $categoria, "TOTAL_CARGA_HORARIA" => $ch, "id_curso" => $idCurso , "requisitoCadastrado" => 0, "ativa" => $ativa))){
-    print 1;
-    
-}else{
-    print "erro na inserção";
+$fetch = selecionarWHERE("curso", array("id"),"codigo = '".$codCurso."' limit 1;");
+foreach ($fetch as $f) {
+    $id_curso = $f["id"];
     
 }
 
+inserir("disciplina", array("CODIGO" => $codigo, "NOME" => $nome, "categoria" => $categoria, "TOTAL_CARGA_HORARIA" => $ch, "id_curso"=> $id_curso, "requisitoCadastrado" => 0, "ativa"=> $ativa));
+
+print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?nome=$nomeCurso&codigo=$codCurso' </script>";

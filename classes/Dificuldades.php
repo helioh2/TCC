@@ -4,9 +4,6 @@
  *
  * @author danielkarling
  */
-require_once 'grafico/graficoPizza.php';
-
-require_once 'grafico/Pizza2.php';
 
 class Dificuldades {
 
@@ -46,39 +43,7 @@ class Dificuldades {
         <?php
     }
 
-    public function desenhaGraficos() {
-        ?>
-        <div class="container-fluid bg-warning">
-
-            <table class="table table-bordered">
-                <div class="row">
-                    <?php
-                    for ($index = 0; $index < count($this->categorias); $index++) {
-                        if ($this->categorias[$index]->getQtd() > 0) {
-                            ?>
-                            <tr class="text-center bg-warning"> 
-                                <td class = "text-success" >
-                                    <?php
-                                    $grafico = new graficoPizza();
-                                    $valor = $this->difs[$index];
-                                    $legenda = $this->categorias[$index]->getNome() . "";
-                                    $grafico->setValor($valor);
-                                    $grafico->setLegenda($legenda);
-                                    $grafico->setTitulo("Dificuldade em " . $legenda);
-                                    $grafico->desenhar();
-                                    ?>
-                                </td>
-                            </tr>
-
-                            <?php
-                        }
-                    }
-                    ?>
-                </div>
-            </table>
-            <?php
-        }
-
+  
         public function imprimeMediaAprovacao() {
             ?>
             <center>

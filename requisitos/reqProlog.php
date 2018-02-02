@@ -7,8 +7,6 @@ include_once '../classes/BD/crudPDO.php';
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-$nomeCurso = $_POST["nomeCurso"];
-$idCurso = $_POST["idCurso"];
 $codDisciplina = $_POST["codDisciplina"];
 $codRequisito = "";
 if (!empty($_POST["codRequisito"])) {
@@ -116,4 +114,4 @@ countReq(X,Acc):- findall(Y,(requisito(X,Y)),L),retiraRepetidos(L,LUnique),  cou
 }
 fclose($fp2);
 
-print "<script type = 'text/javascript'> location.href = './escrevendoProlog.php?idCurso=$idCurso&nomeCurso=$nomeCurso&codigo=$codCurso' </script>";
+//print "<script type = 'text/javascript'> location.href = './escrevendoProlog.php?idCurso=$idCurso&nomeCurso=$nomeCurso&codigo=$codCurso' </script>";

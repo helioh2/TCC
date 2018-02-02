@@ -4,7 +4,7 @@ include_once '../classes/ListarDisciplinas.php';
 include_once '../classes/Disciplina.php';
 
 //$nomeCurso = $_POST["nomeCurso"];
-//$codCurso = $_POST["codCurso"];
+//$codCurso = $_POST["codCurso"];]
 $idCurso = $_POST["idCurso"];
 
 
@@ -12,16 +12,13 @@ $idCurso = $_POST["idCurso"];
 
 $listDisciplinas = new ListarDisciplinas($idCurso);
 
-//$listaDisciplinas = $listDisciplinas->getDisciplinas();
+$listaDisciplinas = $listDisciplinas->getDisciplinas();
 
 
-$listaDisciplinasSemRequisitos= $listDisciplinas->getDisciplinasSemRequisito();
-
-
-
-foreach ($listaDisciplinasSemRequisitos as $disc) {
-    echo "<option value='".$disc->getCodigo()."' id='codDisciplina'>".$disc->getNome()."</option>";
+foreach ($listaDisciplinas as $disc) {
+    echo "<option class='text-center' value='".$disc->getCodigo()."' id='codRequisito'>".$disc->getNome()."</option>";
 }
+
 
 
 // echo $listDisciplinas->listar($codCurso, $nomeCurso);

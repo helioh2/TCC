@@ -3,11 +3,8 @@
 include_once '../classes/BD/crudPDO.php';
 
 
-$idDisciplina = $_GET["idDisciplina"];
-if (!empty($_GET["codigo"])) {
-    $codCurso = $_GET["codigo"];
-}
-$nomeCurso = $_GET['nomeCurso'];
+$idDisciplina = $_POST["id"];
+
 
 
 $fetch = selecionarWHERE("disciplina", array("requisitada", "requisitoCadastrado"), "ID = '$idDisciplina' LIMIT 1");
@@ -18,13 +15,16 @@ foreach ($fetch as $cod) {
 
 
 if ($requisitada || $requisito) {
-    print"<script> alert('Não é possível deletar, pré requisitos já cadastrados'); </script>";
+    print" Não é possível deletar, pré requisitos já cadastrados";
+    //return "Não é possível deletar, pré requisitos já cadastrados";
 } else {
     if (deletar("disc_horario", "id_disciplina = '$idDisciplina'")) {
 
         deletar("disciplina", "ID = '$idDisciplina'");
+        print "sucesso";
     }else{
-        print"<script> alert('OOPS'); </script>";
+        print"alert('OOPS')";
+        //return "OOPS";
     }
 }
-print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?nome=$nomeCurso&codigo=$codCurso' </script>";
+//print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?nome=$nomeCurso&codigo=$codCurso' </script>";

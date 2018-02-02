@@ -67,7 +67,7 @@ foreach ($fetch as $f) {
                     data: {idCurso: <?php echo $id_curso; ?>}
                 }).done(function (data) {
                     if (data === 'erro') {
-                        alert('Você não está logado:');
+                        alert('Você não está logado');
                         location.href = './login.php';
                     }
 
@@ -85,7 +85,6 @@ foreach ($fetch as $f) {
                         location.href = './login.php';
                     } else {
                         atualizar();
-
                     }
                 });
 
@@ -99,120 +98,6 @@ foreach ($fetch as $f) {
 
             }
 
-
-            confirmarDeletar = function (id) {
-                verificarLogado();
-                $.ajax({
-                    type: 'POST',
-                    url: "../modal/modalConfirmarDeletar.php",
-                    data: {idDisciplina: id}
-                }).done(function (data) {
-
-                    $("#corpoModal").html(data);
-
-
-                });
-                $('#modal').modal('show');
-
-
-            };
-            deletarDisciplina = function (id) {
-                verificarLogado();
-
-                $("#modal").modal('hide');
-                $.ajax({
-                    type: 'POST',
-                    url: "../ajax/excluirDisciplinaAjax.php",
-                    data: {id: id}
-                }).done(function (data) {
-                    if (data !== 'sucesso') {
-                        alert(data);
-
-                    } else {
-                        atualizar();
-
-                    }
-                });
-            };
-            function novaDisciplinaModal() {
-                $.ajax({
-                    type: 'POST',
-                    url: "../modal/novaDisciplinaModal.php",
-                    data: {idCurso: <?php echo $id_curso; ?>}
-                }).done(function (data) {
-
-                    $("#corpoModal").html(data);
-
-
-                });
-                $('#modal').modal('show');
-
-            }
-
-            function inserirDisciplina() {
-                var nome = document.getElementById("nomeD").value;
-                var codigo = document.getElementById("codigoD").value;
-                var ch = document.getElementById("chD").value;
-//                var ativa = document.getElementById("ativaD").value;
-                var categoria = document.getElementById("categoriaD").value;
-                var idCurso = document.getElementById("idCurso").value;
-
-                if (codigo === "") {
-                    alert('Campo CODIGO não pode estar vazio');
-                } else {
-
-                    $.ajax({
-                        type: 'POST',
-                        url: "inserirDisciplina.php",
-                        data: {nome: nome, codigo: codigo, ch: ch, categoria: categoria, idCurso: idCurso},
-                    }).done(function (data) {
-                        if (data != 1) {
-                            alert(data);
-                        }
-                        atualizar();
-                        $("#modal").modal("hide");
-
-                    });
-                }
-
-            }
-
-
-            function alterarDisciplina(idDisciplina) {
-                verificarLogado();
-                $.ajax({
-                    type: 'POST',
-                    url: "../modal/modalAlterarDisciplina.php",
-                    data: {idCurso: <?php echo $id_curso; ?>, idDsciplina: idDisciplina}
-                }).done(function (data) {
-
-                    $("#corpoModal").html(data);
-
-
-                });
-                $('#modal').modal('show');
-
-
-
-            }
-            function alterarCurso(id) {
-                verificarLogado();
-                $('#modalListarCursos').modal('hide');
-                $.ajax({
-                    type: 'POST',
-                    url: "../modal/modalAlterarCurso.php",
-                    data: {idCurso: id}
-                }).done(function (data) {
-
-                    $("#corpoModal").html(data);
-
-
-                });
-                $('#modal').modal('show');
-
-            }
-
-
             function atualizar() {
 
                 var nome = document.getElementById("nomeDigitado").value;
@@ -221,59 +106,13 @@ foreach ($fetch as $f) {
                 //$nome = document.corpo.linha.aler-warning.nome;
                 $.ajax({
                     type: 'POST',
-                    url: "../ajax/listarDisciplinasAjax.php",
+                    url: "../ajax/listarDiscentesAjax.php",
                     data: {idCurso: idCurso, nome: nome},
                 }).done(function (data) {
 
                     $(".alert-warning").html(data);
 
                 });
-            }
-            function inserirHistorico() {
-
-                $.ajax({
-                    type: 'POST',
-                    url: "verificarLoginCurso.php",
-                    data: {idCurso: <?php echo $id_curso; ?>}
-                }).done(function (data) {
-                    if (data === "logado") {
-                        $('#modalListarCursos').modal('hide');
-                        $.ajax({
-                            type: 'POST',
-                            url: "lerCSV.php",
-                            data: {idCurso: <?php echo $id_curso; ?>}
-                        }).done(function (data) {
-
-                            $("#corpoModal").html(data);
-
-
-                        });
-                        $('#modal').modal('show');
-
-                    } else {
-                        alert(data);
-                        location.href = './login.php';
-                    }
-                });
-
-
-
-            }
-            function ativar(id, ativo) {
-                verificarLogado();
-                $.ajax({
-                    type: 'POST',
-                    url: "ativarDisciplina.php",
-                    data: {id: id, ativo: ativo}
-                }).done(function (data) {
-
-                    atualizar();
-
-
-                });
-
-
-
             }
 
             function alterarImagem(num) {
@@ -291,7 +130,7 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/voltar.png';
 
                 } else if (num === 5) {
-                    document.getElementById('imagem').src = 'img/aluno.png';
+                    document.getElementById('imagem').src = 'img/livro.png';
 
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/default.png';
@@ -305,7 +144,7 @@ foreach ($fetch as $f) {
     </head>
 
     <body class="bg-warning">
-        
+
         <div class="row">
             <div class="col-lg-2">
                 <center>
@@ -351,8 +190,8 @@ foreach ($fetch as $f) {
 <!--                                    <li style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="window.location.href = 'lerCSV.php?idCurso=<?php echo $id_curso; ?>'"> Inserir Histórico</button></li>-->
                                     <li onmouseover="alterarImagem(3)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="inserirHistorico()"> Inserir Histórico</button></li>
 
-                                    <li onmouseover="alterarImagem(5)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="window.location.href = 'listarDiscentes.php?codigo=<?php echo $codCurso;?>'">Listar Discentes</button></li>
-                                    
+                                    <li onmouseover="alterarImagem(5)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="window.location.href = 'listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'">Listar Disciplinas</button></li>
+
                                     <li onmouseover="alterarImagem(4)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-info  btn-lg" onclick="window.location.href = 'index.php'"> Voltar</button></li>
                                     <br>
 
@@ -376,7 +215,7 @@ foreach ($fetch as $f) {
                     <table class="table bg-warning" >
                         <thead>
                             <tr>
-                                <th>Código</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th><th>Ativo</th><th>Deletar</th>
+                                <th>ID</th><th>Nome</th><th>Matrícula</th><th>Ano</th><th>Atividade Curricular</th><th>Media Final</th><th>Situação</th><th>Período</th><th>Carga Horária Total</th><th>Ano Ingresso</th><th>Forma Evasão</th><th>Ano Evasão</th><th>Sexo</th>
                             </tr> 
                         </thead>
                         <tbody class = "alert-warning">
@@ -468,41 +307,6 @@ foreach ($fetch as $f) {
         </div>
 
 
-
-
-
-
-
-        <!--        <div  class="modal fade" id="modalDisciplina" ng-controller="MeuController">
-                    <div class="modal-dialog bg-info">
-                        <div class="modal-content bg-info">
-                            <div class="modal-header bg-info">
-                                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                <h4 ng-app="Disciplina" class="modal-title">{{nomeDisciplina}}</h4>
-                            </div>
-                            <div class="modal-body bg-info">
-                                <center>
-                                    <form id="curso" class="container-fluid bg-info" name="curso" method="post" action="inserirDisciplina.php">
-                                        Inserir Disciplina<br><br>
-                                        Nome<br><input name="nome" class="text-success center-block " ng-model="nomeDisciplina" type="text" id="nomeD" value=""><br>
-                                        Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigoD" value = ""><br>
-                                        Categoria<br><input class="text-success center-block" name="categoria" type="text" id="categoriaD" value = ""><br>
-                                        Carga Horaria<br><input class="text-success center-block" name="CH" type="number" id="chD" value = ""> 
-                                        Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativaD" value = "1" ?> <br> 
-                                        <input name="codCurso" class="text-success center-block "  type="hidden" id="codCursoD" value ="<?php echo $codCurso; ?>" >
-                                        <input name="nomeCurso" class="text-success center-block "  type="hidden" id="nomeCurso" value ="<?php echo $nomeCurso; ?>">
-                                        <br>
-                                        <input type="submit" name="submit" class="alert-success" value="inserir">
-                                        <input type="button" onclick="inserirDisciplina()"  class="alert-success" value="inserirJS">
-                                    </form>
-                                </center>
-                            </div>
-                            <div class="modal-footer bg-info">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
 
 
 
