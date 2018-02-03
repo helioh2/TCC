@@ -1,21 +1,4 @@
 <?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of ListarCursos
- *
- * @author danielkarling
- */
-?>
-
-
-<?php
-
 include_once '../classes/Disciplina.php';
 include_once '../classes/BD/crudPDO.php';
 
@@ -27,7 +10,8 @@ class ListarDisciplinas {
     public function __construct($id_curso) {
         session_start();
         $id_usuario = $_SESSION["usuario"]['id'];
-        $num = numLinhasSelecionarWHERE("curso",array('id'), "id_usuario = '$id_usuario' AND id = '$id_curso'");
+        $num = numLinhasSelecionarWHERE("curso left join compartilhado on curso.id = compartilhado.id_curso",
+                array('curso.id'), " curso.id = $id_curso AND (curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario)");
         if ($num > 0) {
             $fetch = selecionarWHERE("disciplina", array("CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado", "ativa"), "id_curso = '$id_curso'");
             foreach ($fetch as $linha) {
@@ -44,7 +28,8 @@ class ListarDisciplinas {
     public function listar($id_curso) {
         session_start();
         $id_usuario = $_SESSION["usuario"]['id'];
-        $num = numLinhasSelecionarWHERE("curso",array('id'), "id_usuario = $id_usuario AND id = $id_curso");
+        $num = numLinhasSelecionarWHERE("curso  left join compartilhado on curso.id = compartilhado.id_curso", 
+                array('curso.id'), " curso.id = $id_curso AND (curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario)");
         if ($num > 0) {
 
 

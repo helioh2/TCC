@@ -1,9 +1,7 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+session_start();
+$nomeUsuario = $_SESSION["usuario"]['nome'];
+$id_usuario = $_SESSION["usuario"]['id'];
 ?>
 <html ng-app="listarCursos">
     <head>
@@ -85,6 +83,38 @@
 
                 });
             }
+
+            function compartilhar(idCurso) {
+                $('#modalListarCursos').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/listarUsuarios.php",
+                    data: {idCurso: idCurso}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    $('#modal').modal('show');
+
+                });
+
+            }
+
+            function  finalizarCompartilhamento(idCurso, idConvidado) {
+                $("#modal").modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "compartilhar.php",
+                    data: {idCurso: idCurso, idConvidado: idConvidado}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    alert(data);
+                    atualizar();
+
+                });
+
+
+            }
             function alterarImagem(num) {
                 verificarLogado();
                 if (num === 1) {
@@ -113,10 +143,6 @@
 
     </head>
 
-    <?php
-    session_start();
-    $nomeUsuario = $_SESSION["usuario"]['nome'];
-    ?>
     <body class="bg-warning">
         <br>
     <center>

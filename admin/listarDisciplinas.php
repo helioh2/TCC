@@ -1,17 +1,7 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 include_once '../classes/ListarDisciplinas.php';
 include_once '../classes/BD/crudPDO.php';
 include_once './modal.php';
-
-
-
 
 $codCurso = $_GET["codigo"];
 
@@ -67,7 +57,7 @@ foreach ($fetch as $f) {
                     data: {idCurso: <?php echo $id_curso; ?>}
                 }).done(function (data) {
                     if (data === 'erro') {
-                        alert('Você não está logado:');
+                        alert('Você não está logado:'+ data);
                         location.href = './login.php';
                     }
 
@@ -76,11 +66,11 @@ foreach ($fetch as $f) {
 
             $(document).ready(function () {
 
-
                 $.ajax({
-                    url: "verificarLogin.php",
+                    url: "verificarLogin.php"
                 }).done(function (data) {
                     if (data === 'erro') {
+                        //alert(data);
                         alert('Você não está logado');
                         location.href = './login.php';
                     } else {
@@ -257,7 +247,7 @@ foreach ($fetch as $f) {
                 });
 
 
-                
+
 
             }
             function ativar(id, ativo) {
@@ -273,6 +263,38 @@ foreach ($fetch as $f) {
 
                 });
 
+
+
+            }
+
+            function compartilhar(idCurso) {
+                $('#modalListarCursos').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/listarUsuarios.php",
+                    data: {idCurso: idCurso}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    $('#modal').modal('show');
+
+                });
+
+            }
+
+            function  finalizarCompartilhamento(idCurso, idConvidado) {
+                $("#modal").modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "compartilhar.php",
+                    data: {idCurso: idCurso, idConvidado: idConvidado}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    alert(data);
+                    atualizar();
+
+                });
 
 
             }

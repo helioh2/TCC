@@ -19,7 +19,10 @@ session_start();
 $id_usuario = $_SESSION["usuario"]['id'];
 
 
-$num = numLinhasSelecionarWHERE("curso", array('id'), "id_usuario = $id_usuario AND id = $id_curso");
+//$num = numLinhasSelecionarWHERE("curso", array('id'), "id_usuario = $id_usuario AND id = $id_curso");
+$num = numLinhasSelecionarWHERE("curso left join compartilhado on curso.id = compartilhado.id_curso",
+        array('curso.id'),
+        " curso.id = $id_curso AND (curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario)");
 if($num == 0){
     
     print "<script>  location.href = './login.php';</script>";

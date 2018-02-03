@@ -1,11 +1,4 @@
 <?php
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-
 include_once '../classes/ListarDisciplinas.php';
 include_once '../classes/BD/crudPDO.php';
 include_once './modal.php';
@@ -146,6 +139,38 @@ foreach ($fetch as $f) {
                 });
             }
 
+
+            function compartilhar(idCurso) {
+                $('#modalListarCursos').modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/listarUsuarios.php",
+                    data: {idCurso: idCurso}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    $('#modal').modal('show');
+
+                });
+
+            }
+
+            function  finalizarCompartilhamento(idCurso, idConvidado) {
+                $("#modal").modal('hide');
+                $.ajax({
+                    type: 'POST',
+                    url: "compartilhar.php",
+                    data: {idCurso: idCurso, idConvidado: idConvidado}
+
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    alert(data);
+                    atualizar();
+
+                });
+
+
+            }
             function alterarImagem(num) {
                 verificarLogado();
                 if (num === 1) {

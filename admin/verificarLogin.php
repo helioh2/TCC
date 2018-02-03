@@ -1,7 +1,7 @@
 <?php
-
 require_once '../classes/BD/crudPDO.php';
 session_start();
+
 if (!(isset($_SESSION["usuario"]))) {
     print "erro";
 } else {

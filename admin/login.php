@@ -39,7 +39,7 @@ include './modal.php';
                             alert('você não possui acesso ' + user);
 
                         } else {
-                            alert('seja bem vindo ' + user);
+                            alert('seja bem vindo ' + user+': '+data);
 
                             location.href = './index.php';
 
