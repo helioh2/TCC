@@ -1,6 +1,6 @@
 <?php
 require_once '../classes/BD/crudPDO.php';
-include_once './modal.php';
+include_once '../admin/modal.php';
 $idCurso = $_POST["idCurso"];
 
 $fetch = selecionarWHERE("curso", array("nome"), "id= '$idCurso' LIMIT 1");

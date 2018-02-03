@@ -92,6 +92,37 @@ foreach ($fetch as $f) {
 
             });
 
+
+            function inserirHistorico() {
+
+                $.ajax({
+                    type: 'POST',
+                    url: "verificarLoginCurso.php",
+                    data: {idCurso: <?php echo $id_curso; ?>}
+                }).done(function (data) {
+                    if (data === "logado") {
+                        $('#modalListarCursos').modal('hide');
+                        $.ajax({
+                            type: 'POST',
+                            url: "../modal/lerCSV.php",
+                            data: {idCurso: <?php echo $id_curso; ?>}
+                        }).done(function (data) {
+
+                            $("#corpoModal").html(data);
+
+
+                        });
+                        $('#modal').modal('show');
+
+                    } else {
+                        alert(data);
+                        location.href = './login.php';
+                    }
+                });
+
+
+
+            }
             function pesquisar() {
                 verificarLogado();
                 atualizar();

@@ -240,7 +240,7 @@ foreach ($fetch as $f) {
                         $('#modalListarCursos').modal('hide');
                         $.ajax({
                             type: 'POST',
-                            url: "lerCSV.php",
+                            url: "../modal/lerCSV.php",
                             data: {idCurso: <?php echo $id_curso; ?>}
                         }).done(function (data) {
 
@@ -257,6 +257,7 @@ foreach ($fetch as $f) {
                 });
 
 
+                
 
             }
             function ativar(id, ativo) {
@@ -305,7 +306,7 @@ foreach ($fetch as $f) {
     </head>
 
     <body class="bg-warning">
-        
+
         <div class="row">
             <div class="col-lg-2">
                 <center>
@@ -351,8 +352,8 @@ foreach ($fetch as $f) {
 <!--                                    <li style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="window.location.href = 'lerCSV.php?idCurso=<?php echo $id_curso; ?>'"> Inserir Histórico</button></li>-->
                                     <li onmouseover="alterarImagem(3)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="inserirHistorico()"> Inserir Histórico</button></li>
 
-                                    <li onmouseover="alterarImagem(5)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="window.location.href = 'listarDiscentes.php?codigo=<?php echo $codCurso;?>'">Listar Discentes</button></li>
-                                    
+                                    <li onmouseover="alterarImagem(5)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="window.location.href = 'listarDiscentes.php?codigo=<?php echo $codCurso; ?>'">Listar Discentes</button></li>
+
                                     <li onmouseover="alterarImagem(4)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-info  btn-lg" onclick="window.location.href = 'index.php'"> Voltar</button></li>
                                     <br>
 
