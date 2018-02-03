@@ -3,7 +3,7 @@
 require_once '../classes/BD/crudPDO.php';
 
 $nome = $_POST['user'];
-$senha = $_POST['senha'];
+$senha = base64_encode($_POST['senha']);
 $nova = $_POST['novaSenha'];
 if ($nova !='' ) {
    
@@ -15,10 +15,10 @@ if ($nova !='' ) {
         foreach ($fetch as $f) {
             $id = $f['id'];
         }
-        alterar("usuario", array('senha'=> $nova), "id = $id");
+        alterar("usuario", array('senha'=> base64_encode($nova)), "id = $id");
         session_start();
         unset($_SESSION["usuario"]);
-        $_SESSION["usuario"] = array('id' => $id, 'senha' => $nova , 'nome' => $nome);
+        $_SESSION["usuario"] = array('id' => $id, 'senha' => base64_encode($nova) , 'nome' => $nome);
         print $id;
     } else {
         print 'erro';
