@@ -17,6 +17,7 @@ class Curso {
     private $codigo;
     private $id;
     private $semanas;
+    private $compatilhado;
 
     function __construct() {
         
@@ -27,6 +28,15 @@ class Curso {
         $this->codigo = $codigo;
         $this->id = $id;
         $this->semanas = $semanas;
+        $this->compatilhado = 0;
+    }
+
+    function setCompartilhado() {
+        $this->compatilhado = 1;
+    }
+    function getCompartilhado() {
+        return $this->compatilhado;
+        
     }
 
     function buscarPorGRR($grr) {
@@ -65,9 +75,9 @@ class Curso {
     function getId() {
         return $this->id;
     }
+
     function getSemanas() {
         return $this->semanas;
     }
-
 
 }

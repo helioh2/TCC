@@ -88,7 +88,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                 $('#modalListarCursos').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    url: "../ajax/listarUsuarios.php",
+                    url: "../ajax/listarUsuariosAjax.php",
                     data: {idCurso: idCurso}
 
                 }).done(function (data) {

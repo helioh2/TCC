@@ -271,7 +271,7 @@ foreach ($fetch as $f) {
                 $('#modalListarCursos').modal('hide');
                 $.ajax({
                     type: 'POST',
-                    url: "../ajax/listarUsuarios.php",
+                    url: "../ajax/listarUsuariosAjax.php",
                     data: {idCurso: idCurso}
 
                 }).done(function (data) {

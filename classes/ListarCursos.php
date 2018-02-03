@@ -2,24 +2,39 @@
 include_once '../classes/Disciplina.php';
 include_once '../classes/BD/crudPDO.php';
 include_once '../classes/Curso.php';
+?>
+<script>
+    function semPermissao() {
+        alert('Você não tem permissão');
+    }
+</script>
+<?php
 
 class ListarCursos {
 
     private $cursos = array();
 
     public function __construct() {
-        //session_start();
+//session_start();
         $id_usuario = $_SESSION["usuario"]['id'];
 
 //        $fetch = selecionarWHERE("curso", array("id", "codigo", "nome", "semanas"), "id_usuario = $id_usuario");
-        //novo select, seleciona os cursos compartilhados contigo
-        $fetch = selecionarWHERE("curso left join compartilhado on curso.id = compartilhado.id_curso ", array("curso.id", "curso.codigo", "curso.nome", "curso.semanas"), "curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario");
-        //novo select, seleciona os cursos compartilhados contigo
+//novo select, seleciona os cursos compartilhados contigo
+        $fetch = selecionarWHERE("curso left join compartilhado on curso.id = compartilhado.id_curso ", array("curso.id", "curso.codigo", "curso.nome", "curso.semanas", "curso.id_usuario",
+            "compartilhado.id_compartilhado"), "curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario");
+//novo select, seleciona os cursos compartilhados contigo
+
 
         foreach ($fetch as $linha) {
-            $disc = new Curso();
-            $disc->curso($linha["nome"], $linha["codigo"], $linha["id"], $linha["semanas"]);
-            $this->cursos[] = $disc;
+
+            $curso = new Curso();
+
+            $curso->curso($linha["nome"], $linha["codigo"], $linha["id"], $linha["semanas"]);
+
+            if ($linha["id_usuario"] != $id_usuario) {
+                $curso->setCompartilhado();
+            }
+            $this->cursos[] = $curso;
         }
     }
 
@@ -34,12 +49,30 @@ class ListarCursos {
                 foreach ($this->getCursos() as $curso) {
                     $nome = $curso->getNome();
                     $codigo = $curso->getCodigo();
-                    echo "<tr class='text-center bg-info2'>"
-                    . "<td>" . $curso->getCodigo() . "</td>"
-                    . "<td><button onclick='compartilhar(" . $curso->getId() . ")'>Compartilhar<button></td>"
-                    . "<td class='text-warning'><button onclick='alterarCurso(" . $curso->getId() . ")'> ALTERAR</button></td>"
+
+                    $classCurso = "text-center bg-info2";
+
+
+                    if ($curso->getCompartilhado() == 1) {
+                        $classCurso = "text-center bg-info2 text-danger";
+                        $nome = $nome . " (COMPART)";
+                    }
+
+                    echo "<tr class='" . $classCurso . "'>"
+                    . "<td>" . $codigo . "</td>";
+
+
+                    if ($curso->getCompartilhado() == 1) {
+                        echo "<td><button class='text-uppercase' onclick='semPermissao()'>Sem Permissão</button></td>";
+                        echo "<td class='text-warning text-uppercase'><button onclick='semPermissao()'> Sem Permissão</button></td>";
+                    } else {
+                        echo "<td><button class='text-uppercase' onclick='compartilhar(" . $curso->getId() . ")'>Compartilhar</button></td>";
+                        echo "<td class='text-warning'><button onclick='alterarCurso(" . $curso->getId() . ")'> ALTERAR</button></td>";
+                    }
+
+
                     //. "<td class='text-warning'><a href='formCurso.php?idCurso=" . $curso->getId() . "'> Alterar</a></td>"
-                    . "<td class='text-warning'><a href='listarDisciplinas.php?codigo=" . $codigo . "'>" . $nome . "</td>"
+                    echo "<td class='text-warning'><a href='listarDisciplinas.php?codigo=" . $codigo . "'>" . $nome . "</td>"
                     . "</tr>";
                 }
                 ?>
