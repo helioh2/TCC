@@ -57,7 +57,7 @@ foreach ($fetch as $f) {
                     data: {idCurso: <?php echo $id_curso; ?>}
                 }).done(function (data) {
                     if (data === 'erro') {
-                        alert('Você não está logado:'+ data);
+                        alert('Você não está logado:' + data);
                         location.href = './login.php';
                     }
 
@@ -321,7 +321,39 @@ foreach ($fetch as $f) {
 
                 }
             }
+            function listaCompartilhado() {
+                $.ajax({
+                    type: 'POST',
+                    url: "../modal/modalListaCompartilhado.php",
+                    data: {idCurso: <?php echo $id_curso; ?>}
 
+                }).done(function (data) {
+                    $("#corpoModal").html(data);
+                    $('#modal').modal('show');
+
+
+
+                });
+
+            }
+
+            function descompartilhar(idConvidado) {
+                $.ajax({
+                    type: 'POST',
+                    url: "descompartilhar.php",
+                    data: {idConvidado: idConvidado, idCurso: <?php echo $id_curso; ?>}
+
+                }).done(function (data) {
+
+                    $('#modal').modal('hide');
+                    alert(data);
+                    atualizar();
+
+
+
+                });
+
+            }
 
         </script>
 
@@ -368,15 +400,29 @@ foreach ($fetch as $f) {
                                             </center>
                                         </ul>
                                     </li>
+                                    <li class=" dropdown" style="margin-right: 10px; ">
+                                        <br>
+                                        <a  onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" href="#" class="dropdown-toggle btn-primary btn-lg" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Curso <span class="caret"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <center>
 
-                                    <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" data-toggle="modal" data-target="#modalListarCursos">Curso</button></li>
+
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" data-toggle="modal" data-target="#modalListarCursos">Listar Cursos</button></li>
+
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="listaCompartilhado()"> Compartilhado</button></li>
+                                            </center>
+                                        </ul>
+                                    </li>
 
 <!--                                    <li style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="window.location.href = 'lerCSV.php?idCurso=<?php echo $id_curso; ?>'"> Inserir Histórico</button></li>-->
                                     <li onmouseover="alterarImagem(3)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" onclick="inserirHistorico()"> Inserir Histórico</button></li>
 
                                     <li onmouseover="alterarImagem(5)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="window.location.href = 'listarDiscentes.php?codigo=<?php echo $codCurso; ?>'">Listar Discentes</button></li>
 
+
                                     <li onmouseover="alterarImagem(4)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-info  btn-lg" onclick="window.location.href = 'index.php'"> Voltar</button></li>
+
+
                                     <br>
 
                                 </ul>

@@ -31,8 +31,8 @@ class Curso {
         $this->compatilhado = 0;
     }
 
-    function setCompartilhado() {
-        $this->compatilhado = 1;
+    function setCompartilhado($id_dono) {
+        $this->compatilhado = $id_dono;
     }
     function getCompartilhado() {
         return $this->compatilhado;
