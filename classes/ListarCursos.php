@@ -42,7 +42,7 @@ class ListarCursos {
         ?>
         <center>            
             <table class="table table-hover">
-                <tr class = "text-center bg-info2">
+                <tr class = "text-center bg-warning">
                     <th class="text-center ">Código</th><th class="text-center">Compartilhar</th><th class="text-center">Alterar</th><th class="text-center">Nome</th>
                 </tr>
                 <?php
@@ -50,11 +50,11 @@ class ListarCursos {
                     $nome = $curso->getNome();
                     $codigo = $curso->getCodigo();
 
-                    $classCurso = "text-center bg-info2";
+                    $classCurso = "text-center";
 
 
                     if ($curso->getCompartilhado() != 0) {
-                        $classCurso = "text-center bg-info2 text-danger";
+                        $classCurso = "text-center text-danger";
                         $selecionar = selecionarWHERE("usuario", array('nome'), "id = '".$curso->getCompartilhado()."' LIMIT 1");
                         foreach ($selecionar as $s) {
                             $nome = $nome . " (COMPART)";

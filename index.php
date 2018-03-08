@@ -19,9 +19,10 @@ and open the template in the editor.
         ?>
     <center><br><br><br>
         <form id="categorias" class="bg-primary container-fluid " name="possibilidades" method="post" action="recomendacao.php">
-            GRR <br><input name="grr" class="text-success center-block "  type="text" id="grr" value = ""><br>
+            <label class="text-uppercase">GRR</label>
+            <br><input name="grr" class="text-success text-center"  type="text" id="grr" value = ""><br>
 <!--            <br><input class="text-success center-block" name="horas" type="number" id="horas" value = "">-->
-            <input type="submit" name="submit" class="alert-success" value="Enviar">
+            <br><input type="submit" name="submit" class="btn btn-default" value="Enviar">
         </form>
     </center>
 

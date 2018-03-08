@@ -5,7 +5,7 @@ require_once '../classes/BD/crudPDO.php';
 $idCurso = $_POST['idCurso'];
 
 $fetch = selecionar("usuario", array('nome', 'id', 'email'));
-echo "<table class='table table-striped text-center bg-warning center-block'>";
+echo "<table class='table table-striped text-center bg-warning'>";
 echo "<thead>";
 echo "<th class='text-center'>NOME</th>"
  . "<th class='text-center' >E-MAIL</th>"

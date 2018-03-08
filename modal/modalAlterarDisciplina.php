@@ -74,7 +74,7 @@ foreach ($fetch as $f) {
         <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplinaALT" value ="<?php echo $idDisciplina; ?>">
         <br>
 <!--        <input type="submit" name="submit" class="alert-success" value="Alterar">-->
-        <input type="button" onclick="disciplinaAlterada()" name="submit" class="alert-success" value="Alterar">
+        <input type="button" onclick="disciplinaAlterada()" name="submit" class="btn btn-success" value="Alterar">
     </form>
 </center>
 

@@ -5,6 +5,6 @@
         <label>N° de Semanas por Semestre</label><br>
         <input class="text-success text-center" name="semanas" type="number" id="semanas" value = "0">
         <br><br>
-        <input type="submit" name="submit" class="alert-success" value="inserir">
+        <input type="submit" name="submit" class="btn btn-success" value="inserir">
     </form>
 </center>

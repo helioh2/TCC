@@ -121,7 +121,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                     document.getElementById('imagem').src = 'img/voltar.png';
 
                 } else if (num === 0) {
-                    document.getElementById('imagem').src = 'img/default.png';
+                    document.getElementById('imagem').src = 'img/logo.png';
 
                 } else if (num === 2) {
                     document.getElementById('imagemCentro').src = 'img/curso.png';
@@ -130,7 +130,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                     document.getElementById('imagemCentro').src = 'img/curso.png';
 
                 } else if (num === 4) {
-                    document.getElementById('imagemCentro').src = 'img/default.png';
+                    document.getElementById('imagemCentro').src = 'img/logo.png';
 
                 }
             }
@@ -148,7 +148,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
     <center>
         <div class="col-lg-10 col-sm-8">
             <br>
-            <img id="imagemCentro" src="img/default.png" height="80" width="100">
+            <img id="imagemCentro" src="img/logo.png" height="60" width="140">
             <br>
             <br>
 
@@ -162,7 +162,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
             <br>
             <label id="user" class="text-uppercase text-success"><?php echo $nomeUsuario; ?></label>
             <br>
-            <img id="imagem" src="img/default.png" height="50" width="70">
+            <img id="imagem" src="img/logo.png" height="50" width="120">
             <br>
             <br>
             <button onmouseover="alterarImagem(1)" onmouseout="alterarImagem(0)" id='logout' class="btn btn-md btn-danger" onclick="logout()">LOGOUT</button>
@@ -181,30 +181,20 @@ $id_usuario = $_SESSION["usuario"]['id'];
 
     <center>
         <div ng-controller="Controller" class="modal modal-dismiss" id="modalListarCursos">
-            <div class="modal-lg bg-info">
+            <div class="modal-lg bg-warning">
                 <div class="modal-content">
-                    <div class="modal-header bg-info">
+                    <div class="modal-header bg-warning">
                         <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                        <h4 id="tituloModal" class="modal-title bg-info">Selecionar Curso: </h4>
+                        <h4 id="tituloModal" class="modal-title bg-warning">Selecionar Curso: </h4>
                     </div>
 
-                    <div class="modal-body bg-info">
+                    <div class="modal-body bg-warning">
                         <center>
 
                             <?php
                             $listCursos->listar();
                             ?>
-                            <!--
-                                                        <br>
-                                                        <form id="curso" class="container-fluid " name="curso" method="get" action="listarDisciplinas.php">
-                                                            <label>Procurando por: {{codCurso}}</label>
-                                                            <input name="nome" class="text-success center-block "  type="hidden" id="nome" value = ""><br>
-                                                            <label>Cógido do Curso:</label><input ng-model="codCurso" class="text-success center-block" name="codigo" type="text" id="codigo" value = "">
-                                                            <br><input type="submit" name="submit" class="alert-success" value="Ok">
-                                                        </form>
-                            -->
-
-
+                       
                         </center>
                     </div>
                     <div class="modal-footer  bg-info">
@@ -216,38 +206,6 @@ $id_usuario = $_SESSION["usuario"]['id'];
 
 
 
-
-
-
-
-
-        <!--        <div ng-controller="Controller" class="modal fade" id="novoCurso">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header  bg-info">
-                                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                <center>
-                                    <h4 class="modal-title  bg-info">{{nomeCurso}}</h4>
-                                </center>
-                            </div>
-                            <div class="modal-body bg-info">
-                                <center>
-                                    <form id="curso" class="container-fluid "  name="curso" method="get" action="inserirCurso.php">
-                                        <label>Nome</label><br><input ng-model="nomeCurso" name="nome" class="text-success center-block "  type="text" id="nome" value = ""><br>
-                                        <label>Cógido</label><br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = ""><br>
-                                        <label>N° de Semanas por Semestre</label><br>
-                                        <input class="text-success text-center" name="semanas" type="number" id="semanas" value = "0">
-                                        <br><br>
-                                        <input type="submit" name="submit" class="alert-success" value="inserir">
-                                    </form>
-                                </center>
-                            </div>
-                            <div class="modal-footer  bg-info">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
     </center>
 </body>
 

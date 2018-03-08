@@ -5,6 +5,6 @@
         <label>Senha</label><input class="text-success center-block"  name="senha" type="password" id="senhaModal" value = ""><br>
         <label>Repita a Senha</label><input class="text-success center-block"  name="novaSenha" type="password" id="novaSenhaModal" value = ""><br>
         <br><br>
-        <input type="button" onclick="inserirUsuario()" name="submit" class="alert-success" value="Cadastrar">
+        <input type="button" onclick="inserirUsuario()" name="submit" class="btn btn-success" value="Cadastrar">
     
 </center>

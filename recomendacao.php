@@ -91,11 +91,11 @@ $recomendacao->start();
     <br>
 <center>
     <div class="modal fade" id="modalDifs">
-        <div class="modal-lg bg-info">
+        <div class="modal-lg bg-warning">
             <div class="modal-content">
-                <div class="modal-header bg-info">
+                <div class="modal-header bg-warning">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title text-info bg-info">Dificuldade por Categoria</h4>
+                    <h4 class="modal-title text-info bg-warning">Dificuldade por Categoria</h4>
                 </div>
                 <div class="modal-body bg-warning">
                     <center>
@@ -107,7 +107,7 @@ $recomendacao->start();
 
                     </center>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer bg-warning">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 </div>
             </div>
@@ -121,11 +121,11 @@ $recomendacao->start();
 
 <center>
     <div class="modal fade" id="modalMedias">
-        <div class="modal-lg bg-info">
+        <div class="modal-lg bg-warning">
             <div class="modal-content">
-                <div class="modal-header bg-info">
+                <div class="modal-header bg-warning">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title text-info bg-info">Percentuais de Aprovação e Médias</h4>
+                    <h4 class="modal-title text-info bg-warning">Percentuais de Aprovação e Médias</h4>
                 </div>
                 <div class="modal-body bg-warning">
                     <center>
@@ -139,7 +139,7 @@ $recomendacao->start();
 
                     </center>
                 </div>
-                <div class="modal-footer">
+                <div class="modal-footer bg-warning">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 </div>
             </div>

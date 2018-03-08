@@ -316,6 +316,12 @@ foreach ($fetch as $f) {
                 } else if (num === 5) {
                     document.getElementById('imagem').src = 'img/aluno.png';
 
+                } else if (num === 6) {
+                    document.getElementById('imagem').src = 'img/nova.png';
+
+                } else if (num === 7) {
+                    document.getElementById('imagem').src = 'img/requisitos.png';
+
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/default.png';
 
@@ -392,9 +398,9 @@ foreach ($fetch as $f) {
                                                                                                         <li ><button class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#mostrarDisciplinas">Mostrar Disciplinas</button></li>-->
                                                     <br>
                                                     <!--                                                    <li><button class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#modalDisciplina">Nova Disciplina</button></li>-->
-                                                    <li><button onmouseover="alterarImagem(1)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" onclick="novaDisciplinaModal()">Nova Disciplina</button></li>
+                                                    <li><button onmouseover="alterarImagem(6)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" onclick="novaDisciplinaModal()">Nova Disciplina</button></li>
                                                     <br>
-                                                    <li><button onmouseover="alterarImagem(1)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" type="button" onclick="window.location.href = '../requisitos/cadastrarRequisitos.php?idCurso=<?php echo $id_curso; ?>&codigo=<?php echo $codCurso; ?>&nomeCurso=<?php echo $nomeCurso; ?>'"> Cadastrar Requisitos</button></li>
+                                                    <li><button onmouseover="alterarImagem(7)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" type="button" onclick="window.location.href = '../requisitos/cadastrarRequisitos.php?idCurso=<?php echo $id_curso; ?>&codigo=<?php echo $codCurso; ?>&nomeCurso=<?php echo $nomeCurso; ?>'"> Cadastrar Requisitos</button></li>
                                                     <br>
                                                 </div>
                                             </center>
@@ -479,11 +485,11 @@ foreach ($fetch as $f) {
         <div class="modal fade" id="modalListarCursos">
 
             <center>
-                <div class="modal-lg bg-info">
+                <div class="modal-lg bg-warning">
                     <div class="modal-content">
-                        <div class="modal-header bg-info">
+                        <div class="modal-header bg-warning">
                             <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title text-info bg-info">Selecionar Curso</h4>
+                            <h4 class="modal-title text-info bg-warning">Selecionar Curso</h4>
                         </div>
                         <div class="modal-body bg-warning">
                             <center>

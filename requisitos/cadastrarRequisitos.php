@@ -33,7 +33,7 @@
                     data: {idCurso: "<?php echo $idCurso; ?>"}
                 }).done(function (data) {
                     
-                    $(".active").html(data);
+                    $("#selectDisciplina").html(data);
 
                 });
                 $.ajax({
@@ -42,7 +42,7 @@
                     data: {idCurso: "<?php echo $idCurso; ?>"}
                 }).done(function (data) {
 
-                    $(".alert-info").html(data);
+                    $("#selectRequisitos").html(data);
 
                 });
             }
@@ -80,7 +80,7 @@
         </script>
 
     </head>
-    <body class="bg-info">
+    <body class="bg-warning">
 
         <div class="title">
             <h1></h1>
@@ -93,15 +93,15 @@
         <form id="lista" class="container-fluid center-block" name="prolog" method="post" action="reqProlog.php">
             <label>Cadastre os requisitos de todas as disciplinas</label><br>
             <label>Caso a disciplina não tenha nenhum, insira sem selecionar nenhum requisito</label>
-            <h4>Disciplina</h4>
-            <select  id="selectDisciplina" class="active" name="codDisciplina">
+            <h4 class="text-info">DISCIPLINAS</h4>
+            <select  id="selectDisciplina" class="btn  text-uppercase text-info text-center" name="codDisciplina">
 
                 <!--                ajax-->
 
             </select>
             <br><br>
-            <h4>Requsitos</h4>
-            <select   class="alert-info" name="codRequisito[]" id="selectRequisitos" size="15" multiple >
+            <h4 class="text-info" >REQUISITOS</h4>
+            <select   class="text-uppercase text-info" name="codRequisito[]" id="selectRequisitos" size="12" multiple >
 
                 <!--                ajax-->
 
@@ -110,13 +110,13 @@
             <input class="text-success" name="nomeCurso" type="hidden" id="nomeCurso" value = "<?php echo $nomeCurso; ?>">
             <input class="text-success" name="idCurso" type="hidden" id="idCurso" value = "<?php echo $idCurso; ?>">
 <!--            <br> <input type="submit" name="submit" class="alert-success" value="Inserir">-->
-            <br> <input type="button" onclick="cadastrar()" name="submit" class="alert-success" value="Inserir">
+            <br> <input type="button" class="btn btn-success" onclick="cadastrar()" name="submit" class="alert-success" value="Inserir">
         </form>
         <br>
-        <button type="button" onclick="window.location.href = '../admin/listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
+        <button type="button" class="btn btn-default" onclick="window.location.href = '../admin/listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
         <br>
         <br>
-        <button type="button" onclick="window.location.href = 'excluirReq.php?codigo=<?php echo $codCurso; ?>'"> Excluir Todos Requisitos</button>
+        <button type="button" class="btn btn-default" onclick="window.location.href = 'excluirReq.php?codigo=<?php echo $codCurso; ?>'"> Excluir Todos Requisitos</button>
 
     </center>
 </body>

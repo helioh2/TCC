@@ -13,11 +13,16 @@ if ($num > 0) {
 
 
     $fetch = selecionarWHERE("compartilhado JOIN usuario ON compartilhado.id_compartilhado = usuario.id", array("usuario.id, usuario.nome, usuario.email"), "compartilhado.id_curso = $id_curso ");
-    echo "<table class='table table-striped text-center bg-warning center-block'>";
+    echo "<center>";
+
+    echo "<table class='table table-hover text-center bg-warning'>";
     echo "<thead>";
-    echo "<th class='text-center'>NOME</th>"
+
+    echo "<tr>"
+    . "<th class='text-center'>NOME</th>"
     . "<th class='text-center' >E-MAIL</th>"
-    . "<th class='text-center' >DESFAZER</th>";
+    . "<th class='text-center' >DESFAZER</th>"
+    . "</tr>";
 
     echo "</thead>";
     echo "<tbody>";
@@ -30,5 +35,7 @@ if ($num > 0) {
     }
     echo "</tbody>";
     echo "</table>";
+
+    echo "</center>";
 }
 ?>
