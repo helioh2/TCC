@@ -41,7 +41,7 @@ class Recomendacao {
         $media = $categoria->getMediaFinal() . "";
         $percApr = $categoria->getPercentAprovacao() . "";
         $qtdDiscCursadas = $categoria->getQtd();
-    //comando .jar, arquivo fuzzy, media, aprovacao, qtdade de disciplina cursada
+        //comando .jar, arquivo fuzzy, media, aprovacao, qtdade de disciplina cursada
         $comando = "java -jar jar/Dificuldade.jar jar/Dificuldade.fcl $media $percApr $qtdDiscCursadas";
         $saida = exec($comando, $saida);
         return $saida;
@@ -49,7 +49,7 @@ class Recomendacao {
 
     //verifica disciplinas que podem ser matriculadas a partir dos pre requisitos ja cursados
     public function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
-    //comando .jar, arquivo Prolog, string disciplinas cursadas
+        //comando .jar, arquivo Prolog, string disciplinas cursadas
         $strExec = "java -jar jar/Possibilidade.jar $arquivoRequisitoCurso \"$strTermo\"";
         $saida2 = exec($strExec, $saida2);
 
@@ -80,7 +80,7 @@ class Recomendacao {
 
         $pAprov = $categoria->getPercentAprovacao();
         $mFinal = $categoria->getMediaFinal();
-    //comando .jar, possibilidade, dificuldade, arquivo Fuzzy, arquivo Prolog
+        //comando .jar, possibilidade, dificuldade, arquivo Fuzzy, arquivo Prolog
         $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $dificuldade jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
 
         $saida2 = exec($comando, $saida2);
@@ -126,19 +126,22 @@ class Recomendacao {
         $curso = new Curso();
         $curso->buscarPorGRR($this->grr);
 
+
         $listaCategoriasDados = new ListaCategoriasDados($this->grr);
         $categorias = $listaCategoriasDados->getCategorias();
 
         $listaCategoriasCurso = new ListaCategoriasCurso($curso->getCodigo());
-        $categoiasCurso = $listaCategoriasCurso->getCategorias();
+        // $categoriasCurso = $listaCategoriasCurso->getCategorias();
+
 
         $difs = array();
-       // echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
-
+        // echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 // +++++++++++++++++++++++++++++++ CHAMA MODULO DIFICULDADE ++++++++++++++++++++++++++++++++++++
         foreach ($categorias as $cat) {
             $difs[] = $this->calculaDificuldade($cat);
         }
+
+
         $nomeCategorias = $listaCategoriasDados->getNomeCategorias();
         $nomeCategoiasCurso = $listaCategoriasCurso->getNomeCategorias();
 
@@ -152,16 +155,21 @@ class Recomendacao {
                 $novaCat = new CategoriaDados($catCurso);
                 $novaCat->setMediaFinal(100);
                 $novaCat->setPercentAprovacao(100);
+                $novaCat->setQtd(0);
                 $categorias[] = $novaCat;
                 $difs[] = 0;
             }
         }
 
+
 //cria tabela dificuldade por disciplina
         $this->listaDificuldade = new Dificuldades($categorias, $difs);
 
+
+
 //lista de disciplinas cursadas pelo aluno
         $cursadas = new DiscCursadasAluno($this->grr);
+
 
 //construcao da string para usar no prolog
         $strTermo = $cursadas->getTermo() . "";
@@ -173,28 +181,34 @@ class Recomendacao {
         $arrayPossibilidades = $this->calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 
 
-
+        // VEIO ATÉ AQUI ====================================
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
+        // var_dump($arrayPossibilidades);
+        //var_dump($categorias);
+        // var_dump($difs);
+        //var_dump($arquivoQTDRequisitoCurso);
+        //var_dump($curso->getSemanas());
+        //die();
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
 // +++++++++++++++++++++++++++++++ CHAMA MODULO IMPORTANCIADISC ++++++++++++++++++++++++++++++++++++
         $recomendacao = $this->calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
 
-//ordenar a lista de recomendacao
+
+////ordenar a lista de recomendacao
         usort($recomendacao, "Disciplina::ordenaDisciplinas");
 
         $horas = 0;
         //$recomendacaoFinal = array();
+        //
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
         foreach ($recomendacao as $d) {
             $this->recomendacaoFinal[] = $d;
             $horas += $d->getHorasDedicacao();
         }
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
-
-        
-
+//
 //cria lista de colisao de horarios para cada disciplina
         for ($i = 0; $i < count($this->recomendacaoFinal); $i++) {
             $antigo = $this->recomendacaoFinal[$i]->getHorarios();
@@ -208,6 +222,7 @@ class Recomendacao {
                 }
             }
         }
+        //usort($recomendacao, "Disciplina::ordenaDisciplinasPorColisao");
     }
 
 }

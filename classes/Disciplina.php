@@ -104,6 +104,14 @@ class Disciplina {
                 ($d2->getImportancia()) ? -1 : 1;
     }
 
+    public function ordenaDisciplinasPorColisao(Disciplina $d1, Disciplina $d2) {
+        if (count($d1->getColisoes()) == count($d2->getColisoes())) {
+            return 0;
+        }
+        return (count($d1->getColisoes())) <
+                (count($d2->getColisoes())) ? -1 : 1;
+    }
+
     function getHorarios() {
         return $this->horarios;
     }

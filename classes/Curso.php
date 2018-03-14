@@ -34,19 +34,14 @@ class Curso {
     function setCompartilhado($id_dono) {
         $this->compatilhado = $id_dono;
     }
+
     function getCompartilhado() {
         return $this->compatilhado;
-        
     }
 
     function buscarPorGRR($grr) {
 
-        $conn = DataBase::getInstance()->getDb();
-        $sql = "  SELECT curso.id, curso.codigo, curso.nome, curso.semanas FROM curso, aproveitamento WHERE aproveitamento.MATR_ALUNO= '$grr' and curso.id=aproveitamento.id_curso LIMIT 1;";
-
-        $stmt = $conn->prepare($sql);
-        $stmt->execute();
-        $fetch = $stmt->fetchAll();
+        $fetch = selecionarWHERE("aproveitamento JOIN curso ON aproveitamento.id_curso = curso.id", array('curso.id', 'curso.codigo', 'curso.nome', 'curso.semanas'), "MATR_ALUNO= '$grr' LIMIT 1");
 
         foreach ($fetch as $f) {
             $this->id = $f["id"];
@@ -80,4 +75,5 @@ class Curso {
         return $this->semanas;
     }
 
+    
 }

@@ -11,7 +11,7 @@
  *
  * @author danielkarling
  */
-include_once URL.'/classes/CategoriaDados.php';
+include_once URL . '/classes/CategoriaDados.php';
 
 class ListaCategoriasCurso {
 
@@ -19,24 +19,14 @@ class ListaCategoriasCurso {
     private $nomeCategorias;
 
     public function __construct($codCurso) {
-        try {
-            $conn = DataBase::getInstance()->getDb();
 
+        $fetch = selecionarWHERE("disciplina JOIN curso ON disciplina.id_curso = curso.id", array('disciplina.categoria'), "curso.codigo = '$codCurso' GROUP BY disciplina.categoria");
 
-            $sql = "SELECT disciplina.categoria FROM disciplina, curso WHERE curso.codigo = '$codCurso' and disciplina.id_curso = curso.id GROUP BY categoria; ";
-//echo $sql;
-
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-            $fetch = $stmt->fetchAll();
-
-            foreach ($fetch as $f) {
-                $cat = $f["categoria"];
-                $this->categoriasCurso[] = new CategoriaDados($cat);
-            }
-        } catch (Exception $e) {
-            echo $e;
+        foreach ($fetch as $f) {
+            $cat = $f["categoria"];
+            $this->categoriasCurso[] = new CategoriaDados($cat);
         }
+
         foreach ($this->categoriasCurso as $cat) {
             $this->nomeCategorias[] = $cat->getNome() . "";
         }

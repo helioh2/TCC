@@ -27,11 +27,11 @@ class ListaCategoriasDados {
             $sql = "
 
 SELECT a.perc, a.media, a.categoria, b.qtd FROM
-(SELECT SUM(dadosCategoria.perc) as perc,SUM(dadosCategoria.media) as media, dadosCategoria.categoria FROM(SELECT ROUND(SUM(dados.qtd) * SUM(dados.percUnit)) AS perc, 0 AS media, dados.categoria FROM (SELECT COUNT(*) AS qtd, 0 AS percUnit, d.CATEGORIA FROM aproveitamento a LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO = 'APROVADO' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA UNION SELECT 0 AS qtd, 100/COUNT(*) AS percUnit, d.CATEGORIA FROM aproveitamento a  LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dados GROUP BY dados.categoria UNION SELECT 0 AS perc, ROUND(AVG(a.MEDIA_FINAL)) AS media, d.categoria FROM aproveitamento a LEFT JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dadosCategoria GROUP  BY  dadosCategoria.categoria) AS a 
-LEFT JOIN 
+(SELECT SUM(dadosCategoria.perc) as perc,SUM(dadosCategoria.media) as media, dadosCategoria.categoria FROM(SELECT ROUND(SUM(dados.qtd) * SUM(dados.percUnit)) AS perc, 0 AS media, dados.categoria FROM (SELECT COUNT(*) AS qtd, 0 AS percUnit, d.CATEGORIA FROM aproveitamento a JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO = 'APROVADO' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA UNION SELECT 0 AS qtd, 100/COUNT(*) AS percUnit, d.CATEGORIA FROM aproveitamento a  JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dados GROUP BY dados.categoria UNION SELECT 0 AS perc, ROUND(AVG(a.MEDIA_FINAL)) AS media, d.categoria FROM aproveitamento a JOIN disciplina d ON d.CODIGO = a.COD_ATIV_CURRIC WHERE a.DESCR_SITUACAO <> 'MATRICULA' AND a.MATR_ALUNO = '$grr' GROUP BY d.CATEGORIA) AS dadosCategoria GROUP  BY  dadosCategoria.categoria) AS a 
+ JOIN 
 
 (
-SELECT categoria , COUNT(disciplina.categoria) as qtd FROM disciplina LEFT JOIN aproveitamento ON disciplina.CODIGO = aproveitamento.COD_ATIV_CURRIC WHERE aproveitamento.MATR_ALUNO = '$grr' GROUP BY disciplina.categoria) as b ON a.categoria = b.categoria;";
+SELECT categoria , COUNT(disciplina.categoria) as qtd FROM disciplina JOIN aproveitamento ON disciplina.CODIGO = aproveitamento.COD_ATIV_CURRIC WHERE aproveitamento.MATR_ALUNO = '$grr' GROUP BY disciplina.categoria) as b ON a.categoria = b.categoria;";
 
 
             $stmt = $conn->prepare($sql);
