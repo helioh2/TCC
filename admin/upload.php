@@ -20,20 +20,22 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
 
     $row = 1;
     if (($handle = fopen("./CSV/$arquivo", "r")) !== FALSE) {
+        $relatorioErro = "";
 
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
             //verifica primeiro item do cabecalho do CSV
-            if (($row == 1) && ($data[0] != "NOME DO ALUNO") && ($data[1] != "MATRICULA DO ALUNO") ) {
-                echo "<script>alert('Arquivo inválido!');</script>";
+            if (($row == 1) && ($data[0] != "NOME DO ALUNO") && ($data[1] != "MATRICULA DO ALUNO")) {
+
+                echo "<script>alert('Arquivo Inválido!');</script>";
 
                 print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
                 die();
             }
-            
+
             $num = count($data);
             $row++;
-            
+
 
             $NOME_PESSOA = $data[0];
             $MATR_ALUNO = $data[1];
@@ -62,12 +64,20 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
 
             $inseriu = TRUE;
 
+
+
             if ((numLinhasSelecionarWHERE("aproveitamento", array("NOME_PESSOA"), "NOME_PESSOA='$NOME_PESSOA' AND MATR_ALUNO = '$MATR_ALUNO' AND COD_CURSO = '$COD_CURSO' AND COD_ATIV_CURRIC = '$COD_ATIV_CURRIC' AND MEDIA_FINAL = '$MEDIA_FINAL'") == 0) && ($NOME_PESSOA != "NOME DO ALUNO")) {
-                $inseriu = inserir("aproveitamento", $dados);
+                if ($MEDIA_FINAL > 100) {
+                    $relatorioErro = $relatorioErro . " ERRO: Média Final $MEDIA_FINAL inválida, em  $NOME_ATIV_CURRIC de  $NOME_PESSOA ";
+                } else {
+                    $inseriu = inserir("aproveitamento", $dados);
+                }
             }
             if ($inseriu == FALSE) {
 
-                echo "<script>alert('problema na inserção dos dados!');</script>";
+                $relatorioErro = "<script>alert('Problema na inserção dos dados! " . $relatorioErro . "');</script>";
+
+                print $relatorioErro;
 
                 print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
             }
@@ -77,8 +87,9 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
         }
         if ($inseriu == TRUE) {
 
+            $relatorioErro = "<script>alert('Relatóriox incluído com sucesso!  $relatorioErro ');</script>";
 
-            print "<script>alert ('Relatório incluído com sucesso!');</script>";
+            echo $relatorioErro;
             print "<script type = 'text/javascript'> location.href = './listarDisciplinas.php?codigo=" . $codCurso . "' </script>";
         }
         fclose($handle);

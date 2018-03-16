@@ -13,7 +13,7 @@ class ListarDisciplinas {
         $num = numLinhasSelecionarWHERE("curso left join compartilhado on curso.id = compartilhado.id_curso",
                 array('curso.id'), " curso.id = $id_curso AND (curso.id_usuario = $id_usuario OR compartilhado.id_compartilhado = $id_usuario)");
         if ($num > 0) {
-            $fetch = selecionarWHERE("disciplina", array("CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado", "ativa"), "id_curso = '$id_curso'");
+            $fetch = selecionarWHERE("disciplina", array("CODIGO", "NOME", "categoria", "TOTAL_CARGA_HORARIA", "requisitoCadastrado", "ativa"), "id_curso = '$id_curso' ORDER BY NOME");
             foreach ($fetch as $linha) {
                 $disc = new Disciplina($linha["NOME"], $linha["CODIGO"], 0, $linha["TOTAL_CARGA_HORARIA"], 0, 0, $linha["requisitoCadastrado"], $linha["ativa"]);
                 $this->disciplinas[] = $disc;

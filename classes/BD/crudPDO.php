@@ -20,8 +20,8 @@ function inserir($tabela, array $dados) {
     if ($stmt->execute()) {
         //print"<script> alert('Insedira com sucesso'); </script>";
         return $conn->lastInsertId();
-    }else{
-        
+    } else {
+
         print"<script> alert('Falha na inserção'); </script>";
         return FALSE;
     }
@@ -59,14 +59,12 @@ function deletar($tabela, $condicao) {
 
 
     $stmt = $conn->prepare($sql);
-    if ($stmt->execute()){
+    if ($stmt->execute()) {
         return TRUE;
         //print"<script> alert('Excluida com sucesso'); </script>";
-        
-    }else{
+    } else {
         print"<script> alert('Falha na exclusão'); </script>";
         return FALSE;
-        
     }
 }
 
@@ -119,7 +117,7 @@ function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
     $linhas = implode(",", array_values($array));
 
     $sql = "SELECT {$linhas} FROM {$tabela} WHERE {$condicao}";
-   
+
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();
@@ -132,4 +130,28 @@ function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
       echo '<br>';
       } */
     return $line;
+}
+
+function listarRequisitos($idCurso) {
+    $conn = DataBase::getInstance()->getDb();
+
+    $sql = "SELECT disciplina.ID as id, disciplina.NOME as disciplina, req.requisito  FROM (SELECT disciplina.NOME as requisito , requisito.id_disciplina FROM requisito JOIN disciplina ON requisito.id_requisito = disciplina.ID) as req JOIN disciplina ON req.id_disciplina = disciplina.ID WHERE disciplina.id_curso = $idCurso";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $fetch = $stmt->fetchAll();
+
+    return $fetch;
+}
+
+function listarRequisitosCodigo($idCurso) {
+    $conn = DataBase::getInstance()->getDb();
+
+    $sql = "SELECT disciplina.ID as id, disciplina.CODIGO as disciplina, req.requisito  FROM (SELECT disciplina.CODIGO as requisito , requisito.id_disciplina FROM requisito JOIN disciplina ON requisito.id_requisito = disciplina.ID) as req JOIN disciplina ON req.id_disciplina = disciplina.ID WHERE disciplina.id_curso =  $idCurso";
+
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+    $fetch = $stmt->fetchAll();
+
+    return $fetch;
 }

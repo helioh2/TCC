@@ -76,7 +76,8 @@
             for (var i = 0; i < ((listaColisao.length) - 1); i++) {
                 //alert(listaColisao[i]);
 
-                $("#" + listaColisao[i]).addClass("alert-success");
+                $("#" + listaColisao[i]).addClass("alert-danger");
+                $("#" + listaColisao[i] + "nome").addClass("alert-danger");
             }
 
 
@@ -96,7 +97,8 @@
             for (var i = 0; i < ((listaColisao.length) - 1); i++) {
                 //alert(listaColisao[i]);
 
-                $("#" + listaColisao[i]).removeClass("alert-success");
+                $("#" + listaColisao[i]).removeClass("alert-danger");
+                $("#" + listaColisao[i] + "nome").removeClass("alert-danger");
             }
 
         }
@@ -157,7 +159,7 @@ $recomendacao->start();
                         <tr class="text-center" id="elementos"> 
 
                             <td id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
-                            <td  class="text-success" ><?php echo $rec->getNome(); ?></td>
+                            <td id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
                             <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
                             <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
 

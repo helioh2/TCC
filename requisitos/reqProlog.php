@@ -2,27 +2,18 @@
 
 include_once '../classes/BD/crudPDO.php';
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-$codDisciplina = $_POST["codDisciplina"];
-$codRequisito = "";
-if (!empty($_POST["codRequisito"])) {
-    $codRequisito = $_POST["codRequisito"];
-}
+
 $codCurso = $_POST["codCurso"];
 
-$listaRequisitos = $codRequisito;
+$idCurso = $_POST["idCurso"];
 
-alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '$codDisciplina'");
 
-// escrevendo na base de conhecimento de requisitos de disciplinas
-if (!(file_exists("../jar/req" . $codCurso . ".pl"))) {
-    $fp = fopen("../jar/req" . $codCurso . ".pl", "a");
+if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
+    unlink("../jar/req" . $codCurso . ".pl");
+}
+$fp = fopen("../jar/req" . $codCurso . ".pl", "a");
 
-    fwrite($fp, "possibilidades(R,L):-
+fwrite($fp, "possibilidades(R,L):-
 	base(L),
 	podeCursar(R).
 
@@ -65,21 +56,65 @@ verLista([Cab|Cauda]):-
 
 verLista(X):- write(X).
 ");
-} else {
 
-    $fp = fopen("../jar/req" . $codCurso . ".pl", "a");
+
+$fetch = listarRequisitosCodigo($idCurso);
+
+
+if ((file_exists("../jar/qtdReq" . $codCurso . ".pl"))) {
+    //alterar("disciplina", array("requisitoCadastrado" => 0, "requisitada" => 0), "id_curso = '$idCurso'");
+
+    unlink("../jar/qtdReq" . $codCurso . ".pl");
 }
+if (!empty($fetch[0]['disciplina'])) {
+    $disciplinaAnterior = $fetch[0]['disciplina'];
+//alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '$disciplinaAnterior'");
+    fwrite($fp, "\nrequisito('" . $disciplinaAnterior . "'):-\n");
+    foreach ($fetch as $f) {
 
-if ($codRequisito == "") {
-    fwrite($fp, "\n\nrequisito('" . $codDisciplina . "').\n");
-} else {
-    fwrite($fp, "\n\nrequisito('" . $codDisciplina . "'):-\n");
-    foreach ($listaRequisitos as $requisito) {
-        fwrite($fp, "disciplina('" . $requisito . "'),\n");
-        fwrite($fp, "requisito('" . $requisito . "'),\n");
+        if ($disciplinaAnterior != $f['disciplina']) {
+
+            alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '$disciplinaAnterior'");
+            $disciplinaAnterior = $f['disciplina'];
+            fwrite($fp, "true.\n\nrequisito('" . $f['disciplina'] . "'):-\n");
+        }
+        alterar("disciplina", array("requisitada" => 1), "CODIGO = '" . $f['requisito'] . "'");
+        fwrite($fp, "disciplina('" . $f['requisito'] . "'),\n");
+        fwrite($fp, "requisito('" . $f['requisito'] . "'),\n");
     }
     fwrite($fp, "true.");
 }
+
+//cadastrados sem requisitos
+$fetch3 = selecionarWHERE("requisito", array('id_disciplina'), "id_requisito = 0 AND id_curso = $idCurso");
+foreach ($fetch3 as $f3) {
+    $fetch4 = selecionarWHERE("disciplina", array('CODIGO'), "ID = '" . $f3['id_disciplina'] . "' LIMIT 1");
+    foreach ($fetch4 as $f4) {
+        $codigo = $f4['CODIGO'];
+    }
+    echo " cadastrado sem requisito " . $f3['id_disciplina'];
+    fwrite($fp, "\n\nrequisito('" . $codigo . "'):-\n");
+    fwrite($fp, "true.");
+
+    alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '" . $codigo . "'");
+    //inserir("requisito", array('id_disciplina'=> $f3['id_disciplina'], 'id_requisito' => 0, 'id_curso' => $idCurso));
+}
+
+//nao cadastrei
+$fetch2 = selecionarWHERE("disciplina", array('CODIGO', 'ID'), "requisitoCadastrado = 0 AND id_curso = $idCurso");
+foreach ($fetch2 as $f2) {
+
+    fwrite($fp, "\n\nrequisito('" . $f2['CODIGO'] . "'):-\n");
+    fwrite($fp, "true.");
+
+    echo " sem cadastrar " . $f2['ID'];
+    alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '" . $f2['CODIGO'] . "'");
+    inserir("requisito", array('id_disciplina' => $f2['ID'], 'id_requisito' => 0, 'id_curso' => $idCurso));
+}
+
+
+
+
 fclose($fp);
 
 
@@ -104,14 +139,13 @@ retiraRepetidos([H|T],[H|T2]):- not(member(H,T)), retiraRepetidos(T,T2).
 countReq(X,Acc):- findall(Y,(requisito(X,Y)),L),retiraRepetidos(L,LUnique),  count(LUnique,Acc).\n");
 } else {
     $fp2 = fopen("../jar/qtdReq" . $codCurso . ".pl", "a");
-}if ($codRequisito == "") {
-    
-} else {
-    foreach ($listaRequisitos as $requisito) {
-        fwrite($fp2, "\n\nrequisitoDireto('".$requisito."', X) :- X = '".$codDisciplina."'. \n");
-        alterar("disciplina", array("requisitada" => 1), "CODIGO = '$requisito'");
-    }
 }
-fclose($fp2);
+foreach ($fetch as $f) {
+    fwrite($fp2, "\n\nrequisitoDireto('" . $f['requisito'] . "', X) :- X = '" . $f['disciplina'] . "'. \n");
+    alterar("disciplina", array("requisitada" => 1), "ID = " . $f['requisito']);
+}
 
-//print "<script type = 'text/javascript'> location.href = './escrevendoProlog.php?idCurso=$idCurso&nomeCurso=$nomeCurso&codigo=$codCurso' </script>";
+fclose($fp2);
+//
+//print "<script>alert('Requisitos Cadastrados');</script>";
+echo "Requisitos Cadastrados";
