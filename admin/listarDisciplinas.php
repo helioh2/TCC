@@ -446,8 +446,6 @@ foreach ($fetch as $f) {
                 <div id="listaDisciplinas" >
 
 
-
-
                     <table class="table bg-warning" >
                         <thead>
                             <tr>

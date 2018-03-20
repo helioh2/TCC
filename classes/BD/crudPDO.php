@@ -132,10 +132,10 @@ function numLinhasSelecionarWHERE($tabela, $array, $condicao) {
     return $line;
 }
 
-function listarRequisitos($idCurso) {
+function listarRequisitos($idCurso, $order) {
     $conn = DataBase::getInstance()->getDb();
 
-    $sql = "SELECT disciplina.ID as id, disciplina.NOME as disciplina, req.requisito  FROM (SELECT disciplina.NOME as requisito , requisito.id_disciplina FROM requisito JOIN disciplina ON requisito.id_requisito = disciplina.ID) as req JOIN disciplina ON req.id_disciplina = disciplina.ID WHERE disciplina.id_curso = $idCurso";
+    $sql = "SELECT disciplina.ID as id, disciplina.NOME as disciplina, req.requisito  FROM (SELECT disciplina.NOME as requisito , requisito.id_disciplina FROM requisito JOIN disciplina ON requisito.id_requisito = disciplina.ID) as req JOIN disciplina ON req.id_disciplina = disciplina.ID WHERE disciplina.id_curso = $idCurso ORDER BY $order";
 
     $stmt = $conn->prepare($sql);
     $stmt->execute();

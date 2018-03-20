@@ -25,6 +25,9 @@
             });
 
 
+            var order = "disciplina";
+
+
 
             function atualizar() {
                 $.ajax({
@@ -49,7 +52,7 @@
                 $.ajax({
                     type: "post",
                     url: "../ajax/requisitosAjax.php",
-                    data: {idCurso: "<?php echo $idCurso; ?>"}
+                    data: {idCurso: "<?php echo $idCurso; ?>", order: order}
                 }).done(function (data) {
 
                     $("#requisitos").html(data);
@@ -88,7 +91,7 @@
                 $.ajax({
                     type: 'POST',
                     url: "../ajax/gravarRequisito.php",
-                    data: {idCurso: <?php echo $idCurso;?>,codRequisito: codRequisitosSelecionados, codCurso: codCurso, codDisciplina: codDisciplina}
+                    data: {idCurso: <?php echo $idCurso; ?>, codRequisito: codRequisitosSelecionados, codCurso: codCurso, codDisciplina: codDisciplina}
                 }).done(function (data) {
 
                     atualizar();
@@ -111,15 +114,44 @@
                 });
 
             }
+
+            function excluirTodos(id) {
+                $.ajax({
+                    type: 'POST',
+                    url: "excluirReq.php",
+                    data: {idCurso: id}
+                }).done(function (data) {
+                    alert(data);
+                    atualizar();
+                    mostrarRequisitos();
+
+                });
+
+            }
             function mostrarRequisitos() {
                 if ($("#btnMostrar").val() === 'MOSTRAR') {
                     $("#requisitos").show();
+                    $("#titulo").show();
                     $("#btnMostrar").val('OCULTAR');
-                    $("#btnMostrar").html('OCULTAR');
+                    //$("#btnMostrar").html('OCULTAR');
+                    //$("#formulario").removeClass();
+                    //$("#formulario").addClass("col-lg-6");
+                    $("#formulario").hide();
+
+                    // $("#divRequisitos").removeClass();
+                    //$("#divRequisitos").addClass("col-lg-6");
+
                 } else {
                     $("#requisitos").hide();
+                    $("#titulo").hide();
                     $("#btnMostrar").val('MOSTRAR');
-                    $("#btnMostrar").html('MOSTRAR');
+                    //$("#btnMostrar").html('LISTA DE REQUISITOS');
+                    //$("#formulario").removeClass();
+                    //$("#formulario").addClass("col-lg-8");
+
+                    $("#formulario").show();
+                    //$("#divRequisitos").removeClass();
+                    //$("#divRequisitos").addClass("col-lg-2");
 
                 }
 
@@ -130,78 +162,84 @@
     </head>
     <body class="bg-warning">
 
-        <div class="title">
-            <h1></h1>
-
-        </div>
-
-        <br><br>
-
-    <center>
-        <!--        <div class="col-lg-6">-->
 
 
-        <form id="lista" class="container-fluid center-block" >
-            <!--                <label>Cadastre os requisitos de todas as disciplinas</label><br>
-                            <label>Caso a disciplina não tenha nenhum, insira sem selecionar nenhum requisito</label>-->
-            <h4 class="text-info">DISCIPLINAS</h4>
-            <select  id="selectDisciplina" class="btn  text-uppercase text-info text-center" name="codDisciplina">
+        <div class="row">
+            <div id="formulario"  >
+                <center>
+                    <div >
 
-                <!--                ajax-->
 
-            </select>
-            <br><br>
-            <h4 class="text-info" >REQUISITOS</h4>
-            <select  required="true" class="text-uppercase text-info" name="codRequisito[]" id="selectRequisitos" size="12" multiple >
+                        <br>
+                        <br>
+                        <form id="lista" class="container-fluid center-block" >
+                            <div class="panel panel-primary" style="margin-left: 10%; margin-right: 10%">
+                                <h4 class="text-info">DISCIPLINA</h4>
+                                <select  id="selectDisciplina" class="btn  text-uppercase text-info text-center" name="codDisciplina">
 
-                <!--                ajax-->
+                                    <!--                ajax-->
 
-            </select>
-            <input class="text-success" name="codCurso" type="hidden" id="codCurso" value = "<?php echo $codCurso; ?>">
-            <input class="text-success" name="nomeCurso" type="hidden" id="nomeCurso" value = "<?php echo $nomeCurso; ?>">
-            <input class="text-success" name="idCurso" type="hidden" id="idCurso" value = "<?php echo $idCurso; ?>">
-<!--            <br> <input type="submit" name="submit" class="alert-success" value="Inserir">-->
-            <br> <input type="button" class="btn btn-default" onclick="salvar()" name="submit" class="alert-success" value="ADICIONAR">
-        </form>
-        <br>
-        <button type="button" class="btn btn-default" onclick="window.location.href = '../admin/listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
-        <br>
+                                </select>
+                                <br>
+                                <br>
+                            </div>
+                            <div class="panel panel-primary " style="margin-left: 10%; margin-right: 10%">
+                                <h4 class="text-info" >REQUISITOS</h4>
+                                <select   class="text-uppercase text-info " style="border: white" name="codRequisito[]" id="selectRequisitos" size="12" multiple >
 
-        <!--        </div>-->
+                                    <!--                ajax-->
 
-        <!--        <div class="col-lg-6" >-->
-        <br>
+                                </select>
+                                <input class="text-success" name="codCurso" type="hidden" id="codCurso" value = "<?php echo $codCurso; ?>">
+                                <input class="text-success" name="nomeCurso" type="hidden" id="nomeCurso" value = "<?php echo $nomeCurso; ?>">
+                                <input class="text-success" name="idCurso" type="hidden" id="idCurso" value = "<?php echo $idCurso; ?>">
+                                <br>
+                                <br>
+                                <input type="button" class="btn btn-primary" onclick="salvar()" name="submit" class="alert-success" value="ADICIONAR">
+                                <br>
+                                <br>
+                            </div>
+                        </form>
+                        <button class="btn btn-success" onclick="cadastrar()">FINALIZAR</button>
+                        <br>
+                        <br>
+                        <button type="button" class="btn btn-default" onclick="window.location.href = '../admin/listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
 
-        <div class="panel panel-default">
-            <h4 class="text-uppercase text-info">Requisitos Cadastrados</h4>
 
-            <center>
-                <button id="btnMostrar" class="btn btn-sm btn-default" value="MOSTRAR"  onclick="mostrarRequisitos()">MOSTRAR</button>
-                <br>
-            </center>
+                    </div>
 
-            <div hidden="true" id="requisitos">
 
-                <!--                    ajax-->
+                </center>
+            </div>
 
+
+            <div id="divRequisitos" style="margin-top: 10px;  margin-left: 10%;" >
+
+
+                <center>
+
+                    <div class="navbar navbar-fixed-top" style="margin-top: 20%; margin-left: 100%; margin-right: 1px;"  >
+
+                        <button id="btnMostrar" class="nav navbar-right btn btn-md btn-default" value="MOSTRAR" style="transform: rotate(270deg);" onclick="mostrarRequisitos()">LISTA DE REQUISITOS</button>
+                    </div>
+                    <br>
+                </center>
+                <h4 hidden="true" id="titulo" class="text-uppercase text-info">Requisitos Cadastrados</h4>
+
+                <div  hidden="true" id="requisitos">
+
+                    <!--                    ajax-->
+
+
+
+                </div>
 
 
             </div>
-
         </div>
-        <br>
-        <button class="btn btn-success" onclick="cadastrar()">SALVAR</button>
-        <br>
-        <button type="button" class="btn btn-default" onclick="window.location.href = 'excluirReq.php?codigo=<?php echo $codCurso; ?>'"> Excluir Todos Requisitos</button>
 
 
-
-
-        <!--        </div>-->
-    </center>
-
-
-</body>
+    </body>
 
 
 

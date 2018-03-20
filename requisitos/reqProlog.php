@@ -92,7 +92,7 @@ foreach ($fetch3 as $f3) {
     foreach ($fetch4 as $f4) {
         $codigo = $f4['CODIGO'];
     }
-    echo " cadastrado sem requisito " . $f3['id_disciplina'];
+   // echo " cadastrado sem requisito " . $f3['id_disciplina'];
     fwrite($fp, "\n\nrequisito('" . $codigo . "'):-\n");
     fwrite($fp, "true.");
 
@@ -107,7 +107,7 @@ foreach ($fetch2 as $f2) {
     fwrite($fp, "\n\nrequisito('" . $f2['CODIGO'] . "'):-\n");
     fwrite($fp, "true.");
 
-    echo " sem cadastrar " . $f2['ID'];
+    //echo " sem cadastrar " . $f2['ID'];
     alterar("disciplina", array("requisitoCadastrado" => 1), "CODIGO = '" . $f2['CODIGO'] . "'");
     inserir("requisito", array('id_disciplina' => $f2['ID'], 'id_requisito' => 0, 'id_curso' => $idCurso));
 }

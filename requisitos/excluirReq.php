@@ -6,14 +6,15 @@
  * and open the template in the editor.
  */
 include_once '../classes/BD/crudPDO.php';
-$codCurso = $_GET["codigo"];
-$fetch = selecionarWHERE("curso", array("id"), "codigo = '$codCurso'");
+$idCurso = $_POST['idCurso'];
+
+$fetch = selecionarWHERE("curso", array("codigo"), "id= '$idCurso'");
 
 foreach ($fetch as $f) {
-    $id = $f["id"];
+    $codCurso = $f["codigo"];
 }
-deletar("requisito", "id_curso = $id");
-alterar("disciplina", array("requisitoCadastrado" => 0, "requisitada" => 0), "id_curso = '$id'");
+deletar("requisito", "id_curso = $idCurso");
+alterar("disciplina", array("requisitoCadastrado" => 0, "requisitada" => 0), "id_curso = '$idCurso'");
 if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
 
 
@@ -23,13 +24,12 @@ if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
 
 
 
-        echo "<script>alert('Excluído com sucesso');</script>";
+        echo "Excluído com sucesso";
     } else {
 
-        echo "<script>alert('Não foi possível excluir');</script>";
+        echo "Não foi possível excluir";
     }
 } else {
 
-    echo "<script>alert('Arquivo não encontrado');</script>";
+    echo "Arquivo não encontrado";
 }
-print "<script type = 'text/javascript'> location.href = '../admin/listarDisciplinas.php?codigo=$codCurso'</script>";

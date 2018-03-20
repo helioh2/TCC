@@ -185,7 +185,7 @@ class Recomendacao {
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
-        // var_dump($arrayPossibilidades);
+         //var_dump($arrayPossibilidades);
         //var_dump($categorias);
         // var_dump($difs);
         //var_dump($arquivoQTDRequisitoCurso);
