@@ -18,6 +18,7 @@ class Curso {
     private $id;
     private $semanas;
     private $compatilhado;
+    private $horasTotal;
 
     function __construct() {
         
@@ -40,6 +41,24 @@ class Curso {
         return $this->compatilhado;
     }
 
+    function getHorasTotal() {
+        return $this->horasTotal;
+    }
+
+    function setHorasTotal($horasTotal) {
+        $this->horasTotal = $horasTotal;
+    }
+
+    function  buscaHorasTotal($id){
+        $fetch = selecionarWHERE("disciplina", array('sum(TOTAL_CARGA_HORARIA) as horasTotal'), "id_curso = $id");
+        foreach ($fetch as $f) {
+            $this->setHorasTotal($f['horasTotal']);
+            
+        }
+        
+        
+    }
+            
     function buscarPorGRR($grr) {
 
         $fetch = selecionarWHERE("aproveitamento JOIN curso ON aproveitamento.id_curso = curso.id", array('curso.id', 'curso.codigo', 'curso.nome', 'curso.semanas', 'curso.id_periodo'), "MATR_ALUNO= '$grr' LIMIT 1");
@@ -51,6 +70,8 @@ class Curso {
             $this->semanas = $f["semanas"];
             $this->idPeriodo = $f["id_periodo"];
         }
+        
+        $this->buscaHorasTotal($f["id"]);
     }
 
     function setNome($nome) {
@@ -77,8 +98,8 @@ class Curso {
         return $this->semanas;
     }
 
-    function getPeriodo(){
+    function getPeriodo() {
         return $this->idPeriodo;
-        
     }
+
 }

@@ -139,12 +139,35 @@ foreach ($fetch as $f) {
 
             }
 
+            function inputNovaCategoria() {
+                $("#divSelectCategoria").hide();
+                $("#divNovaCategoria").show();
+
+
+            }
+            function selecionarCategoria() {
+                $("#divSelectCategoria").show();
+                $("#divNovaCategoria").hide();
+                $("#categoriaD").val("");
+                
+                
+
+            }
+
             function inserirDisciplina() {
                 var nome = document.getElementById("nomeD").value;
                 var codigo = document.getElementById("codigoD").value;
                 var ch = document.getElementById("chD").value;
 //                var ativa = document.getElementById("ativaD").value;
-                var categoria = document.getElementById("categoriaD").value;
+                var categoriaInput = document.getElementById("categoriaD").value;
+                var categoriaSelect = $("#selectCategoria").val();
+                var categoria = "";
+                if (categoriaInput === "") {
+                    categoria = categoriaSelect;
+                } else {
+                    categoria = categoriaInput;
+                }
+
                 var idCurso = document.getElementById("idCurso").value;
 
                 if (codigo === "") {

@@ -15,6 +15,16 @@ class Dificuldades {
         $this->difs = $difs;
     }
 
+    public function listarStringCategorias($min) {
+        $string = "";
+        for ($index1 = 0; $index1 < count($this->difs); $index1++) {
+            if ($this->difs[$index1] > $min) {
+                $string = $string . $this->categorias[$index1]->getNome() . ", ";
+            }
+        }
+        return $string;
+    }
+
     public function imprimeDificuldades() {
         ?>
         <center>
@@ -26,7 +36,7 @@ class Dificuldades {
                     <tr class="text-center">
                         <td class="text-uppercase bg-success"> Categoria </td>
                         <td class="text-uppercase bg-success"> % Dificuldade</td>
-                        
+
                     </tr>
                     <?php
                     for ($index1 = 0; $index1 < count($this->difs); $index1++) {

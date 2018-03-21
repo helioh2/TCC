@@ -102,6 +102,22 @@
             }
 
         }
+        function mostrarInfo() {
+            if ($("#btnInfo").val() === "mostrar") {
+                $("#btnInfo").val(0);
+                $("#btnInfo").val("ocultar");
+                $("#info").show();
+
+            } else {
+                $("#btnInfo").val("ocultar");
+                $("#btnInfo").val("mostrar");
+                $("#info").hide();
+
+
+            }
+
+
+        }
 
     </script>
 </head>
@@ -109,6 +125,7 @@
 $grr = $_POST["grr"];
 require_once './Recomendacao.php';
 $recomendacao = new Recomendacao($grr);
+
 $recomendacao->start();
 ?>
 
@@ -160,8 +177,8 @@ $recomendacao->start();
 
                             <td id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
                             <td id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
-                            <td  class="text-success" ><?php echo round($rec->getImportancia(),0) . "%"; ?></td>
-                            <td class="text-success"><?php echo  round($rec->getHorasDedicacao(),0); ?></td>
+                            <td  class="text-success" ><?php echo round($rec->getImportancia(), 0) . "%"; ?></td>
+                            <td class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
 
                             <td >
                                 <?php
@@ -224,11 +241,41 @@ $recomendacao->start();
                 </tbody>
 
             </table>
+
         </div>
 
     </div>
     <br>
     <br>
+<center>
+    <button id="btnInfo" class="btn btn-lg btn-primary text-uppercase" onclick="mostrarInfo()" value="mostrar">Informações</button>
+
+    <br>
+    <div id="info"  class="panel panel-primary" style="margin-left: 5%; margin-right: 5%; margin-bottom: 5%;"  hidden="true">
+        <?php
+        $strMsg = $recomendacao->getListaDificuldade()->listarStringCategorias(30);
+
+        if (strlen($strMsg) == 0) {
+            $recomendacao->setMensagem("Você está indo bem!");
+        } else {
+            $recomendacao->setMensagem("Atenção: se esforce mais em " . substr($strMsg, 0, -2));
+        }
+        $totalHorasCursado = $recomendacao->getCargaCursada();
+        $totalHorasCurso = $recomendacao->getCargaTotalCurso();
+        $totalAnosCursados = $recomendacao->getAnosCursados();
+        $mediaPorAno = $totalHorasCursado / $totalAnosCursados;
+
+        $previsaoConclusao = ($totalHorasCurso - $totalHorasCursado) / $mediaPorAno;
+
+
+
+        echo "<h3 class='text-uppercase' >" . $recomendacao->getMensagem() . "</h3><br><br>";
+        echo "<h4 class='text-uppercase'> Você já cursou $totalHorasCursado horas</h4><br>";
+        echo "<h4 class='text-uppercase' >Previsão para conclusão: " . round($previsaoConclusao, 0) . " anos</h4>";
+        ?>
+    </div>
+</center>
+
 <center>
     <div class = "modal fade" id = "modalDifs">
         <div class = "modal-lg bg-warning">
@@ -240,10 +287,9 @@ $recomendacao->start();
                 <div class = "modal-body bg-warning">
                     <center>
 
-                        <?php
-                        $recomendacao->getListaDificuldade()->imprimeDificuldades();
-//$recomendacao->getListaDificuldade()->desenhaGraficos();
-                        ?>
+<?php
+$recomendacao->getListaDificuldade()->imprimeDificuldades();
+?>
 
                     </center>
                 </div>
@@ -270,10 +316,10 @@ $recomendacao->start();
                 <div class="modal-body bg-warning">
                     <center>
 
-                        <?php
+<?php
 //$recomendacao->getListaDificuldade()->imprimeDificuldades();
-                        $recomendacao->getListaDificuldade()->imprimeMediaAprovacao();
-                        ?>
+$recomendacao->getListaDificuldade()->imprimeMediaAprovacao();
+?>
 
 
 

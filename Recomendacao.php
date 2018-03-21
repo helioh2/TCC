@@ -15,9 +15,17 @@ class Recomendacao {
     private $grr = "";
     private $recomendacaoFinal = array();
     private $listaDificuldade = array();
+    private $mensagem = "";
+    private $anoEntrada = 0;
+    private $anoMaximo = 0;
+    private $cargaCursada = 0;
+    private $cargaTotalCurso = 0;
+    private $anosCursados  = 0;
+            
 
     function __construct($grr) {
         $this->grr = $grr;
+        $this->horasCursadas();
     }
 
     function getListaDificuldade() {
@@ -34,6 +42,65 @@ class Recomendacao {
 
     function setRecomendacaoFinal($recomendacaoFinal) {
         $this->recomendacaoFinal = $recomendacaoFinal;
+    }
+
+    function getMensagem() {
+        return $this->mensagem;
+    }
+
+    function setMensagem($mensagem) {
+        $this->mensagem = $mensagem;
+    }
+
+    function getCargaTotalCurso() {
+        return $this->cargaTotalCurso;
+    }
+    function getAnosCursados() {
+        return $this->anosCursados;
+    }
+
+    function setAnosCursados($anosCursados) {
+        $this->anosCursados = $anosCursados;
+    }
+
+    
+    function horasCursadas() {
+        $fetch = selecionarWHERE("aproveitamento", array("MIN(ANO) as entrada", "MAX(ANO) as atual"), "MATR_ALUNO = '" . $this->grr . "'");
+        foreach ($fetch as $f) {
+            $this->setAnoEntrada($f['entrada']);
+            $this->setAnoMaximo($f['atual']);
+        }
+
+        $fetch2 = selecionarWHERE("aproveitamento JOIN disciplina ON aproveitamento.COD_ATIV_CURRIC = disciplina.CODIGO", array("SUM(disciplina.TOTAL_CARGA_HORARIA) as cursada"), "aproveitamento.DESCR_SITUACAO = 'Aprovado' AND aproveitamento.MATR_ALUNO = '".$this->grr."'");
+        foreach ($fetch2 as $f) {
+            $this->setCargaCursada($f["cursada"]);
+        }
+        $qtdAnos = numLinhasSelecionarWHERE("aproveitamento", array("ANO"), "MATR_ALUNO = '$this->grr' GROUP BY ANO");
+        $this->setAnosCursados($qtdAnos);
+    }
+
+    function getAnoEntrada() {
+        return $this->anoEntrada;
+    }
+
+    function getAnoMaximo() {
+        return $this->anoMaximo;
+    }
+
+    function setAnoEntrada($anoEntrada) {
+        $this->anoEntrada = $anoEntrada;
+    }
+
+    function setAnoMaximo($anoMaximo) {
+        $this->anoMaximo = $anoMaximo;
+    }
+
+    function getCargaCursada() {
+        return $this->cargaCursada;
+    }
+
+    function setCargaCursada($cargaCursada) {
+        $this->cargaCursada = $cargaCursada;
     }
 
     //calcula dificuldade nas categorias 
@@ -143,7 +210,7 @@ class Recomendacao {
 
         $curso = new Curso();
         $curso->buscarPorGRR($this->grr);
-
+        $this->cargaTotalCurso = $curso->getHorasTotal();
 
         $listaCategoriasDados = new ListaCategoriasDados($this->grr);
         $categorias = $listaCategoriasDados->getCategorias();
@@ -153,7 +220,6 @@ class Recomendacao {
 
 
         $difs = array();
-// echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 // +++++++++++++++++++++++++++++++ CHAMA MODULO DIFICULDADE ++++++++++++++++++++++++++++++++++++
         foreach ($categorias as $cat) {
             $difs[] = $this->calculaDificuldade($cat);
@@ -199,16 +265,10 @@ class Recomendacao {
         $arrayPossibilidades = $this->calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 
 
-// VEIO ATÉ AQUI ====================================
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
-//var_dump($arrayPossibilidades);
-//var_dump($categorias);
-// var_dump($difs);
-//var_dump($arquivoQTDRequisitoCurso);
-//var_dump($curso->getSemanas());
-//die();
+
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
 // +++++++++++++++++++++++++++++++ CHAMA MODULO IMPORTANCIADISC ++++++++++++++++++++++++++++++++++++
         $recomendacao = $this->calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas(), $curso->getPeriodo());
