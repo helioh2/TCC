@@ -200,7 +200,7 @@
                                 <br>
                             </div>
                         </form>
-                        <button class="btn btn-success" onclick="cadastrar()">FINALIZAR</button>
+                        <button class="btn btn-success" onclick="cadastrar()">SALVAR ALTERAÇÕES</button>
                         <br>
                         <br>
                         <button type="button" class="btn btn-default" onclick="window.location.href = '../admin/listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>

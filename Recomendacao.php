@@ -60,7 +60,7 @@ class Recomendacao {
     }
 
     //calcula as importancias das possibilidades de matricula, baseado na dificuldade, qtdade de requisicoes ...
-    public function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arrayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas) {
+    public function calculaImportancias($arrayPossibilidades, $arrayCategorias, $arrayDificuldades, $arquivoQTDRequisitoCurso, $numeroSemanas, $idPeriodo) {
         $recomendacao = array();
         foreach ($arrayPossibilidades as $possibilidade) {
             $catDisc = new BuscaCategoriaDisc($possibilidade);
@@ -68,7 +68,7 @@ class Recomendacao {
             for ($index = 0; $index < count($arrayCategorias); $index++) {
 
                 if ($arrayCategorias[$index]->getNome() == $catPos) {
-                    $this->importancia($recomendacao, $arrayDificuldades[$index], $arrayCategorias[$index], $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas);
+                    $this->importancia($recomendacao, $arrayDificuldades[$index], $arrayCategorias[$index], $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas, $idPeriodo);
                 }
             }
         }
@@ -76,7 +76,7 @@ class Recomendacao {
     }
 
     //calcula a importancia da disciplina, chamada pela funcao calculaImportancias()
-    public function importancia(&$recomendacao, $dificuldade, $categoria, $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas) {
+    public function importancia(&$recomendacao, $dificuldade, $categoria, $possibilidade, $arquivoQTDRequisitoCurso, $numeroSemanas, $idPeriodo) {
 
         $pAprov = $categoria->getPercentAprovacao();
         $mFinal = $categoria->getMediaFinal();
@@ -104,11 +104,29 @@ class Recomendacao {
             $disc->setHorarios($horarios->getHorarios());
 
 //$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
+//calcular as horas de dedicacao semanal
 
-            $disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * $dificuldade / 12) / $numeroSemanas);
-            if ($disc != NULL) {
-                $recomendacao[] = $disc;
+            if ($idPeriodo == 4) {
+
+                $extra = (($disc->getCargaHoraria() / 1.5 )) / $numeroSemanas;
+                if ($dificuldade <= 30) {
+                    $fatorDificudade = $dificuldade / 26;
+                } else
+                    $fatorDificudade = $dificuldade / 29;
             }
+            else {
+                $extra = ($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria()) / $numeroSemanas;
+                if ($dificuldade <= 30) {
+                    $fatorDificudade = $dificuldade / 25;
+                } else
+                    $fatorDificudade = $dificuldade / 27;
+            }
+            $disc->setHorasDedicacao($extra * $fatorDificudade);
+        }
+
+
+        if ($disc != NULL) {
+            $recomendacao[] = $disc;
         }
     }
 
@@ -131,11 +149,11 @@ class Recomendacao {
         $categorias = $listaCategoriasDados->getCategorias();
 
         $listaCategoriasCurso = new ListaCategoriasCurso($curso->getCodigo());
-        // $categoriasCurso = $listaCategoriasCurso->getCategorias();
+// $categoriasCurso = $listaCategoriasCurso->getCategorias();
 
 
         $difs = array();
-        // echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
+// echo "<center><h2>  CURSO: " . $curso->getCodigo() . " -- " . $curso->getNome() . "</h2></center><br><br>";
 // +++++++++++++++++++++++++++++++ CHAMA MODULO DIFICULDADE ++++++++++++++++++++++++++++++++++++
         foreach ($categorias as $cat) {
             $difs[] = $this->calculaDificuldade($cat);
@@ -181,27 +199,27 @@ class Recomendacao {
         $arrayPossibilidades = $this->calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 
 
-        // VEIO ATÉ AQUI ====================================
+// VEIO ATÉ AQUI ====================================
 //nome dinâmico do arquivo de requisitos do curso
         $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
 
-         //var_dump($arrayPossibilidades);
-        //var_dump($categorias);
-        // var_dump($difs);
-        //var_dump($arquivoQTDRequisitoCurso);
-        //var_dump($curso->getSemanas());
-        //die();
+//var_dump($arrayPossibilidades);
+//var_dump($categorias);
+// var_dump($difs);
+//var_dump($arquivoQTDRequisitoCurso);
+//var_dump($curso->getSemanas());
+//die();
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
 // +++++++++++++++++++++++++++++++ CHAMA MODULO IMPORTANCIADISC ++++++++++++++++++++++++++++++++++++
-        $recomendacao = $this->calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas());
+        $recomendacao = $this->calculaImportancias($arrayPossibilidades, $categorias, $difs, $arquivoQTDRequisitoCurso, $curso->getSemanas(), $curso->getPeriodo());
 
 
 ////ordenar a lista de recomendacao
         usort($recomendacao, "Disciplina::ordenaDisciplinas");
 
         $horas = 0;
-        //$recomendacaoFinal = array();
-        //
+//$recomendacaoFinal = array();
+//
 //NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
         foreach ($recomendacao as $d) {
             $this->recomendacaoFinal[] = $d;
@@ -222,7 +240,7 @@ class Recomendacao {
                 }
             }
         }
-        //usort($recomendacao, "Disciplina::ordenaDisciplinasPorColisao");
+//usort($recomendacao, "Disciplina::ordenaDisciplinasPorColisao");
     }
 
 }

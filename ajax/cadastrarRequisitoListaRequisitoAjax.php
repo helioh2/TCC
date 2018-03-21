@@ -16,7 +16,7 @@ $listaDisciplinas = $listDisciplinas->getDisciplinas();
 
 
 foreach ($listaDisciplinas as $disc) {
-    echo "<option class='text-center'  value='".$disc->getCodigo()."' id='codRequisito'>".$disc->getNome()."</option>";
+    echo "<option class=''  value='".$disc->getCodigo()."' id='codRequisito'>".$disc->getNome()."</option>";
 }
 
 

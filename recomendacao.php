@@ -160,8 +160,8 @@ $recomendacao->start();
 
                             <td id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
                             <td id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
-                            <td  class="text-success" ><?php echo (Integer) $rec->getImportancia() . "%"; ?></td>
-                            <td class="text-success"><?php echo (Integer) $rec->getHorasDedicacao(); ?></td>
+                            <td  class="text-success" ><?php echo round($rec->getImportancia(),0) . "%"; ?></td>
+                            <td class="text-success"><?php echo  round($rec->getHorasDedicacao(),0); ?></td>
 
                             <td >
                                 <?php

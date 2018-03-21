@@ -29,6 +29,7 @@ class Curso {
         $this->id = $id;
         $this->semanas = $semanas;
         $this->compatilhado = 0;
+        $this->idPeriodo = 0;
     }
 
     function setCompartilhado($id_dono) {
@@ -41,13 +42,14 @@ class Curso {
 
     function buscarPorGRR($grr) {
 
-        $fetch = selecionarWHERE("aproveitamento JOIN curso ON aproveitamento.id_curso = curso.id", array('curso.id', 'curso.codigo', 'curso.nome', 'curso.semanas'), "MATR_ALUNO= '$grr' LIMIT 1");
+        $fetch = selecionarWHERE("aproveitamento JOIN curso ON aproveitamento.id_curso = curso.id", array('curso.id', 'curso.codigo', 'curso.nome', 'curso.semanas', 'curso.id_periodo'), "MATR_ALUNO= '$grr' LIMIT 1");
 
         foreach ($fetch as $f) {
             $this->id = $f["id"];
             $this->codigo = $f["codigo"];
             $this->nome = $f["nome"];
             $this->semanas = $f["semanas"];
+            $this->idPeriodo = $f["id_periodo"];
         }
     }
 
@@ -75,5 +77,8 @@ class Curso {
         return $this->semanas;
     }
 
-    
+    function getPeriodo(){
+        return $this->idPeriodo;
+        
+    }
 }
