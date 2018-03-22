@@ -7,7 +7,7 @@
 
     </tr>
     <?php
-    $vetorDif = [10, 20, 30, 40, 50, 60, 70];
+    $vetorDif = [10, 20, 30, 40, 50, 60, 70, 80, 90];
     $vetorRec = [1, 2, 3, 4, 5, 6];
     foreach ($vetorDif as $dif) {
         foreach ($vetorRec as $rec) {
