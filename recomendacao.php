@@ -116,8 +116,43 @@
 
             }
 
+        }
+        var sumHorasTotais = 0;
+        function selecionar(cod, horas) {
+            var idLinha = "#linha"+cod;
+            var intHoras = parseInt(horas);
+            var id = "#" + cod + "btn";
+            if ($(id).val() === "somar") {
+                sumHorasTotais = sumHorasTotais + intHoras;
+                $(id).html("-");
+                $(id).removeClass();
+                $(id).addClass("btn btn-sm btn-danger");
+                $(id).val("retirar");
+                $(idLinha).addClass("alert-info");
+               
+            } else {
+
+                sumHorasTotais = sumHorasTotais - intHoras;
+                $(id).html("+");
+                $(id).removeClass();
+                $(id).addClass("btn btn-sm btn-success");
+                $(id).val("somar");
+                
+                $(idLinha).removeClass("alert-info");
+                
+            }
+            console.log(sumHorasTotais);
+            var str = "<label class='text-info'> ESTIMATIVA DE<br>" + sumHorasTotais + " HORAS SEMANAIS <br> EXTRACLASSE</label>";
+            $("#horasTotais").html(str);
 
         }
+
+
+
+
+
+
+
 
     </script>
 </head>
@@ -145,6 +180,7 @@ $recomendacao->start();
                                 <li style="margin-top: 10px;"><button class="btn-primary btn-lg" data-toggle="modal" data-target="#modalDifs">DIFICULDADE</button></li>
                                 <li style="margin-top: 10px;"><button class="btn-primary btn-lg" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
                                 <li style="margin-top: 10px;"><button class="btn-info btn-lg"onclick="window.location.href = 'index.php'">VOLTAR</button></li>
+                                <li style="margin-top: 10px;"> <div id='horasTotais'></div></li>
                             </ul>
                         </div>
                     </div>
@@ -158,6 +194,7 @@ $recomendacao->start();
                     <tr class="text-center">
                         <td class="text-uppercase text-info"> Código </td>
                         <td class="text-uppercase text-info"> Disciplina </td>
+                        <td class="text-uppercase text-info"> Escolher </td>
                         <td class="text-uppercase text-info"> Recomendação</td>
                         <td class="text-uppercase text-info"> Horas de Dedicação Semanal </td>
                         <td class="text-uppercase text-info"> Horários </td>
@@ -170,14 +207,18 @@ $recomendacao->start();
                     $count = 0;
                     foreach ($recomendacao->getRecomendacaoFinal() as $rec) {
                         $c = $rec->getCodigo();
+                        $h = $rec->getHorasDedicacao();
                         $count = $count + 1;
                         ?>
 
-                        <tr class="text-center" id="elementos"> 
+                        <tr class="text-center" id="<?php echo "linha".$count;?>"> 
 
                             <td id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
-                            <td id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
-                            <td  class="text-success" ><?php echo round($rec->getImportancia(), 0) . "%"; ?></td>
+                            <td   id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
+
+                            <td><button id="<?php echo $count . "btn" ?>" class="btn btn-sm btn-success" onclick="selecionar(<?php echo $count; ?>, <?php echo round($h, 0); ?>)" value="somar">+</button></td>
+
+                            <td class="text-success" ><?php echo round($rec->getImportancia(), 0) . "%"; ?></td>
                             <td class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
 
                             <td >
@@ -287,9 +328,9 @@ $recomendacao->start();
                 <div class = "modal-body bg-warning">
                     <center>
 
-<?php
-$recomendacao->getListaDificuldade()->imprimeDificuldades();
-?>
+                        <?php
+                        $recomendacao->getListaDificuldade()->imprimeDificuldades();
+                        ?>
 
                     </center>
                 </div>
@@ -316,10 +357,10 @@ $recomendacao->getListaDificuldade()->imprimeDificuldades();
                 <div class="modal-body bg-warning">
                     <center>
 
-<?php
+                        <?php
 //$recomendacao->getListaDificuldade()->imprimeDificuldades();
-$recomendacao->getListaDificuldade()->imprimeMediaAprovacao();
-?>
+                        $recomendacao->getListaDificuldade()->imprimeMediaAprovacao();
+                        ?>
 
 
 

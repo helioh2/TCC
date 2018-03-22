@@ -5,24 +5,32 @@ $fetch = selecionar("periodo", array('id', 'nome'));
 
 
 <center>
-    <form id="curso" class="container-fluid "  name="curso" method="get" action="../admin/inserirCurso.php">
-        <label>Nome</label><br><input ng-model="nomeCurso" name="nome" class="text-success center-block "  type="text" id="nome" value = ""><br>
-        <label>Cógido</label><br><input class="text-success center-block" name="codigo" type="text" id="codigo" value = ""><br>
-        <label>N° de Semanas por Semestre</label><br>
-        <input class="text-success text-center" name="semanas" type="number" id="semanas" value = "0">
-        <br>
-        <br>
-        <label>Turno</label><br>
-        <select required="true" class='bg-warning' style="border: white;" name="idPeriodo[]" size="3">
-            <?php
-            foreach ($fetch as $f) {
-                echo "<option class='text-uppercase text-primary' value='".$f['id']."'>".$f['nome']."</option>";
-            }
-            ?>
+    <form id="curso" class="container-fluid text-uppercase"  name="curso" method="get" action="../admin/inserirCurso.php">
 
-        </select>
+
+        <h4>Nome</h4><input ng-model="nomeCurso" name="nome" class="text-primary center-block "  type="text" id="nome" value = ""><br>
+        <h4>Cógido</h4><input class="text-primary center-block" name="codigo" type="text" id="codigo" value = ""><br>
+        <h4>N° de Semanas por Semestre</h4>
+        <input class="text-primary text-center" name="semanas" type="number" id="semanas" value = "0">
+        
         <br>
+<!--        <div class="panel panel-primary bg-warning" style="margin-left: 30%; margin-right: 30%">-->
+            <h4>Turno</h4>
+            <select required="true" class='bg-warning text-uppercase btn-default btn-lg' style="border: white;" name="idPeriodo[]" size="4">
+                <?php
+                foreach ($fetch as $f) {
+                    echo "<option class='text-uppercase text-primary ' value='" . $f['id'] . "'>" . $f['nome'] . "</option>";
+                }
+                ?>
+
+            </select>
+            <br>
+            <br>
+<!--        </div>-->
         <br>
-        <input type = "submit" name = "submit" class = "btn btn-success" value = "inserir">
+
+        <input type = "submit" name = "submit" class = "btn btn-md btn-primary text-uppercase" value = "inserir">
+        <br>
+
     </form>
 </center>

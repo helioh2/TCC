@@ -10,15 +10,15 @@ FUNCTION_BLOCK dificuldade
 	END_VAR
 
 	FUZZIFY dificuldade
-		TERM Alta  := gauss 0 25;
-		TERM Media  := gauss 50 10;
-		TERM Baixa  := gauss 100 25;		
+		TERM A  := gauss 0 25;
+		TERM B  := gauss 50 10;
+		TERM C  := gauss 100 25;		
 	END_FUZZIFY
 
 	FUZZIFY requisitada
-		TERM Alta  := sigm 3 3;
-		TERM Media  := gauss 2.5 1;
-		TERM Baixa  := sigm -3 1;
+		TERM A  := sigm 3 3;
+		TERM B  := gauss 2.5 1;
+		TERM C  := sigm -3 1;
 	END_FUZZIFY
 
 
@@ -44,16 +44,17 @@ FUNCTION_BLOCK dificuldade
 		// Use 'max' accumulation method
 		ACCU : MAX;
 		
-		RULE 1: IF requisitada IS Alta AND dificuldade IS Alta THEN recomendar IS MuitoAlta;
-		RULE 2: IF requisitada IS Alta AND dificuldade IS Media THEN recomendar IS Alta;
-		RULE 3: IF requisitada IS Alta AND dificuldade IS Baixa THEN recomendar IS Baixa;
-		RULE 4: IF requisitada IS Media AND dificuldade IS Alta THEN recomendar IS Alta;
-		RULE 5: IF requisitada IS Media AND dificuldade IS Media THEN recomendar IS Media;
-		RULE 6: IF requisitada IS Media AND dificuldade IS Baixa THEN recomendar IS Baixa;			
-		RULE 7: IF requisitada IS Baixa AND dificuldade IS Alta THEN recomendar IS Baixa;			
-		RULE 8: IF requisitada IS Baixa AND dificuldade IS Media THEN recomendar IS Baixa;			
-		RULE 9: IF requisitada IS Baixa AND dificuldade IS Baixa THEN recomendar IS MuitoBaixa;			
-	
+		RULE 1: IF requisitada IS A AND dificuldade IS A THEN recomendar IS MuitoAlta;
+		RULE 2: IF requisitada IS A AND dificuldade IS B THEN recomendar IS Alta;
+		RULE 3: IF requisitada IS A AND dificuldade IS C THEN recomendar IS Baixa;
+		RULE 4: IF requisitada IS B AND dificuldade IS A THEN recomendar IS Alta;
+		RULE 5: IF requisitada IS B AND dificuldade IS B THEN recomendar IS Media;
+		RULE 6: IF requisitada IS B AND dificuldade IS C THEN recomendar IS Baixa;			
+		RULE 7: IF requisitada IS C AND dificuldade IS A THEN recomendar IS Baixa;			
+		RULE 8: IF requisitada IS C AND dificuldade IS B THEN recomendar IS Baixa;			
+		RULE 9: IF requisitada IS C AND dificuldade IS C THEN recomendar IS MuitoBaixa;			
+
+                
 	END_RULEBLOCK	
 	
 END_FUNCTION_BLOCK

@@ -20,7 +20,7 @@ $fetch = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso 
 
     <br>
 <!--    </div>-->
-    <div class="panel panel-primary"style="margin-left: 20%; margin-right: 20%;">
+    <div class="panel panel-primary"style="margin-left: 25%; margin-right: 25%;">
         <label>Categoria</label>
         <br>
 
@@ -35,7 +35,7 @@ $fetch = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso 
                 ?>
             </select>
             <br>
-            <button id="btnNovaCategoria" class="btn btn-md btn-default" onclick="inputNovaCategoria()">NOVA</button>
+            <button id="btnNovaCategoria" class="btn btn-md btn-default " onclick="inputNovaCategoria()">NOVA</button>
 
         </div>
 
@@ -43,7 +43,7 @@ $fetch = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso 
 
             <input class="text-primary center-block" name="categoria" type="text" id="categoriaD" value = "">
             <br>
-            <button id="btnSelectCategoria" class="btn btn-md btn-default" onclick="selecionarCategoria()">LISTAR</button>
+            <button id="btnSelectCategoria" class="btn btn-md btn-default " onclick="selecionarCategoria()">LISTAR</button>
             <br>
         </div>
     </div>

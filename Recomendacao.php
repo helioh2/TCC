@@ -20,8 +20,7 @@ class Recomendacao {
     private $anoMaximo = 0;
     private $cargaCursada = 0;
     private $cargaTotalCurso = 0;
-    private $anosCursados  = 0;
-            
+    private $anosCursados = 0;
 
     function __construct($grr) {
         $this->grr = $grr;
@@ -55,6 +54,7 @@ class Recomendacao {
     function getCargaTotalCurso() {
         return $this->cargaTotalCurso;
     }
+
     function getAnosCursados() {
         return $this->anosCursados;
     }
@@ -63,7 +63,6 @@ class Recomendacao {
         $this->anosCursados = $anosCursados;
     }
 
-    
     function horasCursadas() {
         $fetch = selecionarWHERE("aproveitamento", array("MIN(ANO) as entrada", "MAX(ANO) as atual"), "MATR_ALUNO = '" . $this->grr . "'");
         foreach ($fetch as $f) {
@@ -71,7 +70,7 @@ class Recomendacao {
             $this->setAnoMaximo($f['atual']);
         }
 
-        $fetch2 = selecionarWHERE("aproveitamento JOIN disciplina ON aproveitamento.COD_ATIV_CURRIC = disciplina.CODIGO", array("SUM(disciplina.TOTAL_CARGA_HORARIA) as cursada"), "aproveitamento.DESCR_SITUACAO = 'Aprovado' AND aproveitamento.MATR_ALUNO = '".$this->grr."'");
+        $fetch2 = selecionarWHERE("aproveitamento JOIN disciplina ON aproveitamento.COD_ATIV_CURRIC = disciplina.CODIGO", array("SUM(disciplina.TOTAL_CARGA_HORARIA) as cursada"), "aproveitamento.DESCR_SITUACAO = 'Aprovado' AND aproveitamento.MATR_ALUNO = '" . $this->grr . "'");
         foreach ($fetch2 as $f) {
             $this->setCargaCursada($f["cursada"]);
         }
@@ -170,7 +169,7 @@ class Recomendacao {
             $horarios = new BuscaHorariosDisc($possibilidade);
             $disc->setHorarios($horarios->getHorarios());
 
-//$disc->setHorasDedicacao(($disc->getCargaHoraria() / 2 + $disc->getCargaHoraria() * 101 / ($pAprov + 1) * 101 / ($mFinal + 1 )) / 18);
+
 //calcular as horas de dedicacao semanal
 
             if ($idPeriodo == 4) {
@@ -189,11 +188,10 @@ class Recomendacao {
                     $fatorDificudade = $dificuldade / 27;
             }
             $disc->setHorasDedicacao($extra * $fatorDificudade);
-        }
 
-
-        if ($disc != NULL) {
-            $recomendacao[] = $disc;
+            if ($disc != NULL) {
+                $recomendacao[] = $disc;
+            }
         }
     }
 
@@ -277,16 +275,11 @@ class Recomendacao {
 ////ordenar a lista de recomendacao
         usort($recomendacao, "Disciplina::ordenaDisciplinas");
 
-        $horas = 0;
-//$recomendacaoFinal = array();
-//
-//NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
+
         foreach ($recomendacao as $d) {
             $this->recomendacaoFinal[] = $d;
-            $horas += $d->getHorasDedicacao();
         }
-//NAO USADO. SERVE PARA CALCULAR AS HORAS TOTAIS DE DEDICACAO
-//
+
 //cria lista de colisao de horarios para cada disciplina
         for ($i = 0; $i < count($this->recomendacaoFinal); $i++) {
             $antigo = $this->recomendacaoFinal[$i]->getHorarios();
