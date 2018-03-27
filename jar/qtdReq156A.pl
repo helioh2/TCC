@@ -1,30 +1,3 @@
-requisitoDireto('PCE001', 'PCE006').
-requisitoDireto('DEE090', X) :- X = 'DEE056'; X = 'DEE059'.
-requisitoDireto('DEE045', X) :- X = 'DEE046'; X = 'DEE049'.
-requisitoDireto('PCE010', 'PCE004').
-requisitoDireto('PCE005', 'PCE015').
-requisitoDireto('PCE006', X) :- X = 'PCE011' ; X = 'PCE014'.
-requisitoDireto('DEE046', X):- X = 'DEE047'; X = 'DEE051'.
-requisitoDireto('DEE050', 'DEE051').
-requisitoDireto('PCE011', 'PCE017').
-requisitoDireto('PCE014', 'DEE059').
-requisitoDireto('DEE047', X):- X= 'DEE059'; X= 'DEE056'; 
-                            X= 'DEE055'; X= 'DEE054'.
-requisitoDireto('DEE051', 'DEE054').
-requisitoDireto('PCE017', 'DEE044').
-requisitoDireto('DEE055', X):- X = 'DEE057'; X = 'DEE058'.
-requisitoDireto('PCE021', X):- X = 'DSH014'; X = 'DSH015'; X = 'DSH016'.
-requisitoDireto('DEE044', 'DEE061').
-requisitoDireto('DEE057', X):- X = 'DEE060'; X = 'DSH018'.
-requisitoDireto(Y, 'DSH018'):- Y = 'DEE058'; Y = 'DSH014'; 
-                                    Y = 'DSH015'; Y = 'DSH016'.
-requisitoDireto(Y, X):- (Y = 'DSH014'; Y = 'DSH015'; Y = 'DSH016'),
-		  (X = 'DSH017'; X = 'DSH019').
-requisitoDireto(Y, X):- (Y = 'DSH017'; Y = 'DSH019'),
-		  (X = 'DSH021'; X = 'DSH020').
-requisitoDireto(Y, X):- (Y = 'DSH021'; Y = 'DSH020'),
-		  (X = 'DSH022'; X = 'DSH025').
-		  
 		  
 exige(X, Y):- requisitoDireto(Y, X).
 exige(X, Z):- requisitoDireto(Y, X), exige(Y, Z).
@@ -40,3 +13,156 @@ retiraRepetidos([H|T],T2):- member(H,T), retiraRepetidos(T,T2),!.
 retiraRepetidos([H|T],[H|T2]):- not(member(H,T)), retiraRepetidos(T,T2).
 
 countReq(X,Acc):- findall(Y,(requisito(X,Y)),L),retiraRepetidos(L,LUnique),  count(LUnique,Acc).
+
+
+requisitoDireto('DSH008', X) :- X = 'DSH010'. 
+
+
+requisitoDireto('DEE045', X) :- X = 'DEE046'. 
+
+
+requisitoDireto('DEE040', X) :- X = 'DEE041'. 
+
+
+requisitoDireto('DEE045', X) :- X = 'DEE049'. 
+
+
+requisitoDireto('DEE046', X) :- X = 'DEE047'. 
+
+
+requisitoDireto('DEE041', X) :- X = 'DEE052'. 
+
+
+requisitoDireto('DSH009', X) :- X = 'DSH011'. 
+
+
+requisitoDireto('DEE041', X) :- X = 'DEE042'. 
+
+
+requisitoDireto('DEE046', X) :- X = 'DEE051'. 
+
+
+requisitoDireto('DEE050', X) :- X = 'DEE051'. 
+
+
+requisitoDireto('DEE047', X) :- X = 'DEE054'. 
+
+
+requisitoDireto('DEE051', X) :- X = 'DEE054'. 
+
+
+requisitoDireto('DEE042', X) :- X = 'DEE043'. 
+
+
+requisitoDireto('DEE047', X) :- X = 'DEE055'. 
+
+
+requisitoDireto('DEE090', X) :- X = 'DEE056'. 
+
+
+requisitoDireto('DEE047', X) :- X = 'DEE056'. 
+
+
+requisitoDireto('DEE055', X) :- X = 'DEE058'. 
+
+
+requisitoDireto('DSH013', X) :- X = 'DSH014'. 
+
+
+requisitoDireto('DSH013', X) :- X = 'DSH016'. 
+
+
+requisitoDireto('DEE043', X) :- X = 'DEE044'. 
+
+
+requisitoDireto('DSH013', X) :- X = 'DSH015'. 
+
+
+requisitoDireto('DEE055', X) :- X = 'DEE057'. 
+
+
+requisitoDireto('DEE058', X) :- X = 'DSH018'. 
+
+
+requisitoDireto('DSH015', X) :- X = 'DSH018'. 
+
+
+requisitoDireto('DEE057', X) :- X = 'DSH018'. 
+
+
+requisitoDireto('DEE090', X) :- X = 'DEE059'. 
+
+
+requisitoDireto('DEE047', X) :- X = 'DEE059'. 
+
+
+requisitoDireto('DEE052', X) :- X = 'DEE059'. 
+
+
+requisitoDireto('DEE057', X) :- X = 'DEE060'. 
+
+
+requisitoDireto('DSH014', X) :- X = 'DSH019'. 
+
+
+requisitoDireto('DSH016', X) :- X = 'DSH019'. 
+
+
+requisitoDireto('DSH015', X) :- X = 'DSH019'. 
+
+
+requisitoDireto('DSH019', X) :- X = 'DSH021'. 
+
+
+requisitoDireto('DSH017', X) :- X = 'DSH021'. 
+
+
+requisitoDireto('DSH019', X) :- X = 'DSH020'. 
+
+
+requisitoDireto('DSH017', X) :- X = 'DSH020'. 
+
+
+requisitoDireto('DEE044', X) :- X = 'DEE061'. 
+
+
+requisitoDireto('DEE047', X) :- X = 'DSH023'. 
+
+
+requisitoDireto('DEE058', X) :- X = 'DSH023'. 
+
+
+requisitoDireto('DSH019', X) :- X = 'DSH023'. 
+
+
+requisitoDireto('DSH017', X) :- X = 'DSH023'. 
+
+
+requisitoDireto('DSH021', X) :- X = 'DSH022'. 
+
+
+requisitoDireto('DSH020', X) :- X = 'DSH022'. 
+
+
+requisitoDireto('DSH021', X) :- X = 'DSH025'. 
+
+
+requisitoDireto('DSH020', X) :- X = 'DSH025'. 
+
+
+requisitoDireto('DSH023', X) :- X = 'DSH024'. 
+
+
+requisitoDireto('DSH014', X) :- X = 'DSH017'. 
+
+
+requisitoDireto('DSH016', X) :- X = 'DSH017'. 
+
+
+requisitoDireto('DSH015', X) :- X = 'DSH017'. 
+
+
+requisitoDireto('DEE074', X) :- X = 'DEE075'. 
+
+
+requisitoDireto('DEE040', X) :- X = 'mat0001'. 

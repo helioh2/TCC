@@ -30,20 +30,23 @@
 
             var idButton = "#btnHorarios" + cod;
             var idDiv = "#divHorarios" + cod;
-            //alert(idButton);
-            // alert(idDiv);
-            // alert($(idButton).val());
-            if ($(idButton).val() === "MOSTRAR") {
-                $(idButton).val("ESCONDER");
-                $(idButton).html("ESCONDER");
-                $(idDiv).show();
-            } else {
-                $(idButton).val("MOSTRAR");
-                $(idButton).html("MOSTRAR");
-                $(idDiv).hide();
-            }
+            $(idButton).hide();
+            $(idDiv).show();
+
 
         }
+        function esconder(cod) {
+
+            var idButton = "#btnHorarios" + cod;
+            var idDiv = "#divHorarios" + cod;
+
+            $(idButton).show();
+            $(idDiv).hide();
+
+
+        }
+
+
         function mostrarColisao(cod) {
 
             var idButton = "#btnColisao" + cod;
@@ -112,24 +115,108 @@
                 $("#btnInfo").val("ocultar");
                 $("#btnInfo").val("mostrar");
                 $("#info").hide();
-
-
             }
 
         }
+
         var sumHorasTotais = 0;
-        function selecionar(cod, horas) {
-            var idLinha = "#linha"+cod;
+
+        function selecionar(index, horas) {
+
+            var idLinha = "#linha" + index;
+            var idName = index;
+            var codCodigo = $(document.getElementsByName(idName)).attr("id");
+            //alert(codCodigo);
+
             var intHoras = parseInt(horas);
-            var id = "#" + cod + "btn";
+            var id = "#" + index + "btn";
             if ($(id).val() === "somar") {
+
                 sumHorasTotais = sumHorasTotais + intHoras;
                 $(id).html("-");
                 $(id).removeClass();
                 $(id).addClass("btn btn-sm btn-danger");
                 $(id).val("retirar");
-                $(idLinha).addClass("alert-info");
+                $("#" + codCodigo).addClass("alert-info");
+                $("#" + codCodigo + "nome").addClass("alert-info");
+                // $(idLinha).addClass("alert-info");
+
+                //verifica choques automaticamente
+                var divColisao = "#divColisao" + index;
+                var codColisoes = $(divColisao).html() + "";
+                codColisoes = codColisoes.replace(/^\s+|\s+$/g, "");
+                //alert(codColisoes);
+                //lista das colisoes de cod
+                var listaColisao = new Array();
+                listaColisao = codColisoes.split("<br>");
+                //deseleciona as disciplias com choque
+                for (var i = 0; i < ((listaColisao.length) - 1); i++) {
+                    //alert(listaColisao[i]);
+                    var buttonName = listaColisao[i] + "btn";
+                    var btnSelecionarId = $(document.getElementsByName(buttonName)).attr("id");
+                    var btnSelecionarVal = $("#" + btnSelecionarId).val();
+
+                    var horasName = listaColisao[i] + "horas";
+                    var idHoras = $(document.getElementsByName(horasName)).attr("id");
+
+
+                    //var btnSelecionarVal = $(idBtnSelecionar).val();
+                    // alert("id horas: "+idHoras);
+                    //alert(btnSelecionarVal);
+                    if (btnSelecionarVal === "retirar") {
+                        alert("Colisão de Horário com: "+listaColisao[i]);
+                        // alert(listaColisao[i]+"retirar");
+                        $("#" + btnSelecionarId).html("+");
+                        $("#" + btnSelecionarId).removeClass();
+                        $("#" + btnSelecionarId).addClass("btn btn-sm btn-success");
+                        $("#" + btnSelecionarId).val("somar");
+
+                        $("#" + listaColisao[i]).removeClass("alert-info");
+                        $("#" + listaColisao[i] + "nome").removeClass("alert-info");
+                        //alert(idHoras);
+                        var horas2 = parseInt($("#" + idHoras).html());
+                        //alert(horas2);
+                        sumHorasTotais = sumHorasTotais - horas2;
+                    }
+                }
+
+            } else {
                
+                sumHorasTotais = sumHorasTotais - intHoras;
+                $(id).html("+");
+                $(id).removeClass();
+                $(id).addClass("btn btn-sm btn-success");
+                $(id).val("somar");
+
+                $("#" + codCodigo).removeClass("alert-info");
+                $("#" + codCodigo + "nome").removeClass("alert-info");
+                //$(idLinha).removeClass("alert-info");
+
+            }
+            console.log(sumHorasTotais);
+            var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
+                    sumHorasTotais +
+                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
+            $("#horasTotais").html(str);
+
+        }
+
+        function selecionar2(index, horas) {
+
+            var idLinha = "#linha" + index;
+            var intHoras = parseInt(horas);
+            var id = "#" + index + "btn";
+            if ($(id).val() === "somar") {
+
+
+                sumHorasTotais = sumHorasTotais + intHoras;
+                $(id).html("-");
+                $(id).removeClass();
+                $(id).addClass("btn btn-sm btn-danger");
+                $(id).val("retirar");
+
+                $(idLinha).addClass("alert-info");
+
             } else {
 
                 sumHorasTotais = sumHorasTotais - intHoras;
@@ -137,12 +224,14 @@
                 $(id).removeClass();
                 $(id).addClass("btn btn-sm btn-success");
                 $(id).val("somar");
-                
+
                 $(idLinha).removeClass("alert-info");
-                
+
             }
             console.log(sumHorasTotais);
-            var str = "<label class='text-info'> ESTIMATIVA DE<br>" + sumHorasTotais + " HORAS SEMANAIS <br> EXTRACLASSE</label>";
+            var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
+                    sumHorasTotais +
+                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
             $("#horasTotais").html(str);
 
         }
@@ -177,10 +266,17 @@ $recomendacao->start();
                         <br>
                         <div id ="menu" class="nav navbar-left ">
                             <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
-                                <li style="margin-top: 10px;"><button class="btn-primary btn-lg" data-toggle="modal" data-target="#modalDifs">DIFICULDADE</button></li>
-                                <li style="margin-top: 10px;"><button class="btn-primary btn-lg" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
-                                <li style="margin-top: 10px;"><button class="btn-info btn-lg"onclick="window.location.href = 'index.php'">VOLTAR</button></li>
-                                <li style="margin-top: 10px;"> <div id='horasTotais'></div></li>
+                                <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalDifs">DIFICULDADE</button></li>
+                                <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
+                                <li style="margin-top: 10px;"> <div id='horasTotais'>
+                                        <label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>
+                                            HORAS SEMANAIS <br> EXTRACLASSE</label>
+                                    </div></li>
+                                <br>
+                                <br>
+                                <li style="margin-top: 10px;  padding-top: 80%;"><button class="btn-info btn-lg" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
+
+
                             </ul>
                         </div>
                     </div>
@@ -192,13 +288,13 @@ $recomendacao->start();
             <table class="table bg-warning">
                 <thead>
                     <tr class="text-center">
-                        <td class="text-uppercase text-info"> Código </td>
-                        <td class="text-uppercase text-info"> Disciplina </td>
-                        <td class="text-uppercase text-info"> Escolher </td>
-                        <td class="text-uppercase text-info"> Recomendação</td>
-                        <td class="text-uppercase text-info"> Horas de Dedicação Semanal </td>
-                        <td class="text-uppercase text-info"> Horários </td>
-                        <td class="text-uppercase text-info"> Colisão de Horários </td>
+                        <td style="vertical-align:middle"  class="text-uppercase text-primary"> Código </td>
+                        <td style="vertical-align:middle" class="text-uppercase text-primary"> Disciplina </td>
+                        <td style="vertical-align:middle"  class="text-uppercase text-primary"> Escolher </td>
+                        <td style="vertical-align:middle"  class="text-uppercase text-primary"> Recomendação</td>
+                        <td class="text-uppercase text-primary"> Horas de Dedicação Semanal </td>
+                        <td style="vertical-align:middle"   class="text-uppercase text-primary"> Horários </td>
+                        <td class="text-uppercase text-primary"> Colisão de Horários </td>
                     </tr>
                 </thead>
                 <tbody id="lista">
@@ -209,27 +305,29 @@ $recomendacao->start();
                         $c = $rec->getCodigo();
                         $h = $rec->getHorasDedicacao();
                         $count = $count + 1;
+                        $countS = (string) ($count);
                         ?>
 
-                        <tr class="text-center" id="<?php echo "linha".$count;?>"> 
+                        <tr class="text-center" id="<?php echo "linha" . $count; ?>"> 
 
-                            <td id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
+                            <td name="<?php echo $count; ?>" id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
                             <td   id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
 
-                            <td><button id="<?php echo $count . "btn" ?>" class="btn btn-sm btn-success" onclick="selecionar(<?php echo $count; ?>, <?php echo round($h, 0); ?>)" value="somar">+</button></td>
+                            <td><button name="<?php echo $c . "btn" ?>" id="<?php echo $countS . "btn" ?>" class="btn btn-sm btn-success" onclick="selecionar(<?php echo $count; ?>, <?php echo round($h, 0); ?>)" value="somar">+</button></td>
 
                             <td class="text-success" ><?php echo round($rec->getImportancia(), 0) . "%"; ?></td>
-                            <td class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
+                            <td id="<?php echo $count . "horas"; ?>" name="<?php echo $c . "horas"; ?>"  class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
 
                             <td >
                                 <?php
-                                $countS = (string) ($count);
                                 $idButton = "btnHorarios" . $countS;
                                 $idDiv = "divHorarios" . $countS;
                                 ?>
-                                <button id="<?php echo $idButton; ?>" class="btn btn-default" onclick="mostrar(<?php echo $countS ?>)" value="MOSTRAR">MOSTRAR</button>
+                                <button id="<?php echo $idButton; ?>" onmouseover="mostrar(<?php echo $countS; ?>)" value="MOSTRAR">
+                                    <img src="img/horario.png" height="35px" width="35px"/> 
+                                </button>
 
-                                <div id="<?php echo $idDiv; ?>" hidden="true">
+                                <div onmouseout="esconder(<?php echo $countS; ?>)" id="<?php echo $idDiv; ?>"  hidden="true">
                                     <?php
                                     foreach ($rec->getHorarios() as $h) {
                                         echo $h . "<br>";
@@ -289,10 +387,10 @@ $recomendacao->start();
     <br>
     <br>
 <center>
-    <button id="btnInfo" class="btn btn-lg btn-primary text-uppercase" onclick="mostrarInfo()" value="mostrar">Informações</button>
+    <button id="btnInfo" class="btn btn-lg btn-primary text-uppercase" onclick="mostrarInfo()" style="margin-left: 18%;" value="mostrar">Informações</button>
 
     <br>
-    <div id="info"  class="panel panel-primary" style="margin-left: 5%; margin-right: 5%; margin-bottom: 5%;"  hidden="true">
+    <div id="info"  class="panel panel-primary" style="margin-left: 18%; margin-right: 3%; margin-bottom: 3%;"  hidden="true">
         <?php
         $strMsg = $recomendacao->getListaDificuldade()->listarStringCategorias(30);
 
@@ -307,12 +405,23 @@ $recomendacao->start();
         $mediaPorAno = $totalHorasCursado / $totalAnosCursados;
 
         $previsaoConclusao = ($totalHorasCurso - $totalHorasCursado) / $mediaPorAno;
+        $previsaoConclusaoAnos = (int) ($previsaoConclusao);
+        $previsaoConclusaoMeses = "";
+        if (($previsaoConclusao - $previsaoConclusaoAnos ) > 0.5) {
+            $previsaoConclusaoMeses = " e meio";
+        }
 
-
+        $ano = "";
+        if ($previsaoConclusaoAnos > 1) {
+            $ano = " anos";
+        } else {
+            $ano = " ano";
+        }
 
         echo "<h3 class='text-uppercase' >" . $recomendacao->getMensagem() . "</h3><br><br>";
-        echo "<h4 class='text-uppercase'> Você já cursou $totalHorasCursado horas</h4><br>";
-        echo "<h4 class='text-uppercase' >Previsão para conclusão: " . round($previsaoConclusao, 0) . " anos</h4>";
+        echo "<h4 class='text-uppercase'> Você já cursou $totalHorasCursado horas<br>";
+        echo "continuando assim, a previsão de conclusão é de " . $previsaoConclusaoAnos . $ano .
+        $previsaoConclusaoMeses . " </h4>";
         ?>
     </div>
 </center>

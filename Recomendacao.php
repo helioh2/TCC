@@ -289,6 +289,7 @@ class Recomendacao {
                     if (in_array($h, $this->recomendacaoFinal[$i2]->getHorarios()) != FALSE) {
 
                         $this->recomendacaoFinal[$i2]->insereColisao($this->recomendacaoFinal[$i]->getCodigo());
+                        $this->recomendacaoFinal[$i]->insereColisao($this->recomendacaoFinal[$i2]->getCodigo());
                     }
                 }
             }

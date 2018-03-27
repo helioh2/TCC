@@ -50,9 +50,9 @@ class Curso {
     }
 
     function  buscaHorasTotal($id){
-        $fetch = selecionarWHERE("disciplina", array('sum(TOTAL_CARGA_HORARIA) as horasTotal'), "id_curso = $id");
+        $fetch = selecionarWHERE("curso", array("cargaHoraria"), "id = $id");
         foreach ($fetch as $f) {
-            $this->setHorasTotal($f['horasTotal']);
+            $this->setHorasTotal($f['cargaHoraria']);
             
         }
         

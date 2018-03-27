@@ -12,6 +12,8 @@ $fetch = selecionar("periodo", array('id', 'nome'));
         <h4>Cógido</h4><input class="text-primary center-block" name="codigo" type="text" id="codigo" value = ""><br>
         <h4>N° de Semanas por Semestre</h4>
         <input class="text-primary text-center" name="semanas" type="number" id="semanas" value = "0">
+        <h4>Carga Horária</h4>
+        <input class="text-primary text-center" name="cargaHoraria" type="number" id="cargaHoraria" value = "0">
         
         <br>
 <!--        <div class="panel panel-primary bg-warning" style="margin-left: 30%; margin-right: 30%">-->
