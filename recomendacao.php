@@ -1,3 +1,6 @@
+<?php
+include_once './modal.php';
+?>
 <head>
     <meta charset="UTF-8">
     <title>Recomendações de Disciplinas</title>
@@ -26,34 +29,28 @@
             order = 'colisao';
             atualizar();
         }
-        function mostrar(cod) {
 
+
+        //mostra div com os horarios
+        function mostrar(cod) {
             var idButton = "#btnHorarios" + cod;
             var idDiv = "#divHorarios" + cod;
             $(idButton).hide();
             $(idDiv).show();
-
-
         }
-        function esconder(cod) {
 
+        //esconde div com os horarios
+        function esconder(cod) {
             var idButton = "#btnHorarios" + cod;
             var idDiv = "#divHorarios" + cod;
-
             $(idButton).show();
             $(idDiv).hide();
-
-
         }
 
-
+        //mostra div que contem as disciplinas com colisoes de horarios
         function mostrarColisao(cod) {
-
             var idButton = "#btnColisao" + cod;
             var idDiv = "#divColisao" + cod;
-            //alert(idButton);
-            // alert(idDiv);
-            // alert($(idButton).val());
             if ($(idButton).val() === "MOSTRAR") {
                 $(idButton).val("ESCONDER");
                 $(idButton).html("ESCONDER");
@@ -66,19 +63,15 @@
 
         }
 
+        //muda classe bootstrap das disciplinas com colisao ao colocar o mouse sobre
         function iluminarColisao(div) {
             var idDiv = "#divColisao" + div;
             var html = $(idDiv).html() + "";
             var colisaoStr = html.replace(/^\s+|\s+$/g, "");
-            //alert(html);
-
-            //alert(colisaoStr);
             var listaColisao = new Array();
             listaColisao = colisaoStr.split("<br>");
             console.log(listaColisao);
             for (var i = 0; i < ((listaColisao.length) - 1); i++) {
-                //alert(listaColisao[i]);
-
                 $("#" + listaColisao[i]).addClass("alert-danger");
                 $("#" + listaColisao[i] + "nome").addClass("alert-danger");
             }
@@ -87,51 +80,78 @@
 
         }
 
+        //muda classe bootstrap das disciplinas com colisao ao retirar o mouse
         function desiluminaColisao(div) {
             var idDiv = "#divColisao" + div;
             var html = $(idDiv).html() + "";
             var colisaoStr = html.replace(/^\s+|\s+$/g, "");
-            //alert(html);
-
-
             var listaColisao = new Array();
             listaColisao = colisaoStr.split("<br>");
             console.log(listaColisao);
             for (var i = 0; i < ((listaColisao.length) - 1); i++) {
-                //alert(listaColisao[i]);
-
                 $("#" + listaColisao[i]).removeClass("alert-danger");
                 $("#" + listaColisao[i] + "nome").removeClass("alert-danger");
             }
 
         }
+
         function mostrarInfo() {
             if ($("#btnInfo").val() === "mostrar") {
                 $("#btnInfo").val(0);
                 $("#btnInfo").val("ocultar");
                 $("#info").show();
-
             } else {
                 $("#btnInfo").val("ocultar");
                 $("#btnInfo").val("mostrar");
                 $("#info").hide();
             }
-
         }
+
 
         var sumHorasTotais = 0;
 
-        function selecionar(index, horas) {
+        //verifica os choques de horarios automaticamente ao selecionar uma disciplina
+        //removendo estes da selecao e atualizando as horas de estudo extra classe
+        function verificaChoqueHorario(index) {
+            var divColisao = "#divColisao" + index;
+            var codColisoes = $(divColisao).html() + "";
+            codColisoes = codColisoes.replace(/^\s+|\s+$/g, "");
+            var listaColisao = new Array();
+            listaColisao = codColisoes.split("<br>");
+            //deseleciona as disciplias com choque
+            for (var i = 0; i < ((listaColisao.length) - 1); i++) {
+                var buttonName = listaColisao[i] + "btn";
+                var btnSelecionarId = $(document.getElementsByName(buttonName)).attr("id");
+                var btnSelecionarVal = $("#" + btnSelecionarId).val();
+                var horasName = listaColisao[i] + "horas";
+                var idHoras = $(document.getElementsByName(horasName)).attr("id");
+                if (btnSelecionarVal === "retirar") {
+                    alert("Colisão de Horário com: " + listaColisao[i]);
+                    $("#" + btnSelecionarId).html("+");
+                    $("#" + btnSelecionarId).removeClass();
+                    $("#" + btnSelecionarId).addClass("btn btn-sm btn-success");
+                    $("#" + btnSelecionarId).val("somar");
 
+                    $("#" + listaColisao[i]).removeClass("alert-info");
+                    $("#" + listaColisao[i] + "nome").removeClass("alert-info");
+                    var horas2 = parseInt($("#" + idHoras).html());
+                    sumHorasTotais = sumHorasTotais - horas2;
+                }
+            }
+
+        }
+
+        //seleciona as disicpinas escolhidas pelo usuario
+        function selecionar(index, horas) {
             var idLinha = "#linha" + index;
             var idName = index;
             var codCodigo = $(document.getElementsByName(idName)).attr("id");
-            //alert(codCodigo);
 
             var intHoras = parseInt(horas);
             var id = "#" + index + "btn";
-            if ($(id).val() === "somar") {
 
+            //adiciona na lista de selecao
+            if ($(id).val() === "somar") {
                 sumHorasTotais = sumHorasTotais + intHoras;
                 $(id).html("-");
                 $(id).removeClass();
@@ -139,49 +159,14 @@
                 $(id).val("retirar");
                 $("#" + codCodigo).addClass("alert-info");
                 $("#" + codCodigo + "nome").addClass("alert-info");
-                // $(idLinha).addClass("alert-info");
 
                 //verifica choques automaticamente
-                var divColisao = "#divColisao" + index;
-                var codColisoes = $(divColisao).html() + "";
-                codColisoes = codColisoes.replace(/^\s+|\s+$/g, "");
-                //alert(codColisoes);
-                //lista das colisoes de cod
-                var listaColisao = new Array();
-                listaColisao = codColisoes.split("<br>");
-                //deseleciona as disciplias com choque
-                for (var i = 0; i < ((listaColisao.length) - 1); i++) {
-                    //alert(listaColisao[i]);
-                    var buttonName = listaColisao[i] + "btn";
-                    var btnSelecionarId = $(document.getElementsByName(buttonName)).attr("id");
-                    var btnSelecionarVal = $("#" + btnSelecionarId).val();
+                verificaChoqueHorario(index);
 
-                    var horasName = listaColisao[i] + "horas";
-                    var idHoras = $(document.getElementsByName(horasName)).attr("id");
+            }
+            // retira da lista de selecao    
+            else {
 
-
-                    //var btnSelecionarVal = $(idBtnSelecionar).val();
-                    // alert("id horas: "+idHoras);
-                    //alert(btnSelecionarVal);
-                    if (btnSelecionarVal === "retirar") {
-                        alert("Colisão de Horário com: "+listaColisao[i]);
-                        // alert(listaColisao[i]+"retirar");
-                        $("#" + btnSelecionarId).html("+");
-                        $("#" + btnSelecionarId).removeClass();
-                        $("#" + btnSelecionarId).addClass("btn btn-sm btn-success");
-                        $("#" + btnSelecionarId).val("somar");
-
-                        $("#" + listaColisao[i]).removeClass("alert-info");
-                        $("#" + listaColisao[i] + "nome").removeClass("alert-info");
-                        //alert(idHoras);
-                        var horas2 = parseInt($("#" + idHoras).html());
-                        //alert(horas2);
-                        sumHorasTotais = sumHorasTotais - horas2;
-                    }
-                }
-
-            } else {
-               
                 sumHorasTotais = sumHorasTotais - intHoras;
                 $(id).html("+");
                 $(id).removeClass();
@@ -190,51 +175,69 @@
 
                 $("#" + codCodigo).removeClass("alert-info");
                 $("#" + codCodigo + "nome").removeClass("alert-info");
-                //$(idLinha).removeClass("alert-info");
 
             }
             console.log(sumHorasTotais);
             var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
                     sumHorasTotais +
-                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
+                    " HORAS DE DEDICAÇÃO <br> SEMANAL</label>";
+            //atualiza html com informacao das horas totais de estudo extracasse
             $("#horasTotais").html(str);
 
         }
 
-        function selecionar2(index, horas) {
+        function verCoReuisitos(name) {
+            var id = $(document.getElementsByName(name)).attr("id");
+            var cod = $("#" + id).html();
+            //cod = cod.replace(/^\s+|\s+$/g, "");
+            $.ajax({
+                type: 'POST',
+                url: "modal/coRequisitos.php",
+                data: {codigo: cod}
+            }).done(function (data) {
+                $("#cabecalhoModal").html("<center><h3 class='text-primary'>Co-requisitos</h3></center>");
+                $("#corpoModal").html(data);
 
-            var idLinha = "#linha" + index;
-            var intHoras = parseInt(horas);
-            var id = "#" + index + "btn";
-            if ($(id).val() === "somar") {
 
-
-                sumHorasTotais = sumHorasTotais + intHoras;
-                $(id).html("-");
-                $(id).removeClass();
-                $(id).addClass("btn btn-sm btn-danger");
-                $(id).val("retirar");
-
-                $(idLinha).addClass("alert-info");
-
-            } else {
-
-                sumHorasTotais = sumHorasTotais - intHoras;
-                $(id).html("+");
-                $(id).removeClass();
-                $(id).addClass("btn btn-sm btn-success");
-                $(id).val("somar");
-
-                $(idLinha).removeClass("alert-info");
-
-            }
-            console.log(sumHorasTotais);
-            var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
-                    sumHorasTotais +
-                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
-            $("#horasTotais").html(str);
+            });
+            $('#modal').modal('show');
 
         }
+
+//        function selecionar2(index, horas) {
+//
+//            var idLinha = "#linha" + index;
+//            var intHoras = parseInt(horas);
+//            var id = "#" + index + "btn";
+//            if ($(id).val() === "somar") {
+//
+//
+//                sumHorasTotais = sumHorasTotais + intHoras;
+//                $(id).html("-");
+//                $(id).removeClass();
+//                $(id).addClass("btn btn-sm btn-danger");
+//                $(id).val("retirar");
+//
+//                $(idLinha).addClass("alert-info");
+//
+//            } else {
+//
+//                sumHorasTotais = sumHorasTotais - intHoras;
+//                $(id).html("+");
+//                $(id).removeClass();
+//                $(id).addClass("btn btn-sm btn-success");
+//                $(id).val("somar");
+//
+//                $(idLinha).removeClass("alert-info");
+//
+//            }
+//            console.log(sumHorasTotais);
+//            var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
+//                    sumHorasTotais +
+//                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
+//            $("#horasTotais").html(str);
+//
+//        }
 
 
 
@@ -270,7 +273,7 @@ $recomendacao->start();
                                 <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
                                 <li style="margin-top: 10px;"> <div id='horasTotais'>
                                         <label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>
-                                            HORAS SEMANAIS <br> EXTRACLASSE</label>
+                                            HORAS DE DEDICAÇÃO <br> SEMANAL</label>
                                     </div></li>
                                 <br>
                                 <br>
@@ -306,17 +309,22 @@ $recomendacao->start();
                         $h = $rec->getHorasDedicacao();
                         $count = $count + 1;
                         $countS = (string) ($count);
+                        $idNome = $c . "nome";
+                        $idHoras = $count . "horas";
+                        $nameHoras = $c . "horas";
+                        $idBtnSelecionar = $countS . "btn";
+                        $nameBtnSelecionar = $c . "btn";
                         ?>
 
                         <tr class="text-center" id="<?php echo "linha" . $count; ?>"> 
 
                             <td name="<?php echo $count; ?>" id="<?php echo $c; ?>"  ><?php echo $rec->getCodigo(); ?></td>
-                            <td   id="<?php echo $c . "nome"; ?>" class="text-success" ><?php echo $rec->getNome(); ?></td>
+                            <td id="<?php echo $idNome ?>" class="text-success" ><button class="btn-link" onclick="verCoReuisitos(<?php echo $count; ?>)"><?php echo $rec->getNome(); ?></button></td>
 
-                            <td><button name="<?php echo $c . "btn" ?>" id="<?php echo $countS . "btn" ?>" class="btn btn-sm btn-success" onclick="selecionar(<?php echo $count; ?>, <?php echo round($h, 0); ?>)" value="somar">+</button></td>
+                            <td><button name="<?php echo $nameBtnSelecionar; ?>" id="<?php echo $idBtnSelecionar; ?>" class="btn btn-sm btn-success" onclick="selecionar(<?php echo $count; ?>, <?php echo round($h, 0); ?>)" value="somar">+</button></td>
 
                             <td class="text-success" ><?php echo round($rec->getImportancia(), 0) . "%"; ?></td>
-                            <td id="<?php echo $count . "horas"; ?>" name="<?php echo $c . "horas"; ?>"  class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
+                            <td id="<?php echo $idHoras; ?>" name="<?php echo $nameHoras; ?>"  class="text-success"><?php echo round($rec->getHorasDedicacao(), 0); ?></td>
 
                             <td >
                                 <?php
