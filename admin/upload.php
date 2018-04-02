@@ -25,7 +25,7 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
         while (($data = fgetcsv($handle, 1000, ",")) !== FALSE) {
 
             //verifica primeiro item do cabecalho do CSV
-            if (($row == 1) && ($data[0] != "NOME DO ALUNO") && ($data[1] != "MATRICULA DO ALUNO")) {
+            if (($row == 1) && ($data[0] != "NOME DO ALUNO") && ($data[1] != "MATRICULA DO ALUNO") && ($data[20] != "SEXO")) {
 
                 echo "<script>alert('Arquivo Inválido!');</script>";
 
@@ -49,7 +49,7 @@ if (move_uploaded_file($_FILES['arquivo']['tmp_name'], $uploadfile)) {
             $COD_ATIV_CURRIC = $data[7];
             $NOME_ATIV_CURRIC = $data[8];
             $MEDIA_FINAL = $data[9];
-            $DESCR_SITUACAO = $data[10];
+            $DESCR_SITUACAO = strtoupper($data[10]);
             $PERIODO = $data[11];
             $ID_CURSO_ALUNO = $data[12];
             $SITUACAO_ITEM = $data[13];

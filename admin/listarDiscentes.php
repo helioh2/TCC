@@ -34,6 +34,7 @@ foreach ($fetch as $f) {
         <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
         <link href="../css/tcc.css" rel="stylesheet">
         <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/Athena.css" rel="stylesheet">
 
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
@@ -51,6 +52,20 @@ foreach ($fetch as $f) {
 
 
             });
+            function novaDisciplinaModal() {
+                $.ajax({
+                    type: 'POST',
+                    url: "../modal/novaDisciplinaModal.php",
+                    data: {idCurso: <?php echo $id_curso; ?>}
+                }).done(function (data) {
+
+                    $("#corpoModal").html(data);
+
+
+                });
+                $('#modal').modal('show');
+
+            }
 
 
             function  verificarLogado() {
@@ -134,7 +149,7 @@ foreach ($fetch as $f) {
                     data: {idCurso: idCurso, nome: nome},
                 }).done(function (data) {
 
-                    $(".alert-warning").html(data);
+                    $("#corpoLista").html(data);
 
                 });
             }
@@ -174,7 +189,7 @@ foreach ($fetch as $f) {
             function alterarImagem(num) {
                 verificarLogado();
                 if (num === 1) {
-                    document.getElementById('imagem').src = 'img/disciplinas.png';
+                    document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 2) {
                     document.getElementById('imagem').src = 'img/curso.png';
@@ -186,13 +201,13 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/voltar.png';
 
                 } else if (num === 5) {
-                    document.getElementById('imagem').src = 'img/livro.png';
+                    document.getElementById('imagem').src = 'img/livro2.png';
 
                 } else if (num === 6) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 7) {
-                    document.getElementById('imagem').src = 'img/requisitos.png';
+                    document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/default.png';
@@ -239,7 +254,7 @@ foreach ($fetch as $f) {
 
     </head>
 
-    <body class="bg-warning">
+    <body class="Athena_background_three">
 
         <div class="row">
             <div class="col-lg-2">
@@ -252,7 +267,7 @@ foreach ($fetch as $f) {
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
                                     <br>
                                     <li>
-                                        <img id="imagem" src="img/default.png" height="100" width="140">
+                                        <img id="imagem" src="img/default.png" height="120" width="140">
                                     </li>
                                     <br>
                                     <li>
@@ -275,7 +290,7 @@ foreach ($fetch as $f) {
                                                     <li><button onmouseover="alterarImagem(6)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" onclick="novaDisciplinaModal()">Nova Disciplina</button></li>
                                                     <br>
                                                     <li><button onmouseover="alterarImagem(7)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" type="button" onclick="window.location.href = '../requisitos/cadastrarRequisitos.php?idCurso=<?php echo $id_curso; ?>&codigo=<?php echo $codCurso; ?>&nomeCurso=<?php echo $nomeCurso; ?>'"> Cadastrar Requisitos</button></li>
-                                                    <br>
+                                                    
                                                 </div>
                                             </center>
                                         </ul>
@@ -288,9 +303,9 @@ foreach ($fetch as $f) {
                                             <center>
 
 
-                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" data-toggle="modal" data-target="#modalListarCursos">Listar Cursos</button></li>
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#modalListarCursos">Listar Cursos</button></li>
 
-                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="listaCompartilhado()"> Compartilhado</button></li>
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="dropdown-toggle btn-primary" onclick="listaCompartilhado()"> Compartilhado</button></li>
                                             </center>
                                         </ul>
                                     </li>
@@ -321,13 +336,13 @@ foreach ($fetch as $f) {
 
 
 
-                    <table class="table bg-warning" >
+                    <table class="table" >
                         <thead>
                             <tr>
                                 <th>ID</th><th>Nome</th><th>Matrícula</th><th>Ano</th><th>Atividade Curricular</th><th>Media Final</th><th>Situação</th><th>Período</th><th>Carga Horária Total</th><th>Ano Ingresso</th><th>Forma Evasão</th><th>Ano Evasão</th><th>Sexo</th>
                             </tr> 
                         </thead>
-                        <tbody class = "alert-warning">
+                        <tbody id="corpoLista" >
 
 
                             <!--                            ajax-->
@@ -358,13 +373,13 @@ foreach ($fetch as $f) {
         <div class="modal fade" id="modalListarCursos">
 
             <center>
-                <div class="modal-lg bg-info">
+                <div class="modal-lg Athena_modal">
                     <div class="modal-content">
-                        <div class="modal-header bg-info">
+                        <div class="modal-header Athena_modal">
                             <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title text-info bg-info">Selecionar Curso</h4>
+                            <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
                         </div>
-                        <div class="modal-body bg-warning">
+                        <div class="modal-body Athena_modal">
                             <center>
 
 
@@ -375,8 +390,10 @@ foreach ($fetch as $f) {
 
                             </center>
                         </div>
-                        <div class="modal-footer">
+                        <div class="Athena_modal_fother">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                            <br>
+                            <br>
                         </div>
                     </div>
                 </div>
@@ -388,17 +405,16 @@ foreach ($fetch as $f) {
         <div class="modal fade" id="mostrarDisciplinas">
 
             <center>
-                <div class="modal-lg bg-info">
+                <div class="modal-lg">
                     <div class="modal-content">
-                        <div class="modal-header bg-info">
+                        <div class="modal-header Athena_modal">
                             <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title bg-success">Disciplinas</h4>
+                            <h4 class="modal-title Athena_modal">Disciplinas</h4>
                         </div>
-                        <div class="modal-body bg-info
-                             ">
+                        <div class="modal-body Athena_modal">
                             <center>
-                                <table class="table bg-info" >
-                                    <tr  class = "alert-success ">
+                                <table class="table Athena_modal" >
+                                    <tr  class = "Athena_modal ">
                                         <th>Código</th><th>Alterar</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th>              
                                     </tr> 
                                     <?php
@@ -408,7 +424,7 @@ foreach ($fetch as $f) {
                                 </table>  
                             </center>
                         </div>
-                        <div class="modal-footer">
+                        <div class="Athena_modal_fother">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                         </div>
                     </div>

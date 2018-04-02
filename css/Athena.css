@@ -1,0 +1,156 @@
+.Athena_background{
+    background-image: url(Atenas3.jpg);
+    background-size: 100%;
+
+
+}
+
+.Athena_title{
+    font-family: sans-serif;
+    font-weight: bold;
+    color: #ffffff;
+    margin-top: 5%;
+    background: linear-gradient(to bottom, rgba(0, 0, 20, 0.6) 0%, rgba(0, 0, 20, 1) 100%);
+    margin-left: 35%; 
+    margin-right: 35%; 
+    padding-bottom: 3px;
+    padding-top: 1px;
+
+}
+
+.Athena_cabecalho{
+    /*    position: relative;
+        height: 100%;*/
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, rgba(50, 100, 100, 0.5) 10%, rgba(10, 10, 0, 1) 90%);
+    color: white;
+}
+
+.Athena_login {
+    /*    position: relative;*/
+    /*    height: 100%;*/
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, rgba(200, 200, 256, 0.7) 0%, rgba(0, 0, 20, 0.8) 100%);
+    color: white;   
+
+
+}
+
+.Athena_index {
+    /*    position: relative;*/
+    /*    height: 100%;*/
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, rgba(200, 200, 256, 0.7) 0%, rgba(0, 0, 20, 0.8) 100%);
+    color: white;
+    margin-left: 28%;
+    margin-right: 28%;
+
+
+}
+
+
+
+.Athena_modal {
+    /*    position: relative;*/
+    /*    height: 100%;*/
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background:  #E6E0F8;
+
+
+}
+.Athena_modal_fother {
+    /*    position: relative;*/
+    /*    height: 100%;*/
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, #E6E0F8 20%, #BCA9F5 100%);
+
+
+}
+
+.Athena_button_submit{
+
+    background-color: #9999ff; 
+    color: black;
+    /*    padding: 15px 32px;*/
+    text-align: center;
+    display: inline-block;
+    font-size: 15px;   
+}
+.Athena_button_book{
+    background-color: #ccccff; 
+    color: black;
+    /*    padding: 15px 32px;*/
+    text-align: center;
+    display: inline-block;
+    font-size: 12px;   
+}
+.Athena_button_book_large{
+    background-color: #ccccff; 
+    color: black;
+    /*    padding: 15px 32px;*/
+    text-align: center;
+    display: inline-block;
+    font-size: 18px;   
+}
+
+.Athena_button_dark_large{
+    background-color: #483980; 
+    color: white;
+    /*    padding: 15px 32px;*/
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;   
+}
+
+
+.Athena_button_red_large{
+    background-color: #B04734; 
+    color: white;
+    /*    padding: 15px 32px;*/
+    text-align: center;
+    display: inline-block;
+    font-size: 20px;   
+}
+
+.Athena_panel {
+    position: relative;
+
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, rgba(100, 200, 256, 0.7) 0%, rgba(0, 10, 1, 0.8) 100%);
+    color: white;    
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+}
+
+.Athena_panel_two {
+    position: relative;
+
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, rgba(100, 200, 256, 0.7) 0%, rgba(0, 10, 1, 0.8) 100%);
+    color: white;    
+    margin-top: 30%;
+    margin-bottom: 5%;
+
+    margin-left: 10%;
+    padding-bottom: 10px;
+    /*    margin-right: 10%;*/
+
+}
+.Athena_background_two {
+
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, #F5ECCE 60%, #A4A4A4 100%);
+
+    /*    margin-right: 10%;*/
+
+}
+
+.Athena_background_three {
+
+    /*    background: -webkit-gradient(linear, left top, left bottom, from(rgba(146, 135, 187, 0.8)), to(rgba(0, 0, 0, 0.6)));*/
+    background: linear-gradient(to bottom, #F5ECCE 60%, #F5ECCE 60%);
+
+    /*    margin-right: 10%;*/
+
+}

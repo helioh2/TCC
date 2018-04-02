@@ -25,12 +25,13 @@ foreach ($fetch as $f) {
 }
 ?>
 
-<html ng-app="Disciplina" >
-    <head >
+<html>
+    <head>
         <meta charset="UTF-8">
         <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
         <link href="../css/tcc.css" rel="stylesheet">
         <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/Athena.css" rel="stylesheet">
 
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
@@ -149,8 +150,8 @@ foreach ($fetch as $f) {
                 $("#divSelectCategoria").show();
                 $("#divNovaCategoria").hide();
                 $("#categoriaD").val("");
-                
-                
+
+
 
             }
 
@@ -238,7 +239,7 @@ foreach ($fetch as $f) {
                     data: {idCurso: idCurso, nome: nome},
                 }).done(function (data) {
 
-                    $(".alert-warning").html(data);
+                    $("#corpoLista").html(data);
 
                 });
             }
@@ -325,7 +326,7 @@ foreach ($fetch as $f) {
             function alterarImagem(num) {
                 verificarLogado();
                 if (num === 1) {
-                    document.getElementById('imagem').src = 'img/disciplinas.png';
+                    document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 2) {
                     document.getElementById('imagem').src = 'img/curso.png';
@@ -337,13 +338,13 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/voltar.png';
 
                 } else if (num === 5) {
-                    document.getElementById('imagem').src = 'img/aluno.png';
+                    document.getElementById('imagem').src = 'img/aluno2.png';
 
                 } else if (num === 6) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 7) {
-                    document.getElementById('imagem').src = 'img/requisitos.png';
+                    document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/default.png';
@@ -388,10 +389,10 @@ foreach ($fetch as $f) {
 
     </head>
 
-    <body class="bg-warning">
+    <body class="Athena_background_three">
 
         <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-2 col-xs-2">
                 <center>
                     <div  class="navbar navbar-fixed-top"  ng-hide="form"  style="margin-right: 80%">
 
@@ -401,7 +402,7 @@ foreach ($fetch as $f) {
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
                                     <br>
                                     <li>
-                                        <img id="imagem" src="img/default.png" height="100" width="140">
+                                        <img id="imagem" src="img/default.png" height="120" width="140">
                                     </li>
                                     <br>
                                     <li>
@@ -422,9 +423,9 @@ foreach ($fetch as $f) {
                                                     <br>
                                                     <!--                                                    <li><button class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#modalDisciplina">Nova Disciplina</button></li>-->
                                                     <li><button onmouseover="alterarImagem(6)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" onclick="novaDisciplinaModal()">Nova Disciplina</button></li>
-                                                    <br>
+                                                    <br> 
                                                     <li><button onmouseover="alterarImagem(7)" onmouseout="alterarImagem(0)" class="dropdown-toggle btn-primary" type="button" onclick="window.location.href = '../requisitos/cadastrarRequisitos.php?idCurso=<?php echo $id_curso; ?>&codigo=<?php echo $codCurso; ?>&nomeCurso=<?php echo $nomeCurso; ?>'"> Cadastrar Requisitos</button></li>
-                                                    <br>
+
                                                 </div>
                                             </center>
                                         </ul>
@@ -436,9 +437,9 @@ foreach ($fetch as $f) {
                                             <center>
 
 
-                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="btn-primary  btn-lg" data-toggle="modal" data-target="#modalListarCursos">Listar Cursos</button></li>
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="dropdown-toggle btn-primary" data-toggle="modal" data-target="#modalListarCursos">Listar Cursos</button></li>
 
-                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="bg-primary  btn-lg" onclick="listaCompartilhado()"> Compartilhado</button></li>
+                                                <li onmouseover="alterarImagem(2)" onmouseout="alterarImagem(0)" style="margin-top: 10px;"><button type="button" class="dropdown-toggle btn-primary" onclick="listaCompartilhado()"> Compartilhado</button></li>
                                             </center>
                                         </ul>
                                     </li>
@@ -464,19 +465,18 @@ foreach ($fetch as $f) {
             </div>
 
 
-            <div ng-controller="MeuController" class="col-lg-10">
+            <div  class="col-lg-10 col-xs-10">
                 <br><br><br>
                 <div id="listaDisciplinas" >
 
 
-                    <table class="table bg-warning" >
+                    <table class="table" >
                         <thead>
                             <tr>
                                 <th>Código</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th><th>Ativo</th><th>Deletar</th>
                             </tr> 
                         </thead>
-                        <tbody class = "alert-warning">
-
+                        <tbody id="corpoLista" class = "">
 
                             <!--                            ajax-->
 
@@ -486,119 +486,51 @@ foreach ($fetch as $f) {
                 </div>
                 <br>
                 <br>
-                <center>
             </div>
         </div>
-        <div class="row">
-
-        </div>
 
 
 
+    </body>
 
 
-        <?php
-        include_once '../classes/ListarCursos.php';
-        $listCursos = new ListarCursos();
-        ?>
+    <?php
+    include_once '../classes/ListarCursos.php';
+    $listCursos = new ListarCursos();
+    ?>
 
 
-        <div class="modal fade" id="modalListarCursos">
+    <div class="modal fade" id="modalListarCursos">
 
-            <center>
-                <div class="modal-lg bg-warning">
-                    <div class="modal-content">
-                        <div class="modal-header bg-warning">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title text-info bg-warning">Selecionar Curso</h4>
-                        </div>
-                        <div class="modal-body bg-warning">
-                            <center>
-
-
-                                <?php
-                                $listCursos->listar();
-                                ?>
+        <center>
+            <div class="modal-lg Athena_modal">
+                <div class="modal-content">
+                    <div class="modal-header Athena_modal">
+                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
+                    </div>
+                    <div class="modal-body Athena_modal">
+                        <center>
 
 
-                            </center>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        </div>
+                            <?php
+                            $listCursos->listar();
+                            ?>
+
+
+                        </center>
+                    </div>
+                    <div class="Athena_modal_fother">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <br>
+                        <br>
                     </div>
                 </div>
-        </div>
+            </div>
+        </center>
+    </div>
 
 
-
-
-        <div class="modal fade" id="mostrarDisciplinas">
-
-            <center>
-                <div class="modal-lg bg-info">
-                    <div class="modal-content">
-                        <div class="modal-header bg-info">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title bg-success">Disciplinas</h4>
-                        </div>
-                        <div class="modal-body bg-info
-                             ">
-                            <center>
-                                <table class="table bg-info" >
-                                    <tr  class = "alert-success ">
-                                        <th>Código</th><th>Alterar</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th>              
-                                    </tr> 
-                                    <?php
-                                    $listDisciplinas->listar($id_curso);
-                                    ?>
-
-                                </table>  
-                            </center>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                        </div>
-                    </div>
-                </div>
-        </div>
-
-
-
-
-
-
-
-        <!--        <div  class="modal fade" id="modalDisciplina" ng-controller="MeuController">
-                    <div class="modal-dialog bg-info">
-                        <div class="modal-content bg-info">
-                            <div class="modal-header bg-info">
-                                <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                                <h4 ng-app="Disciplina" class="modal-title">{{nomeDisciplina}}</h4>
-                            </div>
-                            <div class="modal-body bg-info">
-                                <center>
-                                    <form id="curso" class="container-fluid bg-info" name="curso" method="post" action="inserirDisciplina.php">
-                                        Inserir Disciplina<br><br>
-                                        Nome<br><input name="nome" class="text-success center-block " ng-model="nomeDisciplina" type="text" id="nomeD" value=""><br>
-                                        Cógido<br><input class="text-success center-block" name="codigo" type="text" id="codigoD" value = ""><br>
-                                        Categoria<br><input class="text-success center-block" name="categoria" type="text" id="categoriaD" value = ""><br>
-                                        Carga Horaria<br><input class="text-success center-block" name="CH" type="number" id="chD" value = ""> 
-                                        Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativaD" value = "1" ?> <br> 
-                                        <input name="codCurso" class="text-success center-block "  type="hidden" id="codCursoD" value ="<?php echo $codCurso; ?>" >
-                                        <input name="nomeCurso" class="text-success center-block "  type="hidden" id="nomeCurso" value ="<?php echo $nomeCurso; ?>">
-                                        <br>
-                                        <input type="submit" name="submit" class="alert-success" value="inserir">
-                                        <input type="button" onclick="inserirDisciplina()"  class="alert-success" value="inserirJS">
-                                    </form>
-                                </center>
-                            </div>
-                            <div class="modal-footer bg-info">
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>-->
 
 
 

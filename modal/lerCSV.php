@@ -92,10 +92,10 @@ foreach ($fetch as $f) {
 
         <input type="hidden" name="idCurso" id="idCurso" value="<?php echo $idCurso; ?>"/>
         <br>
-        <input type="submit" class="bg-success text-uppercase" value="Enviar" /> 
+        <input type="submit" class="bg-success Athena_button_book" value="Enviar" /> 
     </form>
     <br>
-    <button type="button" class="bg-success  btn-lg text-uppercase" onclick="window.location.href = 'CSV/modelo/modelo.xlsx'"> Modelo da Planília</button>
+    <button type="button" class="btn-lg Athena_button_book_large text-uppercase" onclick="window.location.href = 'CSV/modelo/modelo.xlsx'"> Modelo da Planília</button>
 </center>
 
 

@@ -10,24 +10,61 @@ and open the template in the editor.
 <html>
     <head>
         <meta charset="UTF-8">
-        <title>Recomendações de Disciplinas</title>
+        <title>Athena: Sistema para Recomendação de Disciplinas</title>
         <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link href="css/Athena.css" rel="stylesheet">
 
     </head>
-    <body class="bg-primary">
-        <?php
-        ?>
-    <center><br><br><br>
-        <form id="categorias" class="bg-primary container-fluid " name="possibilidades" method="post" action="recomendacao.php">
-            <label class="text-uppercase">GRR</label>
-            <br><input name="grr" class="text-success text-center"  type="text" id="grr" value = ""><br>
-<!--            <br><input class="text-success center-block" name="horas" type="number" id="horas" value = "">-->
-            <br><input type="submit" name="submit" class="btn btn-default" value="Enviar">
-        </form>
-    </center>
+    <body class="Athena_background" >
+
+        <div class="text-center Athena_title " >
+            <h2>ATHENA</h2>
+            <h4>Sistema para Recomendação de Disciplinas</h4>
+
+        </div>
+        <div class="row" style="margin-top: 4%;">
+            <div class="col-lg-3 col-xs-3">
+
+            </div>
+
+           
+            <div class="col-lg-4 col-xs-4 Athena_login" style="margin-left: 8%; ">
+                <center>  
+                    <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">
+                        <h3 >Ambiente de Consulta</h3>
+                    </div>
+                    <form id="categorias" class="container-fluid " name="possibilidades" method="post" action="recommender.php">
+                        <h4 class="text-uppercase" >GRR</h4>
+                        <input style="color: black;" name="grr"  class="text-center"  type="text" id="grr" value = ""><br>
+
+                        <br><input type="submit" name="submit" class="btn Athena_button_submit " value="Consultar">
+                    </form>
+                    <br>
+                    <br>
+                </center>
+            </div>
+
+
+            <div class="Athena_panel col-lg-2 col-xs-2" style=" margin-left: 12%; ">
+                <center>
+
+                    <label>Ambiente de <br>Administração</label><br>
+                    <button class="btn Athena_button_submit" onclick="window.location.href = 'admin/login.php'">Login</button>
+                </center>
+            </div>
+
+        </div>
 
 
 
+        <div  style="position: absolute; bottom: 10px; width: 100%; padding-left: 80%">
+            <center>
+                <label>Desenvolvido por:<br>
+                    <a style="color: black;" href="http://lattes.cnpq.br/3657386675052708">Daniel Antonio Karling</a></label>
+            </center>
+        </div>
 
-</body>
+
+
+    </body>
 </html>

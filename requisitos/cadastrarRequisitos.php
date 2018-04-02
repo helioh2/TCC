@@ -8,6 +8,8 @@
         $codCurso = $_GET["codigo"];
         ?>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/Athena.css" rel="stylesheet">
+        
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -160,7 +162,7 @@
         </script>
 
     </head>
-    <body class="bg-warning">
+    <body class="Athena_modal">
 
 
 
@@ -195,7 +197,7 @@
                                 <input class="text-success" name="idCurso" type="hidden" id="idCurso" value = "<?php echo $idCurso; ?>">
                                 <br>
                                 <br>
-                                <input type="button" class="btn btn-primary" onclick="salvar()" name="submit" class="alert-success" value="ADICIONAR">
+                                <input type="button" class="btn Athena_button_book" onclick="salvar()" name="submit" class="alert-success" value="ADICIONAR">
                                 <br>
                                 <br>
                             </div>

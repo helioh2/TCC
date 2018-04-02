@@ -7,6 +7,7 @@ include './modal.php';
         <meta charset="UTF-8">
         <title id="titulo" >Login</title>
         <link href="../css/bootstrap.css" rel="stylesheet">
+        <link href="../css/Athena.css" rel="stylesheet">
 
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
@@ -21,6 +22,19 @@ include './modal.php';
                     }
                 });
             });
+
+            function atualizar() {
+                $.ajax({
+                    url: "verificarLogin.php",
+                }).done(function (data) {
+                    if (data === 'logado') {
+                        alert('Você já está logado');
+                        location.href = './index.php';
+                    }
+
+                    location.reload();
+                });
+            }
 
             function login() {
                 var user = $('#usuario').val();
@@ -68,6 +82,19 @@ include './modal.php';
                 $('#modal').modal('show');
 
             }
+            function menuNovoUsuario() {
+
+                //$('#modal').modal('hide');
+                $.ajax({
+                    url: "../modal/novoUsuarioModal.php",
+                }).done(function (data) {
+                    $("#btnCadastras").hide();
+                    $("#btnLogar").show();
+                    $("#menu").html(data);
+                });
+                //$('#modal').modal('show');
+
+            }
 
             function inserirUsuario() {
                 var nome = $('#nomeModal').val();
@@ -96,63 +123,74 @@ include './modal.php';
         </script>
     </head>
 
-    <body class="bg-warning">
+    <body class="Athena_background">
 
-        <div class="row">
+     
+            <div class="text-center Athena_title" >
+                <h2>ATHENA</h2>
+                <h4>Sistema para Recomendação de Disciplinas</h4>
 
-            <div style="position: absolute; top: 10px; padding-right: 70%">
-                <center>
-                    <img src="img/nome.png" width="65%" />
-                </center>
             </div>
-        </div>
+       
         <div class="row">
-            <div class="col-lg-10 col-sm-8">
-                <br>
+            <div class="col-lg-2 col-sm-2">
 
-                <br>
-                <center>
-                    USUÁRIO:<br><input class="text-center text-warning" type="text" id="usuario"/><br>
-                    <br>
-                    SENHA:<br><input class="text-center text-warning" type="password" id="senha" /><br>
-                    <br>
-                    <div hidden="true" id='divNova'>
-
-                        NOVA SENHA:<br><input id='novaSenha' type="password" />
-                        <br>
-                        <br>
-                        REPITA NOVA SENHA:<br><input id='novaSenha2' type="password" />
+            </div>
+            <div class="col-lg-8 col-sm-6">
+                <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 5%;">
+                    <div class="panel Athena_cabecalho" style="margin-left: 15%; margin-right: 15%;">
+                        <center>
+                            <h3>Ambiente de Administração</h3>
+                        </center>
                     </div>
-                    <br>
-
-                    <button class="btn btn-sm btn-success"  onclick="login()">ACESSAR</button>
-
-                    <br>
-
-                    <br>
-                    <button id="btnAlterar" onclick="alterarSenha()" class="btn btn-sm btn-info">ALTERAR SENHA</button>
-                    <br>
-                    <br>
-                    </div>
-                </center>
-                <div class="col-lg-2 col-sm-4">
-                    <br>
-                    <br>
                     <center>
+                        USUÁRIO:<br><input style="color: black;"  class="text-center" type="text" id="usuario"/><br>
                         <br>
-                        <button class="btn btn-lg btn-success"  onclick="modalNovoUsuario()">CADASTRE-SE</button>
+                        SENHA:<br><input style="color: black;"  class="text-center" type="password" id="senha" /><br>
+                        <br>
+                        <div  hidden="true" id='divNova'>
+
+                            NOVA SENHA:<br><input style="color: black;" class="text-center" id='novaSenha' type="password" />
+                            <br>
+                            <br>
+                            REPITA NOVA SENHA:<br><input style="color: black;"  class="text-center" id='novaSenha2' type="password" />
+                            <br>
+                            <br>
+                        </div>
+
+                        <button class="btn btn-sm Athena_button_submit"  onclick="login()">ACESSAR</button>
+
+                        <br>
+                        <br>
+                        <div id="btnAlterar">
+                            <button  onclick="alterarSenha()" class="btn Athena_button_book">ALTERAR SENHA</button>
+                            <br>
+                            <br>
+                        </div>
                     </center>
                 </div>
-                <br>
             </div>
-
-            <br>
-            <div style="position: absolute; bottom: 10; width: 100%; padding-left: 80%">
+            <div class="col-lg-2 col-sm-4" >
+                <br>
+                <br>
                 <center>
-                    <label>Desenvolvido por:<br>
-                        <a href="http://lattes.cnpq.br/3657386675052708">Daniel Antonio Karling</a></label>
+                    <br>
+                    <button id="btnCadastras" class="btn btn-lg Athena_button_dark_large"  onclick="menuNovoUsuario()">CADASTRE-SE</button>
+                    <div id="btnLogar" hidden="true">
+                        <button  class="btn btn-lg Athena_button_dark_large"  onclick="atualizar()" >LOGIN</button>
+                    </div>
                 </center>
             </div>
+            <br>
+        </div>
+
+        <br>
+        <div style="position: absolute; bottom: 10px; width: 100%; padding-left: 80%">
+            <center>
+                <label>Desenvolvido por:<br>
+                    <a style="color: black;" href="http://lattes.cnpq.br/3657386675052708">Daniel Antonio Karling</a></label>
+            </center>
+        </div>
 
 
 
