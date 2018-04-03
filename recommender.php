@@ -207,47 +207,24 @@ include_once './modal.php';
 
             }
 
-            //        function selecionar2(index, horas) {
-            //
-            //            var idLinha = "#linha" + index;
-            //            var intHoras = parseInt(horas);
-            //            var id = "#" + index + "btn";
-            //            if ($(id).val() === "somar") {
-            //
-            //
-            //                sumHorasTotais = sumHorasTotais + intHoras;
-            //                $(id).html("-");
-            //                $(id).removeClass();
-            //                $(id).addClass("btn btn-sm btn-danger");
-            //                $(id).val("retirar");
-            //
-            //                $(idLinha).addClass("alert-info");
-            //
-            //            } else {
-            //
-            //                sumHorasTotais = sumHorasTotais - intHoras;
-            //                $(id).html("+");
-            //                $(id).removeClass();
-            //                $(id).addClass("btn btn-sm btn-success");
-            //                $(id).val("somar");
-            //
-            //                $(idLinha).removeClass("alert-info");
-            //
-            //            }
-            //            console.log(sumHorasTotais);
-            //            var str = "<label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>" +
-            //                    sumHorasTotais +
-            //                    " HORAS SEMANAIS <br> EXTRACLASSE</label>";
-            //            $("#horasTotais").html(str);
-            //
-            //        }
+            function modalAjuda(i) {
 
+                if (i === 8) {
+                    $("#modal").modal('hide');
 
+                } else {
+                    var url = "modal/ajuda" + i + ".php";
 
+                    $.ajax({
+                        url: url
+                    }).done(function (data) {
+                        $("#corpoModal").html(data);
 
+                    });
+                    $('#modal').modal('show');
+                }
 
-
-
+            }
 
         </script>
     </head>
@@ -280,7 +257,8 @@ include_once './modal.php';
                                         </div></li>
                                     <br>
                                     <br>
-                                    <li style="margin-bottom:  5px;  margin-top: 85%;"><button class="btn-lg Athena_button_book_large" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
+                                    <li style=" margin-top: 70%;"><button class="btn-primary btn-lg" style="width: 180px;" onclick="modalAjuda(1)" >AJUDA</button></li>
+                                    <li style="margin-bottom:  5px;  margin-top: 10px;"><button class="btn-lg Athena_button_book_large" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
 
 
                                 </ul>
