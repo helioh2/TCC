@@ -8,10 +8,10 @@ $codCurso = $_POST["codCurso"];
 $idCurso = $_POST["idCurso"];
 
 
-if ((file_exists("../jar/req" . $codCurso . ".pl"))) {
-    unlink("../jar/req" . $codCurso . ".pl");
+if ((file_exists("../ModuloEspecialista/req" . $codCurso . ".pl"))) {
+    unlink("../ModuloEspecialista/req" . $codCurso . ".pl");
 }
-$fp = fopen("../jar/req" . $codCurso . ".pl", "a");
+$fp = fopen("../ModuloEspecialista/req" . $codCurso . ".pl", "a");
 
 fwrite($fp, "possibilidades(R,L):-
 	base(L),
@@ -61,10 +61,10 @@ verLista(X):- write(X).
 $fetch = listarRequisitosCodigo($idCurso);
 
 
-if ((file_exists("../jar/qtdReq" . $codCurso . ".pl"))) {
+if ((file_exists("../ModuloEspecialista/qtdReq" . $codCurso . ".pl"))) {
     //alterar("disciplina", array("requisitoCadastrado" => 0, "requisitada" => 0), "id_curso = '$idCurso'");
 
-    unlink("../jar/qtdReq" . $codCurso . ".pl");
+    unlink("../ModuloEspecialista/qtdReq" . $codCurso . ".pl");
 }
 if (!empty($fetch[0]['disciplina'])) {
     $disciplinaAnterior = $fetch[0]['disciplina'];
@@ -120,8 +120,8 @@ fclose($fp);
 
 //escrevendo no arquivo de quantidade de requisitos
 
-if (!(file_exists("../jar/qtdReq" . $codCurso . ".pl"))) {
-    $fp2 = fopen("../jar/qtdReq" . $codCurso . ".pl", "a");
+if (!(file_exists("../ModuloEspecialista/qtdReq" . $codCurso . ".pl"))) {
+    $fp2 = fopen("../ModuloEspecialista/qtdReq" . $codCurso . ".pl", "a");
     fwrite($fp2, "		  
 exige(X, Y):- requisitoDireto(Y, X).
 exige(X, Z):- requisitoDireto(Y, X), exige(Y, Z).
@@ -138,7 +138,7 @@ retiraRepetidos([H|T],[H|T2]):- not(member(H,T)), retiraRepetidos(T,T2).
 
 countReq(X,Acc):- findall(Y,(requisito(X,Y)),L),retiraRepetidos(L,LUnique),  count(LUnique,Acc).\n");
 } else {
-    $fp2 = fopen("../jar/qtdReq" . $codCurso . ".pl", "a");
+    $fp2 = fopen("../ModuloEspecialista/qtdReq" . $codCurso . ".pl", "a");
 }
 foreach ($fetch as $f) {
     fwrite($fp2, "\n\nrequisitoDireto('" . $f['requisito'] . "', X) :- X = '" . $f['disciplina'] . "'. \n");

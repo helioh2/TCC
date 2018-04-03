@@ -108,7 +108,7 @@ class Recomendacao {
         $percApr = $categoria->getPercentAprovacao() . "";
         $qtdDiscCursadas = $categoria->getQtd();
         //comando .jar, arquivo fuzzy, media, aprovacao, qtdade de disciplina cursada
-        $comando = "java -jar jar/Dificuldade.jar jar/Dificuldade.fcl $media $percApr $qtdDiscCursadas";
+        $comando = "java -jar ModuloEspecialista/Dificuldade.jar ModuloEspecialista/Dificuldade.fcl $media $percApr $qtdDiscCursadas";
         $saida = exec($comando, $saida);
         return $saida;
     }
@@ -116,7 +116,7 @@ class Recomendacao {
     //verifica disciplinas que podem ser matriculadas a partir dos pre requisitos ja cursados
     public function calculaPossibilidades($strTermo, $arquivoRequisitoCurso) {
         //comando .jar, arquivo Prolog, string disciplinas cursadas
-        $strExec = "java -jar jar/Possibilidade.jar $arquivoRequisitoCurso \"$strTermo\"";
+        $strExec = "java -jar ModuloEspecialista/Possibilidade.jar $arquivoRequisitoCurso \"$strTermo\"";
         $saida2 = exec($strExec, $saida2);
 
         $tamanho = strlen($saida2);
@@ -147,7 +147,7 @@ class Recomendacao {
         $pAprov = $categoria->getPercentAprovacao();
         $mFinal = $categoria->getMediaFinal();
         //comando .jar, possibilidade, dificuldade, arquivo Fuzzy, arquivo Prolog
-        $comando = "java -jar jar/ImportanciaDisc.jar $possibilidade $dificuldade jar/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
+        $comando = "java -jar ModuloEspecialista/ImportanciaDisc.jar $possibilidade $dificuldade ModuloEspecialista/ImportanciaDisc.fcl $arquivoQTDRequisitoCurso";
 
         $saida2 = exec($comando, $saida2);
 
@@ -257,14 +257,14 @@ class Recomendacao {
         $strTermo = $cursadas->getTermo() . "";
 
 //nome dinâmico do arquivo de requisitos do curso
-        $arquivoRequisitoCurso = "jar/req" . $curso->getCodigo() . ".pl";
+        $arquivoRequisitoCurso = "ModuloEspecialista/req" . $curso->getCodigo() . ".pl";
 
 // +++++++++++++++++++++++++++++++ CHAMA MODULO POSSIBILIDADE ++++++++++++++++++++++++++++++++++++
         $arrayPossibilidades = $this->calculaPossibilidades($strTermo, $arquivoRequisitoCurso);
 
 
 //nome dinâmico do arquivo de requisitos do curso
-        $arquivoQTDRequisitoCurso = "jar/qtdReq" . $curso->getCodigo() . ".pl";
+        $arquivoQTDRequisitoCurso = "ModuloEspecialista/qtdReq" . $curso->getCodigo() . ".pl";
 
 
 //calcula a importancia de todas possibilidades, junto com as horas de dedicacao semanal
