@@ -16,6 +16,7 @@ foreach ($horarios as $h) {
 //echo $nome."<br>";
 ?>
 <link href="../css/bootstrap.min.css" rel="stylesheet">
+<link href="../css/Athena.css" rel="stylesheet">
 <script src="../js/jquery-3.2.0.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
@@ -24,19 +25,22 @@ foreach ($horarios as $h) {
             url: "../ajax/listarHorariosAjax.php",
             data: {idDisciplina: "<?php echo $idDisciplina; ?>"},
         }).done(function (data) {
-            $(".alert-info").html(data);
+            $("#idHorarios").html(data);
 
         });
     });
 
 </script>
 
-<body class="bg-info">
+<body class="Athena_background_two">
 <center>
-    <h4><?php echo $hora;
-; ?></h4>
+    <br>
+    <div class="panel panel-primary" style="margin-left: 15%; margin-right: 15%;">
+        <h4>
+            <?php echo $hora; ?>
+        </h4>
 </center>
-<br><br>
+<br>
 <?php ?>
 <center>
     <form id="lista" class="container-fluid center-block" name="horarios" method="post" action="cadastrarHorarios.php">
@@ -44,17 +48,19 @@ foreach ($horarios as $h) {
         <h4>Horários</h4>
 
         <h5>Os horários já cadastrados serão apagados</h5>
-        <select   class="alert-info" name="idHorario[]" size="15" multiple >
+        <br>
+        <select  id="idHorarios" class="" name="idHorario[]" size="15" multiple >
 
         </select>
 
 
         <input class="text-success" name="idDisciplina" type="hidden" id="idDisciplina" value = "<?php echo $idDisciplina; ?>">
-         <input class="text-success" name="codigo" type="hidden" id="codigo" value = "<?php echo $codCurso; ?>">
-        <br> <input type="submit" name="submit" class="alert-success" value="Cadastrar">
+        <input class="text-success" name="codigo" type="hidden" id="codigo" value = "<?php echo $codCurso; ?>">
+        <br>
+        <br>
+        <input type="submit" name="submit" class="btn btn-md Athena_button_book_large" value="Cadastrar">
     </form>
-    <br>
-    <button type="button" onclick="window.location.href = 'listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
+    <button class="btn btn-md Athena_button_book" type="button" onclick="window.location.href = 'listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
 </center>
 </body>
 

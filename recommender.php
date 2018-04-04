@@ -257,7 +257,7 @@ include_once './modal.php';
                                         </div></li>
                                     <br>
                                     <br>
-                                    <li style=" margin-top: 70%;"><button class="btn-primary btn-lg" style="width: 180px;" onclick="modalAjuda(1)" >AJUDA</button></li>
+                                    <li style=" margin-top: 70%;"><button class="btn-primary btn-lg" style="width: 180px;" onclick="modalAjuda(0)" >AJUDA</button></li>
                                     <li style="margin-bottom:  5px;  margin-top: 10px;"><button class="btn-lg Athena_button_book_large" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
 
 
