@@ -386,6 +386,9 @@ include_once './modal.php';
             } else {
                 $recomendacao->setMensagem("Atenção: se esforce mais em " . substr($strMsg, 0, -2));
             }
+            
+            $previsaoConclusaoAnosMax = 6;
+            
             $totalHorasCursado = $recomendacao->getCargaCursada();
             $totalHorasCurso = $recomendacao->getCargaTotalCurso();
             $totalAnosCursados = $recomendacao->getAnosCursados();
@@ -397,18 +400,25 @@ include_once './modal.php';
             if (($previsaoConclusao - $previsaoConclusaoAnos ) > 0.5) {
                 $previsaoConclusaoMeses = " e meio";
             }
-
+            
             $ano = "";
+            $strextra = "";
+            
             if ($previsaoConclusaoAnos > 1) {
                 $ano = " anos";
             } else {
                 $ano = " ano";
             }
+            if ($previsaoConclusaoAnos >= $previsaoConclusaoAnosMax){
+                $previsaoConclusaoAnos = $previsaoConclusaoAnosMax;
+                $strextra = " ou mais";
+            }
+                
 
             echo "<h3 class='text-uppercase' >" . $recomendacao->getMensagem() . "</h3><br><br>";
             echo "<h4 class='text-uppercase'> Você já cursou $totalHorasCursado horas<br>";
             echo "continuando assim, a previsão de conclusão é de " . $previsaoConclusaoAnos . $ano .
-            $previsaoConclusaoMeses . " </h4>";
+            $previsaoConclusaoMeses .$strextra. " </h4>";
             ?>
         </div>
         <button id="btnInfo" class="btn btn-lg btn-primary text-uppercase" onclick="mostrarInfo()" style="margin-left: 18%;" value="mostrar">Informações</button>
