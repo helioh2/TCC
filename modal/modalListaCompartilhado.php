@@ -38,4 +38,3 @@ if ($num > 0) {
 
     echo "</center>";
 }
-?>

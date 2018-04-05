@@ -95,7 +95,7 @@ foreach ($fetch as $f) {
         <input type="submit" class="bg-success Athena_button_book" value="Enviar" /> 
     </form>
     <br>
-    <button type="button" class="btn-lg Athena_button_book_large text-uppercase" onclick="window.location.href = 'CSV/modelo/modelo.xlsx'"> Modelo da Planília</button>
+    <button type="button" class="btn-lg Athena_button_book_large text-uppercase" onclick="window.location.href = 'CSV/modelo/modelo.xlsx'"> Modelo da Planilha</button>
 </center>
 
 

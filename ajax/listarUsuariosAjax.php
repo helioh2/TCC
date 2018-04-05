@@ -3,9 +3,9 @@
 require_once '../classes/BD/crudPDO.php';
 
 $idCurso = $_POST['idCurso'];
-
-$fetch = selecionar("usuario", array('nome', 'id', 'email'));
-echo "<table class='table table-striped text-center bg-warning'>";
+$idUsuario = $_POST['idUsuario'];
+$fetch = selecionarWHERE("usuario", array('nome', 'id', 'email'), "id <> $idUsuario");
+echo "<table class='table table-striped'>";
 echo "<thead>";
 echo "<th class='text-center'>NOME</th>"
  . "<th class='text-center' >E-MAIL</th>"
@@ -13,7 +13,7 @@ echo "<th class='text-center'>NOME</th>"
 echo "</thead>";
 echo "<tbody>";
 foreach ($fetch as $f) {
-    echo "<tr class='text-center bg-warning'>"
+    echo "<tr class='text-center'>"
     . "<td>" . $f['nome'] . "</td>"
     . "<td>" . $f['email'] . "</td>"
     . "<td><button onclick='finalizarCompartilhamento(" . $idCurso . "," . $f['id'] . ")'>ENVIAR</button></td>"

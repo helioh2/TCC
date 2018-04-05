@@ -292,29 +292,29 @@ foreach ($fetch as $f) {
             }
 
             function compartilhar(idCurso) {
-                $('#modalListarCursos').modal('hide');
+                //$("#modalListarCursos").modal('hide');
                 $.ajax({
                     type: 'POST',
                     url: "../ajax/listarUsuariosAjax.php",
-                    data: {idCurso: idCurso}
+                    data: {idCurso: idCurso, idUsuario: <?php echo $_SESSION["usuario"]['id']?>}
 
                 }).done(function (data) {
-                    $("#corpoModal").html(data);
-                    $('#modal').modal('show');
+                    $("#corpoModalListaCursos").html(data);
+                    //$("#modal").modal('show');
 
                 });
 
             }
 
             function  finalizarCompartilhamento(idCurso, idConvidado) {
-                $("#modal").modal('hide');
+                
                 $.ajax({
                     type: 'POST',
                     url: "compartilhar.php",
                     data: {idCurso: idCurso, idConvidado: idConvidado}
 
                 }).done(function (data) {
-                    $("#corpoModal").html(data);
+                    $("#modalListarCursos").modal('hide');
                     alert(data);
                     atualizar();
 
@@ -510,7 +510,7 @@ foreach ($fetch as $f) {
                         <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
                         <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
                     </div>
-                    <div class="modal-body Athena_modal">
+                    <div id="corpoModalListaCursos" class="modal-body Athena_modal">
                         <center>
 
 
