@@ -7,3 +7,5 @@ Logo, é necessário que seu computador tenha instalado um servidor Web (Apache,
 </p>
 
 <p> Para que o mesmo possa executar corretamente, dê acesso de leitura, escrita e exclusão de dados na pasta ModuloEspecialista.</p>
+
+<p> Para acesso correto ao Banco de Dados deve-se acessar classes/BD/config.php e alterar as informações conforme as configurações do seu Banco de Dados.</p>
