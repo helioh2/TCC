@@ -123,21 +123,16 @@ include './modal.php';
         </script>
     </head>
 
-    <body class="Athena_background">
+    <body class="Athena_background container">
 
-     
-            <div class="text-center Athena_title" >
-                <h2>ATHENA</h2>
-                <h4>Sistema para Recomendação de Disciplinas</h4>
 
-            </div>
-       
-        <div class="row">
-            <div class="col-lg-2 col-sm-2">
+        <?php
+        include '../cabecalho.php';
+        ?>
 
-            </div>
-            <div class="col-lg-8 col-sm-6">
-                <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 5%;">
+        <div class="row ">
+            <div class="col-md-8 col-md-offset-2">
+                <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 2%;">
                     <div class="panel Athena_cabecalho" style="margin-left: 15%; margin-right: 15%;">
                         <center>
                             <h3>Ambiente de Administração</h3>
@@ -170,7 +165,7 @@ include './modal.php';
                     </center>
                 </div>
             </div>
-            <div class="col-lg-2 col-sm-4" >
+            <div class="col-4 col-md-2" >
                 <br>
                 <br>
                 <center>

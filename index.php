@@ -17,17 +17,17 @@ and open the template in the editor.
     </head>
     <body class="Athena_background" >
 
-        <div class="text-center Athena_title " >
-            <h2>ATHENA</h2>
-            <h4>Sistema para Recomendação de Disciplinas</h4>
-
-        </div>
+        <?php 
+        include './cabecalho.php';
+        ?>
+        
+        
         <div class="row" style="margin-top: 4%;">
             <div class="col-lg-3 col-xs-3">
 
             </div>
 
-           
+
             <div class="col-lg-4 col-xs-4 Athena_login" style="margin-left: 8%; ">
                 <center>  
                     <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">

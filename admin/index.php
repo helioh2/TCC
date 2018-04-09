@@ -124,16 +124,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/logo.png';
 
-                } else if (num === 2) {
-                    document.getElementById('imagemCentro').src = 'img/curso.png';
-
-                } else if (num === 3) {
-                    document.getElementById('imagemCentro').src = 'img/curso.png';
-
-                } else if (num === 4) {
-                    document.getElementById('imagemCentro').src = 'img/logo.png';
-
-                }
+                } 
             }
 
 
@@ -145,47 +136,47 @@ $id_usuario = $_SESSION["usuario"]['id'];
     </head>
 
     <body class="Athena_background">
-         <div class="text-center Athena_title " >
-            <h2>ATHENA</h2>
-            <h4>Sistema para Recomendação de Disciplinas</h4>
 
-        </div>
+
+        <?php
+        include '../cabecalho.php';
+        ?>
+
+
         <div class="row" style="margin-top: 5%;">
-            <div class="col-lg-3 col-xs-3">
 
+            <div class="col-md-6 col-md-offset-3 ">
+                <div class="Athena_login" style="margin-left: 20%; margin-right: 20%;  margin-top: 2%;" >
+                    <center>
+                        <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">
+                            <h3 >Ambiente de Administração</h3>
+                        </div>
+                       
+
+                        <button onmouseover="alterarImagem(2)" onmouseout="alterarImagem(4)" class="btn Athena_button_submit" onclick="novoCurso()">Cadastrar Curso</button>
+                        <br><br>
+
+                        <button onmouseover="alterarImagem(2)" onmouseout="alterarImagem(4)" class="btn Athena_button_submit" data-toggle="modal" onmouseover="verificarLogado()" data-target="#modalListarCursos">Visualizar Curso</button>
+                        <br>
+                        <br>
+
+                    </center>
+                </div>
             </div>
-            
-            <div class="col-lg-4 col-xs-4 Athena_login" style="margin-left: 8%;  " >
-                <center>
-                    <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">
-                        <h3 >Ambiente de Administração</h3>
-                    </div>
-                    <img id="imagemCentro" src="img/logo.png" height="60" width="140">
-                    <br>
-                    <br>
-
-                    <button onmouseover="alterarImagem(2)" onmouseout="alterarImagem(4)" class="btn Athena_button_submit" onclick="novoCurso()">Cadastrar Curso</button>
-                    <br><br>
-
-                    <button onmouseover="alterarImagem(3)" onmouseout="alterarImagem(4)" class="btn Athena_button_submit" data-toggle="modal" onmouseover="verificarLogado()" data-target="#modalListarCursos">Visualizar Curso</button>
-                    <br>
-                    <br>
-
-                </center>
+            <div class="col-md-2 col-4 " >
+                <div class="Athena_panel" >
+                    <center>
+                        <img id="imagem" src="img/logo.png" height="80" width="80">
+                        <br>
+                        <br>
+                        <label id="user" class="text-uppercase"><?php echo $nomeUsuario; ?></label>
+                        <br>
+                        <br>
+                        <button onmouseover="alterarImagem(1)" onmouseout="alterarImagem(0)" id='logout' class="btn Athena_button_red_large" onclick="logout()">LOGOUT</button>
+                    </center>
+                </div>
             </div>
-            
-            <div class="Athena_panel col-lg-2 col-xs-2" style=" margin-left: 12%; ">
-                <center>
-                    <img id="imagem" src="img/logo.png" height="80" width="80">
-                    <br>
-                    <br>
-                    <label id="user" class="text-uppercase"><?php echo $nomeUsuario; ?></label>
-                    <br>
-                    <br>
-                    <button onmouseover="alterarImagem(1)" onmouseout="alterarImagem(0)" id='logout' class="btn Athena_button_red_large" onclick="logout()">LOGOUT</button>
-                </center>
-            </div>
-            
+
         </div>
 
         <?php

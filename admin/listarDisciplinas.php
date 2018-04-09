@@ -296,7 +296,7 @@ foreach ($fetch as $f) {
                 $.ajax({
                     type: 'POST',
                     url: "../ajax/listarUsuariosAjax.php",
-                    data: {idCurso: idCurso, idUsuario: <?php echo $_SESSION["usuario"]['id']?>}
+                    data: {idCurso: idCurso, idUsuario: <?php echo $_SESSION["usuario"]['id'] ?>}
 
                 }).done(function (data) {
                     $("#corpoModalListaCursos").html(data);
@@ -307,7 +307,7 @@ foreach ($fetch as $f) {
             }
 
             function  finalizarCompartilhamento(idCurso, idConvidado) {
-                
+
                 $.ajax({
                     type: 'POST',
                     url: "compartilhar.php",
@@ -330,7 +330,7 @@ foreach ($fetch as $f) {
 
                 } else if (num === 2) {
                     document.getElementById('imagem').src = 'img/curso.png';
-
+                    
                 } else if (num === 3) {
                     document.getElementById('imagem').src = 'img/historico.png';
 
@@ -347,7 +347,7 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 0) {
-                    document.getElementById('imagem').src = 'img/default.png';
+                    document.getElementById('imagem').src = 'img/logo.png';
 
                 }
             }
@@ -384,7 +384,7 @@ foreach ($fetch as $f) {
                 });
 
             }
-            
+
 
         </script>
 
@@ -401,11 +401,11 @@ foreach ($fetch as $f) {
 
                             <div id ="menu" class="nav navbar-left ">
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
-                                    <br>
+                                    
                                     <li>
-                                        <img id="imagem" src="img/default.png" height="120" width="140">
+                                        <img id="imagem" src="img/logo.png" height="140px" width="135px">
                                     </li>
-                                    <br>
+                                    
                                     <li>
                                         <label class="text-uppercase">Pesquisar: </label> 
                                         <br><input type="text" class="text-warning"name="nomeDigitado" id="nomeDigitado" onkeyup="pesquisar()"/>

@@ -198,7 +198,7 @@ include_once './modal.php';
                     url: "modal/coRequisitos.php",
                     data: {codigo: cod}
                 }).done(function (data) {
-                    $("#cabecalhoModal").html("<center><h3 class='text-primary'>Co-requisitos</h3></center>");
+                    $("#cabecalhoModal").html("<center><h3 class='text-primary'>Pré-requisito de:</h3></center>");
                     $("#corpoModal").html(data);
 
 
@@ -242,23 +242,26 @@ include_once './modal.php';
 
             <div class="col col-lg-2 col-xs-2">
                 <center>
-                    <div class="navbar navbar-fixed-top"  ng-hide="form"  style="margin-right: 80%">
+                    <div class="navbar navbar-fixed-top"   style="margin-right: 80%">
 
                         <div class="navbar-header">
                             <br>
                             <br>
                             <div id ="menu" class="nav navbar-left ">
-                                <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
-                                    <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalDifs">DIFICULDADE</button></li>
-                                    <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
+                                <ul class="nav navbar-left" style="margin-left: 10px;" >
+                                    <li>
+                                        <img id="imagem" src="img/logoAthena.png" height="140px" width="135px">
+                                    </li>
                                     <li style="margin-top: 10px;"> <div id='horasTotais'>
                                             <label style='width: 180px; 'class='panel panel-primary bg-info'> ESTIMATIVA DE<br>
                                                 HORAS DE DEDICAÇÃO <br> SEMANAL</label>
-                                        </div></li>
-                                    <br>
-                                    <br>
-                                    <li style=" margin-top: 70%;"><button class="btn-primary btn-lg" style="width: 180px;" onclick="modalAjuda(0)" >AJUDA</button></li>
-                                    <li style="margin-bottom:  5px;  margin-top: 10px;"><button class="btn-lg Athena_button_book_large" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
+                                        </div>
+                                    </li>
+                                    <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalDifs">DIFICULDADE</button></li>
+                                    <li style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" data-toggle="modal" data-target="#modalMedias">MÉDIAS</button></li>
+
+                                    <li  style="margin-top: 10px;"><button class="btn-primary btn-lg" style="width: 180px;" onclick="modalAjuda(0)" >AJUDA</button></li>
+                                    <li  style="margin-top: 10px;"><button class="btn-lg Athena_button_book_large" style="width: 180px;" onclick="window.location.href = 'index.php'">VOLTAR</button></li>
 
 
                                 </ul>
@@ -386,9 +389,9 @@ include_once './modal.php';
             } else {
                 $recomendacao->setMensagem("Atenção: se esforce mais em " . substr($strMsg, 0, -2));
             }
-            
+
             $previsaoConclusaoAnosMax = 6;
-            
+
             $totalHorasCursado = $recomendacao->getCargaCursada();
             $totalHorasCurso = $recomendacao->getCargaTotalCurso();
             $totalAnosCursados = $recomendacao->getAnosCursados();
@@ -400,25 +403,25 @@ include_once './modal.php';
             if (($previsaoConclusao - $previsaoConclusaoAnos ) > 0.5) {
                 $previsaoConclusaoMeses = " e meio";
             }
-            
+
             $ano = "";
             $strextra = "";
-            
+
             if ($previsaoConclusaoAnos > 1) {
                 $ano = " anos";
             } else {
                 $ano = " ano";
             }
-            if ($previsaoConclusaoAnos >= $previsaoConclusaoAnosMax){
+            if ($previsaoConclusaoAnos >= $previsaoConclusaoAnosMax) {
                 $previsaoConclusaoAnos = $previsaoConclusaoAnosMax;
                 $strextra = " ou mais";
             }
-                
+
 
             echo "<h3 class='text-uppercase' >" . $recomendacao->getMensagem() . "</h3><br><br>";
             echo "<h4 class='text-uppercase'> Você já cursou $totalHorasCursado horas<br>";
             echo "continuando assim, a previsão de conclusão é de " . $previsaoConclusaoAnos . $ano .
-            $previsaoConclusaoMeses .$strextra. " </h4>";
+            $previsaoConclusaoMeses . $strextra . " </h4>";
             ?>
         </div>
         <button id="btnInfo" class="btn btn-lg btn-primary text-uppercase" onclick="mostrarInfo()" style="margin-left: 18%;" value="mostrar">Informações</button>
