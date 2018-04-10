@@ -22,7 +22,7 @@ and open the template in the editor.
         ?>
         
         
-        <div class="row" style="margin-top: 4%;">
+        <div class="row" style="margin-top: 5%;">
             <div class="col-lg-3 col-xs-3">
 
             </div>
@@ -45,7 +45,7 @@ and open the template in the editor.
             </div>
 
 
-            <div class="Athena_panel col-lg-2 col-xs-2" style=" margin-left: 12%; ">
+            <div class="Athena_panel col-lg-2 col-xs-2" >
                 <center>
 
                     <label>Ambiente de <br>Administração</label><br>

@@ -145,7 +145,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
 
         <div class="row" style="margin-top: 5%;">
 
-            <div class="col-md-6 col-md-offset-3 ">
+            <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
                 <div class="Athena_login" style="margin-left: 20%; margin-right: 20%;  margin-top: 2%;" >
                     <center>
                         <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">
@@ -163,7 +163,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                     </center>
                 </div>
             </div>
-            <div class="col-md-2 col-4 " >
+            <div class="col-md-3 col-xs-3"  >
                 <div class="Athena_panel" >
                     <center>
                         <img id="imagem" src="img/logo.png" height="80" width="80">
