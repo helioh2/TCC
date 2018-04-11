@@ -470,7 +470,7 @@ foreach ($fetch as $f) {
                 <div id="listaDisciplinas" >
 
 
-                    <table class="table" >
+                    <table class="table"  >
                         <thead>
                             <tr>
                                 <th>Código</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th><th>Ativo</th><th>Deletar</th>

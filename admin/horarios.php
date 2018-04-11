@@ -1,6 +1,6 @@
 <?php
 include_once '../classes/BD/crudPDO.php';
-
+include_once './modal.php';
 
 $idDisciplina = $_GET["idDisciplina"];
 if (!empty($_GET["codigo"])) {
@@ -18,17 +18,43 @@ foreach ($horarios as $h) {
 <link href="../css/bootstrap.min.css" rel="stylesheet">
 <link href="../css/Athena.css" rel="stylesheet">
 <script src="../js/jquery-3.2.0.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
 <script type="text/javascript">
     $(document).ready(function () {
         $.ajax({
             type: "post",
             url: "../ajax/listarHorariosAjax.php",
-            data: {idDisciplina: "<?php echo $idDisciplina; ?>"},
+            data: {idDisciplina: "<?php echo $idDisciplina; ?>"}
         }).done(function (data) {
             $("#idHorarios").html(data);
 
         });
     });
+
+    function atualizar() {
+        $.ajax({
+            type: "post",
+            url: "../ajax/listarHorariosAjax.php",
+            data: {idDisciplina: "<?php echo $idDisciplina; ?>"}
+        }).done(function (data) {
+            $("#idHorarios").html(data);
+
+        });
+
+    }
+
+    function novoHorario() {
+        $.ajax({
+            url: "../modal/novoHorarioModal.php"
+        }).done(function (data) {
+            $("#corpoModal").html(data);
+
+
+        });
+        $('#modal').modal('show');
+    }
+
+
 
 </script>
 
@@ -49,17 +75,20 @@ foreach ($horarios as $h) {
 
         <h5>Os horários já cadastrados serão apagados</h5>
         <br>
-        <select  id="idHorarios" class="" name="idHorario[]" size="15" multiple >
+        <select  id="idHorarios" class="panel panel-primary" style="padding-left: 3%; padding-right: 3%;" name="idHorario[]" size="15" multiple >
+
+            <!--                ajax-->
 
         </select>
-
-
         <input class="text-success" name="idDisciplina" type="hidden" id="idDisciplina" value = "<?php echo $idDisciplina; ?>">
         <input class="text-success" name="codigo" type="hidden" id="codigo" value = "<?php echo $codCurso; ?>">
         <br>
         <br>
-        <input type="submit" name="submit" class="btn btn-md Athena_button_book_large" value="Cadastrar">
+        <input type="submit" name="submit" class="btn btn-lg Athena_button_dark_large" value="Cadastrar">
     </form>
+    <br>
+    <button class="btn btn-md Athena_button_submit" onclick="novoHorario()">NOVO HORÁRIO</button>
+
     <button class="btn btn-md Athena_button_book" type="button" onclick="window.location.href = 'listarDisciplinas.php?codigo=<?php echo $codCurso; ?>'"> Voltar</button>
 </center>
 </body>

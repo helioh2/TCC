@@ -22,18 +22,17 @@ include_once '../classes/BD/crudPDO.php';
 class ListarHorarios {
 
     private $horarios = array();
-
+    
+    
     public function __construct() {
-        $fetch = selecionar("horario", array("id_horario", "hora_inicio", "dia"));
+        $fetch = selecionarWHERE("horario", array("id_horario", "hora_inicio", "dia"), " 1 ORDER BY FIELD(dia, 'Segunda', 'Terca', 'Quarta', 'Quinta', 'Sexta') ASC, dia ASC, hora_inicio ASC");
         foreach ($fetch as $linha) {
-            $disc = new Horario($linha["id_horario"], $linha["hora_inicio"], $linha["dia"]);
-            $this->horarios[] = $disc;
+            $horario = new Horario($linha["id_horario"], $linha["hora_inicio"], $linha["dia"]);
+            $this->horarios[] = $horario;
         }
     }
 
-    public function listar() {
-        
-    }
+    
 
     function getHorarios() {
         return $this->horarios;
