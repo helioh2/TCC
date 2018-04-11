@@ -37,15 +37,22 @@ foreach ($fetch as $f) {
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/angular.min.js"></script>
         <script type="text/javascript">
-            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
-                $scope.nomeDisciplina = '';
+           
+            $(document).ready(function () {
 
-                $scope.novoNome = '';
-                $scope.novoCodigo = '';
-                $scope.novaCH;
-                $scope.novaAtiva;
+                $.ajax({
+                    url: "verificarLogin.php"
+                }).done(function (data) {
+                    if (data === 'erro') {
+                        //alert(data);
+                        alert('Você não está logado');
+                        location.href = './login.php';
+                    } else {
+                        atualizar();
 
-                $scope.form = false;
+                    }
+                });
+
 
 
             });
@@ -65,24 +72,6 @@ foreach ($fetch as $f) {
                 });
             }
 
-            $(document).ready(function () {
-
-                $.ajax({
-                    url: "verificarLogin.php"
-                }).done(function (data) {
-                    if (data === 'erro') {
-                        //alert(data);
-                        alert('Você não está logado');
-                        location.href = './login.php';
-                    } else {
-                        atualizar();
-
-                    }
-                });
-
-
-
-            });
 
             function pesquisar() {
                 verificarLogado();
@@ -310,6 +299,7 @@ foreach ($fetch as $f) {
                 }).done(function (data) {
                     $("#corpoModalListaCursos").html(data);
                     //$("#modal").modal('show');
+                   
 
                 });
 
@@ -513,7 +503,7 @@ foreach ($fetch as $f) {
             <div class="modal-lg Athena_modal">
                 <div class="modal-content">
                     <div class="modal-header Athena_modal">
-                        <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                        <button type="button" class="close" data-dismiss="modal" onclick="atualizar()"><span>×</span></button>
                         <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
                     </div>
                     <div id="corpoModalListaCursos" class="modal-body Athena_modal">
@@ -525,7 +515,7 @@ foreach ($fetch as $f) {
                         </center>
                     </div>
                     <div class="Athena_modal_fother">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="atualizar()">Fechar</button>
                         <br>
                         <br>
                     </div>

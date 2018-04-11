@@ -78,7 +78,7 @@
 
             function  verificarLogado() {
                 $.ajax({
-                    url: "verificarLogin.php",
+                    url: "verificarLogin.php"
                 }).done(function (data) {
                     if (data === 'erro') {
                         alert('Você não está logado');

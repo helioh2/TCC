@@ -380,27 +380,28 @@ foreach ($fetch as $f) {
         <div class="modal fade" id="modalListarCursos">
 
             <center>
-                <div class="modal-lg Athena_modal">
-                    <div class="modal-content">
-                        <div class="modal-header Athena_modal">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
-                        </div>
-                        <div  id="corpoModalListaCursos" class="modal-body Athena_modal">
-                            <center>
+            <div class="modal-lg Athena_modal">
+                <div class="modal-content">
+                    <div class="modal-header Athena_modal">
+                        <button type="button" class="close" data-dismiss="modal" onclick="atualizar()"><span>×</span></button>
+                        <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
+                    </div>
+                    <div id="corpoModalListaCursos" class="modal-body Athena_modal">
+                        <center>
 
 
-                                
+                           
 
-                            </center>
-                        </div>
-                        <div class="Athena_modal_fother">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <br>
-                            <br>
-                        </div>
+                        </center>
+                    </div>
+                    <div class="Athena_modal_fother">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="atualizar()">Fechar</button>
+                        <br>
+                        <br>
                     </div>
                 </div>
+            </div>
+        </center>
         </div>
 
 

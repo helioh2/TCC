@@ -9,7 +9,7 @@
         ?>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/Athena.css" rel="stylesheet">
-        
+
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
@@ -19,19 +19,32 @@
                 }).done(function (data) {
                     if (data === 'erro') {
                         alert('Você não está logado');
-                        location.href = './login.php';
+                        location.href = '../admin/login.php';
                     } else {
                         atualizar();
                     }
                 });
             });
+            function  verificarLogado() {
+                $.ajax({
+                    type: 'POST',
+                    url: "../admin/verificarLoginCurso.php",
+                    data: {idCurso: <?php echo $idCurso; ?>}
+                }).done(function (data) {
+                    if (data === 'erro') {
+                        alert('Você não está logado:' + data);
+                        location.href = '../admin/login.php';
+                    }
 
+                });
+            }
 
             var order = "disciplina";
 
 
 
             function atualizar() {
+                verificarLogado();
                 $.ajax({
                     type: "post",
                     url: "../ajax/cadastrarRequisitoListaDisciplinaAjax.php",

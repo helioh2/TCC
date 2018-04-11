@@ -53,7 +53,7 @@ include './modal.php';
                             alert('você não possui acesso ' + user);
 
                         } else {
-                            alert('seja bem vindo ' + user);
+                            alert('Seja bem vindo ' + user);
 
                             location.href = './index.php';
 
