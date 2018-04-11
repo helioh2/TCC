@@ -123,7 +123,7 @@ include './modal.php';
         </script>
     </head>
 
-    <body class="Athena_background container">
+    <body class="Athena_background">
 
 
         <?php
@@ -131,8 +131,8 @@ include './modal.php';
         ?>
 
         <div class="row ">
-            <div class="col-md-8 col-md-offset-2">
-                <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 2%;">
+            <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-xs-12">
+                <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 5%;">
                     <div class="panel Athena_cabecalho" style="margin-left: 15%; margin-right: 15%;">
                         <center>
                             <h3>Ambiente de Administração</h3>
@@ -165,7 +165,7 @@ include './modal.php';
                     </center>
                 </div>
             </div>
-            <div class="col-4 col-md-2" >
+            <div class="col-md-2 col-lg-2 col-xs-12" >
                 <br>
                 <br>
                 <center>
@@ -176,11 +176,10 @@ include './modal.php';
                     </div>
                 </center>
             </div>
-            <br>
+           
         </div>
 
-        <br>
-        <div style="position: absolute; bottom: 10px; width: 100%; padding-left: 80%">
+        <div style="position: absolute; bottom: 4%; width: 100%; padding-left: 80%">
             <center>
                 <label>Desenvolvido por:<br>
                     <a style="color: black;" href="http://lattes.cnpq.br/3657386675052708">Daniel Antonio Karling</a></label>

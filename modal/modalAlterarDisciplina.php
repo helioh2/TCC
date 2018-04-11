@@ -22,17 +22,42 @@ foreach ($fetch as $f) {
 
     $ativa = $f["ativa"];
 }
+require_once '../classes/BD/crudPDO.php';
+$fetch2 = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso GROUP BY categoria")
 ?>
 <script type="text/javascript">
+
+    function inputNovaCategoriaAlterar() {
+        $("#divSelectCategoriaALT").hide();
+        $("#divNovaCategoriaALT").show();
+
+
+    }
+    function selecionarCategoriaAlterar() {
+        $("#divSelectCategoriaALT").show();
+        $("#divNovaCategoriaALT").hide();
+        $("#categoriaDiscALT").val("");
+    }
+
+
 
     function disciplinaAlterada() {
         var nome = document.getElementById("nomeALT").value;
         var codigo = document.getElementById("codigoALT").value;
-        var categoria = document.getElementById("categoriaALT").value;
+        //var categoria = document.getElementById("categoriaALT").value;
         var ch = document.getElementById("chALT").value;
         var ativa = document.getElementById("ativaALT").checked;
         var idCurso = document.getElementById("idCursoALT").value;
         var idDisciplina = document.getElementById("idDisciplinaALT").value;
+
+        var categoriaInput = document.getElementById("categoriaDiscALT").value;
+        var categoriaSelect = $("#selectCategoriaALT").val();
+        var categoria = "";
+        if (categoriaInput === "") {
+            categoria = categoriaSelect;
+        } else {
+            categoria = categoriaInput;
+        }
 
         if (ativa === true) {
             ativa = 1;
@@ -63,19 +88,50 @@ foreach ($fetch as $f) {
 
 <center>
 
-    <form id="disc"  name="curso" method="post" action="alterarDisciplina.php">
-        Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nomeALT" value = "<?php echo $nome; ?>">
-        <input class="text-success  text-center" name="codigo" type="hidden" id="codigoALT" value = "<?php echo $codigo; ?>"><br>
-        Categoria<br><input class="text-success  text-center" name="categoria" type="text" id="categoriaALT" value = "<?php echo $categoria; ?>"><br>
-        Carga Horaria<br><input class="text-success  text-center" name="ch" type="number" id="chALT" value = "<?php echo $ch; ?>" ><br> 
-        Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativaALT" value = "1" <?php if ($ativa != 0) echo "checked" ?> ><br> 
 
-        <input name="idCurso" class="text-success center-block "  type="hidden" id="idCursoALT" value ="<?php echo $idCurso; ?>">
-        <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplinaALT" value ="<?php echo $idDisciplina; ?>">
+    Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nomeALT" value = "<?php echo $nome; ?>">
+    <input class="text-success  text-center" name="codigo" type="hidden" id="codigoALT" value = "<?php echo $codigo; ?>"><br>
+
+
+    <div class="panel panel-primary Athena_modal"style="margin-left: 25%; margin-right: 25%;">
+        <label>CATEGORIA</label>
         <br>
+
+
+        <div id='divSelectCategoriaALT' hidden="true">
+            <select id="selectCategoriaALT" class="panel panel-primary text-primary" style="border: white;">
+                <?php
+                foreach ($fetch2 as $f) {
+                    $categoriaOption = $f['categoria'];
+                    echo "<option class='text-uppercase text-primary text-center' value='$categoriaOption'>$categoriaOption</option>";
+                }
+                ?>
+            </select>
+            <br>
+            <button id="btnNovaCategoria" class="btn btn-md Athena_button_submit" onclick="inputNovaCategoriaAlterar()">NOVA</button>
+            <br>
+            <br>
+        </div>
+
+        <div id="divNovaCategoriaALT" >
+
+            <input class="text-primary center-block" name="categoria" type="text" id="categoriaDiscALT" value = "<?php echo $categoria; ?>">
+            <br>
+            <button id="btnSelectCategoria" class="btn btn-md Athena_button_submit" onclick="selecionarCategoriaAlterar()">LISTAR</button>
+            <br>
+            <br>
+        </div>
+    </div>
+
+    Carga Horaria<br><input class="text-success  text-center" name="ch" type="number" id="chALT" value = "<?php echo $ch; ?>" ><br> 
+    Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativaALT" value = "1" <?php if ($ativa != 0) echo "checked" ?> ><br> 
+
+    <input name="idCurso" class="text-success center-block "  type="hidden" id="idCursoALT" value ="<?php echo $idCurso; ?>">
+    <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplinaALT" value ="<?php echo $idDisciplina; ?>">
+    <br>
 <!--        <input type="submit" name="submit" class="alert-success" value="Alterar">-->
-        <input type="button" onclick="disciplinaAlterada()" name="submit" class="btn btn-success" value="Alterar">
-    </form>
+    <input type="button" onclick="disciplinaAlterada()"  class="btn btn-success" value="Alterar">
+
 </center>
 
 

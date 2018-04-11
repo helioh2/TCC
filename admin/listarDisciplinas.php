@@ -242,6 +242,15 @@ foreach ($fetch as $f) {
                     $("#corpoLista").html(data);
 
                 });
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/corpoModalListarCursosAjax.php",
+                    data: {idUsuario: <?php echo $_SESSION["usuario"]['id'] ?>}
+                }).done(function (data) {
+
+                   $("#corpoModalListaCursos").html(data);
+
+                });
             }
             function inserirHistorico() {
 
@@ -330,7 +339,7 @@ foreach ($fetch as $f) {
 
                 } else if (num === 2) {
                     document.getElementById('imagem').src = 'img/curso.png';
-                    
+
                 } else if (num === 3) {
                     document.getElementById('imagem').src = 'img/historico.png';
 
@@ -401,11 +410,11 @@ foreach ($fetch as $f) {
 
                             <div id ="menu" class="nav navbar-left ">
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
-                                    
+
                                     <li>
                                         <img id="imagem" src="img/logo.png" height="140px" width="135px">
                                     </li>
-                                    
+
                                     <li>
                                         <label class="text-uppercase">Pesquisar: </label> 
                                         <br><input type="text" class="text-warning"name="nomeDigitado" id="nomeDigitado" onkeyup="pesquisar()"/>
@@ -495,10 +504,7 @@ foreach ($fetch as $f) {
     </body>
 
 
-    <?php
-    include_once '../classes/ListarCursos.php';
-    $listCursos = new ListarCursos();
-    ?>
+   
 
 
     <div class="modal fade" id="modalListarCursos">
@@ -514,10 +520,7 @@ foreach ($fetch as $f) {
                         <center>
 
 
-                            <?php
-                            $listCursos->listar();
-                            ?>
-
+                           
 
                         </center>
                     </div>

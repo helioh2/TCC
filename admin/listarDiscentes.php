@@ -40,18 +40,18 @@ foreach ($fetch as $f) {
         <script src="../js/bootstrap.min.js"></script>
         <script src="../js/angular.min.js"></script>
         <script type="text/javascript">
-            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
-                $scope.nomeDisciplina = '';
-
-                $scope.novoNome = '';
-                $scope.novoCodigo = '';
-                $scope.novaCH;
-                $scope.novaAtiva;
-
-                $scope.form = false;
-
-
-            });
+//            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
+//                $scope.nomeDisciplina = '';
+//
+//                $scope.novoNome = '';
+//                $scope.novoCodigo = '';
+//                $scope.novaCH;
+//                $scope.novaAtiva;
+//
+//                $scope.form = false;
+//
+//
+//            });
             function novaDisciplinaModal() {
                 $.ajax({
                     type: 'POST',
@@ -86,7 +86,7 @@ foreach ($fetch as $f) {
 
 
                 $.ajax({
-                    url: "verificarLogin.php",
+                    url: "verificarLogin.php"
                 }).done(function (data) {
                     if (data === 'erro') {
                         alert('Você não está logado');
@@ -152,6 +152,16 @@ foreach ($fetch as $f) {
                     $("#corpoLista").html(data);
 
                 });
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/corpoModalListarCursosAjax.php",
+                    data: {idUsuario: <?php echo $_SESSION["usuario"]['id'] ?>}
+                }).done(function (data) {
+
+                   $("#corpoModalListaCursos").html(data);
+
+                });
+                
             }
 
 
@@ -365,10 +375,6 @@ foreach ($fetch as $f) {
 
 
 
-        <?php
-        include_once '../classes/ListarCursos.php';
-        $listCursos = new ListarCursos();
-        ?>
 
 
         <div class="modal fade" id="modalListarCursos">
@@ -384,10 +390,7 @@ foreach ($fetch as $f) {
                             <center>
 
 
-                                <?php
-                                $listCursos->listar();
-                                ?>
-
+                                
 
                             </center>
                         </div>
@@ -418,9 +421,7 @@ foreach ($fetch as $f) {
                                     <tr  class = "Athena_modal ">
                                         <th>Código</th><th>Alterar</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th>              
                                     </tr> 
-                                    <?php
-                                    $listDisciplinas->listar($id_curso);
-                                    ?>
+                                   
 
                                 </table>  
                             </center>

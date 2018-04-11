@@ -1,9 +1,5 @@
-<?php
-session_start();
-$nomeUsuario = $_SESSION["usuario"]['nome'];
-$id_usuario = $_SESSION["usuario"]['id'];
-?>
-<html ng-app="listarCursos">
+
+<html>
     <head>
         <meta charset="UTF-8">
         <title id="titulo" >Administração</title>
@@ -16,12 +12,12 @@ $id_usuario = $_SESSION["usuario"]['id'];
         <script src="../js/angular.min.js" type="text/javascript"></script>
 
         <script type="text/javascript">
-            angular.module('listarCursos', []).controller('Controller', function ($scope) {
-
-                $scope.codCurso = '';
-                $scope.nomeCurso = '';
-
-            });
+//            angular.module('listarCursos', []).controller('Controller', function ($scope) {
+//
+//                $scope.codCurso = '';
+//                $scope.nomeCurso = '';
+//
+//            });
 
 
             function novoCurso() {
@@ -49,6 +45,13 @@ $id_usuario = $_SESSION["usuario"]['id'];
                 });
 
             });
+        </script>
+        <?php
+        session_start();
+        $nomeUsuario = $_SESSION["usuario"]['nome'];
+        $id_usuario = $_SESSION["usuario"]['id'];
+        ?>
+        <script>
             function alterarCurso(id) {
                 //desaparecer o modal listar 
                 verificarLogado();
@@ -90,7 +93,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                 $.ajax({
                     type: 'POST',
                     url: "../ajax/listarUsuariosAjax.php",
-                    data: {idCurso: idCurso}
+                    data: {idCurso: idCurso, idUsuario: <?php echo $_SESSION["usuario"]['id'] ?>}
 
                 }).done(function (data) {
                     $("#corpoModal").html(data);
@@ -124,7 +127,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
                 } else if (num === 0) {
                     document.getElementById('imagem').src = 'img/logo.png';
 
-                } 
+                }
             }
 
 
@@ -145,13 +148,13 @@ $id_usuario = $_SESSION["usuario"]['id'];
 
         <div class="row" style="margin-top: 5%;">
 
-            <div class="col-md-6 col-md-offset-3 col-xs-6 col-xs-offset-3">
+            <div class="col-md-6 col-md-offset-3 col-lg-6 col-lg-offset-3 col-xs-12">
                 <div class="Athena_login" style="margin-left: 20%; margin-right: 20%;  margin-top: 2%;" >
                     <center>
                         <div class="panel Athena_cabecalho" style="background-color: rgba(11,1,1,0.5);   margin-left: 15%; margin-right: 15%;">
                             <h3 >Ambiente de Administração</h3>
                         </div>
-                       
+
 
                         <button onmouseover="alterarImagem(2)" onmouseout="alterarImagem(4)" class="btn Athena_button_submit" onclick="novoCurso()">Cadastrar Curso</button>
                         <br><br>
@@ -163,7 +166,9 @@ $id_usuario = $_SESSION["usuario"]['id'];
                     </center>
                 </div>
             </div>
-            <div class="col-md-3 col-xs-3"  >
+
+
+            <div class="col-md-3 col-lg-3 col-xs-12 " style="margin-top: 2px;" >
                 <div class="Athena_panel" >
                     <center>
                         <img id="imagem" src="img/logo.png" height="80" width="80">
@@ -182,7 +187,7 @@ $id_usuario = $_SESSION["usuario"]['id'];
         <?php
         include_once './modal.php';
         include_once '../classes/ListarCursos.php';
-        $listCursos = new ListarCursos();
+        $listCursos = new ListarCursos($id_usuario);
         ?>
 
 
