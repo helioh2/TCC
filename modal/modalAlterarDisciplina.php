@@ -87,11 +87,14 @@ $fetch2 = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso
 </script>
 
 <center>
-
-
-    Nome<br><input name="nome" class="text-success  text-center"  type="text" id="nomeALT" value = "<?php echo $nome; ?>">
-    <input class="text-success  text-center" name="codigo" type="hidden" id="codigoALT" value = "<?php echo $codigo; ?>"><br>
-
+  <label class="text-uppercase">Alterar Disciplina</label>
+    <br>
+    <br>
+    NOME<br><input name="nome" class="text-primary  text-center"  type="text" id="nomeALT" value = "<?php echo $nome; ?>">
+    <input class="text-primary  text-center" name="codigo" type="hidden" id="codigoALT" value = "<?php echo $codigo; ?>"><br>
+    <br>
+    CARGA HORÁRIA<br><input class="text-primary  text-center" name="ch" type="number" id="chALT" value = "<?php echo $ch; ?>" ><br> 
+    <br>
 
     <div class="panel panel-primary Athena_modal"style="margin-left: 25%; margin-right: 25%;">
         <label>CATEGORIA</label>
@@ -123,14 +126,14 @@ $fetch2 = selecionarWhere('disciplina', array('categoria'), "id_curso = $idCurso
         </div>
     </div>
 
-    Carga Horaria<br><input class="text-success  text-center" name="ch" type="number" id="chALT" value = "<?php echo $ch; ?>" ><br> 
-    Ativa <br><input class="text-success  text-center" name="ativa" type="checkbox" id="ativaALT" value = "1" <?php if ($ativa != 0) echo "checked" ?> ><br> 
+    
+    ATIVA <br><input class="text-primary  text-center" name="ativa" type="checkbox" id="ativaALT" value = "1" <?php if ($ativa != 0) echo "checked" ?> ><br> 
 
-    <input name="idCurso" class="text-success center-block "  type="hidden" id="idCursoALT" value ="<?php echo $idCurso; ?>">
-    <input name="idDisciplina" class="text-success center-block "  type="hidden" id="idDisciplinaALT" value ="<?php echo $idDisciplina; ?>">
+    <input name="idCurso" class="text-primary center-block "  type="hidden" id="idCursoALT" value ="<?php echo $idCurso; ?>">
+    <input name="idDisciplina" class="text-primary center-block "  type="hidden" id="idDisciplinaALT" value ="<?php echo $idDisciplina; ?>">
     <br>
 <!--        <input type="submit" name="submit" class="alert-success" value="Alterar">-->
-    <input type="button" onclick="disciplinaAlterada()"  class="btn btn-success" value="Alterar">
+    <input type="button" onclick="disciplinaAlterada()"  class="btn btn-md btn-primary" value="Alterar">
 
 </center>
 

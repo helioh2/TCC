@@ -28,7 +28,7 @@ foreach ($fetch as $f) {
 }
 ?>
 
-<html ng-app="Disciplina" >
+<html >
     <head >
         <meta charset="UTF-8">
         <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
@@ -38,7 +38,6 @@ foreach ($fetch as $f) {
 
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/angular.min.js"></script>
         <script type="text/javascript">
 //            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
 //                $scope.nomeDisciplina = '';
@@ -270,7 +269,7 @@ foreach ($fetch as $f) {
         <div class="row">
             <div class="col-lg-2">
                 <center>
-                    <div  class="navbar navbar-fixed-top"  ng-hide="form"  style="margin-right: 80%">
+                    <div  class="navbar navbar-fixed-top" style="margin-right: 80%">
 
                         <div class="navbar-header">
 
@@ -340,7 +339,7 @@ foreach ($fetch as $f) {
             </div>
 
 
-            <div ng-controller="MeuController" class="col-lg-10">
+            <div  class="col-lg-10">
                 <br><br><br>
                 <div id="listaDisciplinas" >
 
