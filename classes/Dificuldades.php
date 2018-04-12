@@ -34,8 +34,8 @@ class Dificuldades {
 
                 <table class="table table-hover">
                     <tr class="text-center">
-                        <td class="text-uppercase bg-success"> Categoria </td>
-                        <td class="text-uppercase bg-success"> % Dificuldade</td>
+                        <th class="text-center text-uppercase bg-success"> Categoria </th>
+                        <th class="text-center text-uppercase bg-success"> % Dificuldade</th>
 
                     </tr>
                     <?php
@@ -66,9 +66,9 @@ class Dificuldades {
 
                 <table class="table table-hover">
                     <tr class="text-center">
-                        <td class="text-uppercase bg-success"> Categoria </td>
-                        <td class="text-uppercase bg-success"> % Aprovação </td>
-                        <td class="text-uppercase bg-success"> Média </td>
+                        <th class="text-center text-uppercase bg-success"> Categoria </th>
+                        <th class="text-center text-uppercase bg-success"> % Aprovação </th>
+                        <th class="text-center text-uppercase bg-success"> Média </th>
                     </tr>
                     <?php
                     for ($index1 = 0; $index1 < count($this->difs); $index1++) {

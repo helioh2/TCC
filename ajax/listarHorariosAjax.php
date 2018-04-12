@@ -13,9 +13,18 @@ $listHor = new ListarHorarios();
 
 $listaHorarios = $listHor->getHorarios();
 
-
+$horarioAnterior = "";
+$arrayClass = array('text-info', 'text-primary');
+$i = 0;
+$class = $arrayClass[$i];
 foreach ($listaHorarios as $horario) {
-    echo "<option value='".$horario->getId()."' id='idHorario'>".$horario->getDia()." - ".$horario->getHora()."</option>";
+    if($horarioAnterior != $horario->getDia()){
+        $horarioAnterior = $horario->getDia();
+       
+        $i = ($i + 1)%2;
+        $class = $arrayClass[$i];
+    }
+    echo "<option class='$class' value='".$horario->getId()."' id='idHorario'>".$horario->getDia()." - ".$horario->getHora()."</option>";
 }
 
 

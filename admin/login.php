@@ -53,7 +53,7 @@ include './modal.php';
                             alert('você não possui acesso ' + user);
 
                         } else {
-                            alert('seja bem vindo ' + user);
+                            alert('Seja bem vindo ' + user);
 
                             location.href = './index.php';
 
@@ -125,18 +125,13 @@ include './modal.php';
 
     <body class="Athena_background">
 
-     
-            <div class="text-center Athena_title" >
-                <h2>ATHENA</h2>
-                <h4>Sistema para Recomendação de Disciplinas</h4>
 
-            </div>
-       
-        <div class="row">
-            <div class="col-lg-2 col-sm-2">
+        <?php
+        include '../cabecalho.php';
+        ?>
 
-            </div>
-            <div class="col-lg-8 col-sm-6">
+        <div class="row ">
+            <div class="col-md-8 col-md-offset-2 col-lg-8 col-lg-offset-2 col-xs-12">
                 <div id="menu" class="Athena_login " style="margin-left: 30%; margin-right: 30%;  margin-top: 5%;">
                     <div class="panel Athena_cabecalho" style="margin-left: 15%; margin-right: 15%;">
                         <center>
@@ -170,7 +165,7 @@ include './modal.php';
                     </center>
                 </div>
             </div>
-            <div class="col-lg-2 col-sm-4" >
+            <div class="col-md-2 col-lg-2 col-xs-12" >
                 <br>
                 <br>
                 <center>
@@ -181,11 +176,10 @@ include './modal.php';
                     </div>
                 </center>
             </div>
-            <br>
+           
         </div>
 
-        <br>
-        <div style="position: absolute; bottom: 10px; width: 100%; padding-left: 80%">
+        <div style="position: absolute; bottom: 4%; width: 100%; padding-left: 80%">
             <center>
                 <label>Desenvolvido por:<br>
                     <a style="color: black;" href="http://lattes.cnpq.br/3657386675052708">Daniel Antonio Karling</a></label>

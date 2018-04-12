@@ -28,7 +28,7 @@ foreach ($fetch as $f) {
 }
 ?>
 
-<html ng-app="Disciplina" >
+<html >
     <head >
         <meta charset="UTF-8">
         <title><?php echo $codCurso . " - " . $nomeCurso; ?></title>
@@ -38,20 +38,19 @@ foreach ($fetch as $f) {
 
         <script src="../js/jquery-3.2.0.min.js"></script>
         <script src="../js/bootstrap.min.js"></script>
-        <script src="../js/angular.min.js"></script>
         <script type="text/javascript">
-            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
-                $scope.nomeDisciplina = '';
-
-                $scope.novoNome = '';
-                $scope.novoCodigo = '';
-                $scope.novaCH;
-                $scope.novaAtiva;
-
-                $scope.form = false;
-
-
-            });
+//            angular.module('Disciplina', []).controller('MeuController', function ($scope) {
+//                $scope.nomeDisciplina = '';
+//
+//                $scope.novoNome = '';
+//                $scope.novoCodigo = '';
+//                $scope.novaCH;
+//                $scope.novaAtiva;
+//
+//                $scope.form = false;
+//
+//
+//            });
             function novaDisciplinaModal() {
                 $.ajax({
                     type: 'POST',
@@ -86,7 +85,7 @@ foreach ($fetch as $f) {
 
 
                 $.ajax({
-                    url: "verificarLogin.php",
+                    url: "verificarLogin.php"
                 }).done(function (data) {
                     if (data === 'erro') {
                         alert('Você não está logado');
@@ -152,33 +151,44 @@ foreach ($fetch as $f) {
                     $("#corpoLista").html(data);
 
                 });
+                $.ajax({
+                    type: 'POST',
+                    url: "../ajax/corpoModalListarCursosAjax.php",
+                    data: {idUsuario: <?php echo $_SESSION["usuario"]['id'] ?>}
+                }).done(function (data) {
+
+                   $("#corpoModalListaCursos").html(data);
+
+                });
+                
             }
 
 
             function compartilhar(idCurso) {
-                $('#modalListarCursos').modal('hide');
+                //$("#modalListarCursos").modal('hide');
                 $.ajax({
                     type: 'POST',
                     url: "../ajax/listarUsuariosAjax.php",
-                    data: {idCurso: idCurso}
+                    data: {idCurso: idCurso, idUsuario: <?php echo $_SESSION["usuario"]['id']?>}
 
                 }).done(function (data) {
-                    $("#corpoModal").html(data);
-                    $('#modal').modal('show');
+                    $("#corpoModalListaCursos").html(data);
+                    //$("#modal").modal('show');
 
                 });
 
             }
 
+
             function  finalizarCompartilhamento(idCurso, idConvidado) {
-                $("#modal").modal('hide');
+                
                 $.ajax({
                     type: 'POST',
                     url: "compartilhar.php",
                     data: {idCurso: idCurso, idConvidado: idConvidado}
 
                 }).done(function (data) {
-                    $("#corpoModal").html(data);
+                    $("#modalListarCursos").modal('hide');
                     alert(data);
                     atualizar();
 
@@ -192,8 +202,8 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 2) {
-                    document.getElementById('imagem').src = 'img/curso.png';
-
+                    document.getElementById('imagem').src = 'img/curso3.png';
+                    
                 } else if (num === 3) {
                     document.getElementById('imagem').src = 'img/historico.png';
 
@@ -210,7 +220,7 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 0) {
-                    document.getElementById('imagem').src = 'img/default.png';
+                    document.getElementById('imagem').src = 'img/logo.png';
 
                 }
             }
@@ -259,17 +269,17 @@ foreach ($fetch as $f) {
         <div class="row">
             <div class="col-lg-2">
                 <center>
-                    <div  class="navbar navbar-fixed-top"  ng-hide="form"  style="margin-right: 80%">
+                    <div  class="navbar navbar-fixed-top" style="margin-right: 80%">
 
                         <div class="navbar-header">
 
                             <div id ="menu" class="nav navbar-left ">
                                 <ul class="nav navbar-left" style="margin-top: 10px; margin-left: 10px;" >
-                                    <br>
+                                    
                                     <li>
-                                        <img id="imagem" src="img/default.png" height="120" width="140">
+                                        <img id="imagem" src="img/logo.png" height="140px" width="135px">
                                     </li>
-                                    <br>
+                                    
                                     <li>
                                         <label class="text-uppercase">Pesquisar: </label> 
                                         <br><input type="text" class="text-warning"name="nomeDigitado" id="nomeDigitado" onkeyup="pesquisar()"/>
@@ -329,7 +339,7 @@ foreach ($fetch as $f) {
             </div>
 
 
-            <div ng-controller="MeuController" class="col-lg-10">
+            <div  class="col-lg-10">
                 <br><br><br>
                 <div id="listaDisciplinas" >
 
@@ -364,39 +374,33 @@ foreach ($fetch as $f) {
 
 
 
-        <?php
-        include_once '../classes/ListarCursos.php';
-        $listCursos = new ListarCursos();
-        ?>
 
 
         <div class="modal fade" id="modalListarCursos">
 
             <center>
-                <div class="modal-lg Athena_modal">
-                    <div class="modal-content">
-                        <div class="modal-header Athena_modal">
-                            <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                            <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
-                        </div>
-                        <div class="modal-body Athena_modal">
-                            <center>
+            <div class="modal-lg Athena_modal">
+                <div class="modal-content">
+                    <div class="modal-header Athena_modal">
+                        <button type="button" class="close" data-dismiss="modal" onclick="atualizar()"><span>×</span></button>
+                        <h4 class="modal-title text-info Athena_modal">Selecionar Curso</h4>
+                    </div>
+                    <div id="corpoModalListaCursos" class="modal-body Athena_modal">
+                        <center>
 
 
-                                <?php
-                                $listCursos->listar();
-                                ?>
+                           
 
-
-                            </center>
-                        </div>
-                        <div class="Athena_modal_fother">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                            <br>
-                            <br>
-                        </div>
+                        </center>
+                    </div>
+                    <div class="Athena_modal_fother">
+                        <button type="button" class="btn btn-default" data-dismiss="modal" onclick="atualizar()">Fechar</button>
+                        <br>
+                        <br>
                     </div>
                 </div>
+            </div>
+        </center>
         </div>
 
 
@@ -417,9 +421,7 @@ foreach ($fetch as $f) {
                                     <tr  class = "Athena_modal ">
                                         <th>Código</th><th>Alterar</th><th>Nome</th><th>Categoria</th><th>Carga Horária</th><th>Horários</th>              
                                     </tr> 
-                                    <?php
-                                    $listDisciplinas->listar($id_curso);
-                                    ?>
+                                   
 
                                 </table>  
                             </center>

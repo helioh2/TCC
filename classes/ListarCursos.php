@@ -14,9 +14,9 @@ class ListarCursos {
 
     private $cursos = array();
 
-    public function __construct() {
+    public function __construct($idUsuario) {
 //session_start();
-        $id_usuario = $_SESSION["usuario"]['id'];
+        $id_usuario = $idUsuario;
 
 //        $fetch = selecionarWHERE("curso", array("id", "codigo", "nome", "semanas"), "id_usuario = $id_usuario");
 //novo select, seleciona os cursos compartilhados contigo
