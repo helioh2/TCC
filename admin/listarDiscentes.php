@@ -202,7 +202,7 @@ foreach ($fetch as $f) {
                     document.getElementById('imagem').src = 'img/nova.png';
 
                 } else if (num === 2) {
-                    document.getElementById('imagem').src = 'img/curso.png';
+                    document.getElementById('imagem').src = 'img/curso3.png';
                     
                 } else if (num === 3) {
                     document.getElementById('imagem').src = 'img/historico.png';
